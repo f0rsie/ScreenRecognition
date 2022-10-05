@@ -14,12 +14,17 @@
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="41*" />
-            <ColumnDefinition Width="39*" />
+            <ColumnDefinition Width="230*" />
+            <ColumnDefinition Width="180*" />
+            <ColumnDefinition Width="311*" />
+            <ColumnDefinition Width="79*" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding Result}"
-                   TextWrapping="Wrap"/>
-        <Button Grid.Column="1"
+                   TextWrapping="Wrap" />
+        <Image Grid.Column="1" x:Name="image1"/>
+        <Button Grid.Column="2"
                 Click="Button_Click" />
+        <Button Grid.Column="3"
+                Click="ButtonScreenshot_Click" />
     </Grid>
 </Window>

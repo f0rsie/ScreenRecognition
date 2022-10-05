@@ -1,9 +1,12 @@
 ﻿using Microsoft.Win32;
 using ScreenRecognition.Desktop.Controllers;
+using ScreenRecognition.Desktop.Core;
+using ScreenRecognition.Desktop.View.Windows;
 using ScreenRecognition.ImagePreparation.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +34,16 @@ namespace ScreenRecognition.Desktop.ViewModel
         {
             _controller = new UniversalController("http://localhost:5046/api/");
             Result = "313123";
+        }
+
+        public void TakeScreenshot()
+        {
+            var screenshot = ScreenCapture.CaptureDesktop();
+
+            screenshot.Save("test.png", ImageFormat.Png);
+
+            var window = new ScreenshotWindow(screenshot);
+            window.ShowDialog();
         }
 
         public async void Start()
