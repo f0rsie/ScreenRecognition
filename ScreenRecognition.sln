@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{56A53565-2BFE-4092-9BF9-AF0D276CA412}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{A2561410-9E0B-444A-B2DB-C57091713BAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{494BCD15-907D-4CFD-B14C-1944F34CBA82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.ImagePreparation", "ScreenRecognition.ImagePreparation\ScreenRecognition.ImagePreparation.csproj", "{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.Api", "ScreenRecognition.Api\ScreenRecognition.Api.csproj", "{0E4C97F8-8332-4EA0-A494-944B053E8E2E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {693BCF43-79FD-46F7-89B2-022BEDF4B7C5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.Desktop", "ScreenRecognition.Desktop\ScreenRecognition.Desktop.csproj", "{837BFA1D-FD3A-4074-9C2E-699DBA578917}"
+	ProjectSection(ProjectDependencies) = postProject
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {693BCF43-79FD-46F7-89B2-022BEDF4B7C5}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E4C97F8-8332-4EA0-A494-944B053E8E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E4C97F8-8332-4EA0-A494-944B053E8E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E4C97F8-8332-4EA0-A494-944B053E8E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E4C97F8-8332-4EA0-A494-944B053E8E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {494BCD15-907D-4CFD-B14C-1944F34CBA82}
+		{0E4C97F8-8332-4EA0-A494-944B053E8E2E} = {56A53565-2BFE-4092-9BF9-AF0D276CA412}
+		{837BFA1D-FD3A-4074-9C2E-699DBA578917} = {A2561410-9E0B-444A-B2DB-C57091713BAD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0B55DBB-25D2-41B3-9CB8-F743BCED43A1}
+	EndGlobalSection
+EndGlobal
