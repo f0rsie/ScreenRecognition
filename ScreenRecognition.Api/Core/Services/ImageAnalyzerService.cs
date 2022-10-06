@@ -47,6 +47,8 @@ namespace ScreenRecognition.Api.Core.Services
 
             }
 
+            // Будем из TesseractOcrService брать это: var r = res.GetMeanConfidence();, а после сравнивать результат. У кого больше всего точность распознавания (r), и больше всего символов, не считая /n и пробелы
+            // Тот и будет выводиться в результат
             return s_results[new Random().Next(0, s_results.Count - 1)];
         }
 

@@ -19,12 +19,13 @@ namespace ScreenRecognition.Api.Core.Services
 
         public string GetText(byte[] image)
         {
-            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", _language, EngineMode.Default);
+            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", _language, EngineMode.LstmOnly);
 
             var img = Pix.LoadFromMemory(image);
             var res = ocrEngine.Process(img);
+            var r = res.GetMeanConfidence();
 
-            return res.GetText();
+            return $"{res.GetText()} + Confidence: {r}";
         }
     }
 }
