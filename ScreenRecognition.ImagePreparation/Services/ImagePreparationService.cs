@@ -8,7 +8,7 @@ namespace ScreenRecognition.ImagePreparation.Services
         // Пояснение для меня же: если фон черный, а текст белый - то получится идеальное изображение для ОКРа, однако если цвет текста черный, а фон белый - то ОКР будет работать через жопу
         // Нужно в функции InvertImageColor как-то делать так, чтобы цвет фона всегда был белым, а цвет текста - черным. Тогда окр будет работать практчиески идеально
 
-        private Bitmap FloodFillImage(Bitmap bmp, int p)
+        private Bitmap FloodFillImage(Bitmap bmp, int p, Color textColor, Color backgroundColor)
         {
             Bitmap result = new Bitmap(bmp.Width, bmp.Height);
             Color color = new Color();
@@ -19,7 +19,7 @@ namespace ScreenRecognition.ImagePreparation.Services
                 {
                     color = bmp.GetPixel(i, j);
                     int K = (color.R + color.G + color.B) / 3;
-                    result.SetPixel(i, j, K <= p ? Color.Black : Color.White);
+                    result.SetPixel(i, j, K <= p ? textColor : backgroundColor);
                 }
             }
 
@@ -28,17 +28,32 @@ namespace ScreenRecognition.ImagePreparation.Services
 
         // Эта функция не хочет инвертировать цвета, она ничего не меняет (в лучшую сторону по крайней мере). Исправлю позже, когда добавлю переводчик и т.д
         // 05.10.2022 16:30 - а эта шляпа не работает на данный момент. Планирую в ближайшем будущем переделать её так, чтобы текст на фото всегда был черный, а фон белым.
-        private Bitmap InvertImageColor(Bitmap bitmap)
+        // 06.10.2022 14:50 - функция переделана в необходимую
+        private Bitmap InvertImageColor(Bitmap bitmap, int p, Color textColor, Color backgroundColor)
         {
-            for (int x = 0; x < bitmap.Width; x++)
+            int textPixels = 0;
+            int backgroundPixels = 0;
+
+            for (int j = 0; j < bitmap.Height; j++)
             {
-                for (int y = 0; y < bitmap.Height; y++)
+                for (int i = 0; i < bitmap.Width; i++)
                 {
-                    Color oldColor = bitmap.GetPixel(x, y);
-                    Color newColor;
-                    newColor = Color.FromArgb(oldColor.A, 255 - oldColor.R, 255 - oldColor.G, 255 - oldColor.B);
-                    bitmap.SetPixel(x, y, newColor);
+                    var color = bitmap.GetPixel(i, j);
+
+                    if (color.ToArgb() == textColor.ToArgb())
+                    {
+                        textPixels++;
+                    }
+                    else if (color.ToArgb() == backgroundColor.ToArgb())
+                    {
+                        backgroundPixels++;
+                    }
                 }
+            }
+
+            if (textPixels > backgroundPixels)
+            {
+                return FloodFillImage(bitmap, p, backgroundColor, textColor);
             }
 
             return bitmap;
@@ -59,12 +74,12 @@ namespace ScreenRecognition.ImagePreparation.Services
             return result;
         }
 
-        public byte[] GetPreparedImage(Bitmap image, int floodValue = 150)
+        public byte[] GetPreparedImage(Bitmap image, Color textColor, Color backgroundColor, int floodValue = 150)
         {
-            var blackWhiteBitmap = FloodFillImage(image, floodValue);
-            var invertedBlackWhiteBitmap = InvertImageColor(blackWhiteBitmap);
-            //blackWhiteBitmap.Save($"E:/Diplom/img_test{DateTime.Now.Second}.png", System.Drawing.Imaging.ImageFormat.Png); // Это временная отладка
-            invertedBlackWhiteBitmap.Save($"E:/Diplom/img_testInverted{DateTime.Now.Minute}_{DateTime.Now.Second}_{DateTime.Now.Millisecond}.png", System.Drawing.Imaging.ImageFormat.Png); // Это временная отладка
+            var blackWhiteBitmap = FloodFillImage(image, floodValue, textColor, backgroundColor);
+            var invertedBlackWhiteBitmap = InvertImageColor(blackWhiteBitmap, floodValue, textColor, backgroundColor);
+            //blackWhiteBitmap.Save($"E:/Diplom/Results/img_test{DateTime.Now.Second}.png", System.Drawing.Imaging.ImageFormat.Png); // Это временная отладка
+            //invertedBlackWhiteBitmap.Save($"E:/Diplom/Results/img_testInverted{DateTime.Now.Minute}_{DateTime.Now.Second}_{DateTime.Now.Millisecond}.png", System.Drawing.Imaging.ImageFormat.Png); // Это временная отладка
             var result = BitmapToByte(invertedBlackWhiteBitmap);
 
             return result;

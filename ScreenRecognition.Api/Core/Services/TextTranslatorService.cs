@@ -20,7 +20,6 @@
             var textTranslationService = new TextTranslationService();
 
             string textFromImage = GetText();
-            //string translateResult = textFromImage; // Временное решение; пока нет модуля самого переводчика
             string translateResult = textTranslationService.TranslateWithMM(textFromImage, "en-EN");
 
             return translateResult;
