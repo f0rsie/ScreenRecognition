@@ -31,7 +31,7 @@
 
             var result = imageAnalyzerService.GetTextFromImage(_image);
 
-            return result;
+            return result.Item1;
         }
     }
 }

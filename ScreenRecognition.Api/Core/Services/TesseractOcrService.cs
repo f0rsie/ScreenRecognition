@@ -17,7 +17,7 @@ namespace ScreenRecognition.Api.Core.Services
             _language = language;
         }
 
-        public string GetText(byte[] image)
+        public (string, float) GetText(byte[] image)
         {
             var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", _language, EngineMode.LstmOnly);
 
@@ -25,7 +25,9 @@ namespace ScreenRecognition.Api.Core.Services
             var res = ocrEngine.Process(img);
             var r = res.GetMeanConfidence();
 
-            return $"{res.GetText()} + Confidence: {r}";
+            var result = (res.GetText(), r);
+
+            return result;
         }
     }
 }

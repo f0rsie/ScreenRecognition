@@ -26,7 +26,7 @@ namespace ScreenRecognition.Desktop.View.Windows
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as MainWindowViewModel)?.Start();
+            (DataContext as MainWindowViewModel)?.Start(null);
         }
 
         private void ButtonScreenshot_Click(object sender, RoutedEventArgs e)

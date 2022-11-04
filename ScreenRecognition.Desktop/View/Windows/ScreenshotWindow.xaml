@@ -10,13 +10,24 @@
         Width="800"
         AllowsTransparency="True"
         WindowStyle="None"
-        Background="Transparent"
-        Topmost="True"
+        Topmost="False"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
-    <Grid>
-        <Image x:Name="image1"
-               OpacityMask="Gray"
-               Margin="7" />
-    </Grid>
+    <Window.Background>
+        <SolidColorBrush />
+    </Window.Background>
+    <!--
+    <Image x:Name="image1"
+           OpacityMask="Gray"
+           Margin="7" />
+    !-->
+    <Canvas MouseDown="Canvas_MouseDown"
+            MouseMove="Canvas_MouseMove"
+            MouseUp="Canvas_MouseUp"
+            x:Name="Canvas"
+            Margin="7">
+        <Canvas.Background>
+            <ImageBrush x:Name="image1" />
+        </Canvas.Background>
+    </Canvas>
 </Window>

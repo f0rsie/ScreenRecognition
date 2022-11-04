@@ -9,7 +9,7 @@ namespace ScreenRecognition.Api.Core.Services
         private byte[] _image;
 
         private List<Thread> _threads;
-        private static List<string>? s_results;
+        private static List<(string, float)>? s_results;
         private Dictionary<string, int> _threadFloodValue;
 
         public ImageAnalyzerService(string language = "eng")
@@ -17,12 +17,12 @@ namespace ScreenRecognition.Api.Core.Services
             _language = language;
 
             _threads = new List<Thread>();
-            s_results = new List<string>();
+            s_results = new List<(string, float)>();
             _threadFloodValue = new Dictionary<string, int>();
         }
 
         // Над этим нужно будет ещё подумать
-        public string GetTextFromImage(byte[] image)
+        public (string, float) GetTextFromImage(byte[] image)
         {
             _image = image;
             int currentThreadNumber = 0;
@@ -49,7 +49,19 @@ namespace ScreenRecognition.Api.Core.Services
 
             // Будем из TesseractOcrService брать это: var r = res.GetMeanConfidence();, а после сравнивать результат. У кого больше всего точность распознавания (r), и больше всего символов, не считая /n и пробелы
             // Тот и будет выводиться в результат
-            return s_results[new Random().Next(0, s_results.Count - 1)];
+            (string, float) result = ("", 0);
+            if (s_results.Count > 0)
+            {
+                result = s_results[0];
+
+                foreach (var item in s_results)
+                {
+                    if (result.Item2 < item.Item2)
+                        result = item;
+                }
+            }
+
+            return result;
         }
 
         private void PreparedImageMethod()
@@ -58,12 +70,12 @@ namespace ScreenRecognition.Api.Core.Services
             var tesseractOcrService = new TesseractOcrService(_language);
 
             byte[]? preparedImage = new byte[0];
-            string? textResult = "";
+            (string?, float) textResult = ("", 0);
             int floodValue = _threadFloodValue.FirstOrDefault(e => e.Key == Thread.CurrentThread.Name).Value;
 
             preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, floodValue);
 
-            if ((textResult = tesseractOcrService.GetText(preparedImage).Replace("\n\n", "\n").Replace("\n", " \n ")).Replace("\n", " ").Replace(" ", "").Length > 4)
+            if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length > 4)
             {
                 s_results?.Add(textResult);
             }
