@@ -5,16 +5,16 @@ namespace ScreenRecognition.Api.Core.Services
 {
     public class ImageAnalyzerService
     {
-        private string _language;
+        private string _inputLanguage;
         private byte[] _image;
 
         private List<Thread> _threads;
-        private static List<(string, float)>? s_results;
+        private static List<(string?, float)>? s_results;
         private Dictionary<string, int> _threadFloodValue;
 
-        public ImageAnalyzerService(string language = "eng")
+        public ImageAnalyzerService(string inputLanguage = "eng")
         {
-            _language = language;
+            _inputLanguage = inputLanguage;
 
             _threads = new List<Thread>();
             s_results = new List<(string, float)>();
@@ -67,7 +67,7 @@ namespace ScreenRecognition.Api.Core.Services
         private void PreparedImageMethod()
         {
             var imagePreparationService = new ImagePreparationService();
-            var tesseractOcrService = new TesseractOcrService(_language);
+            var tesseractOcrService = new TesseractOcrService(_inputLanguage);
 
             byte[]? preparedImage = new byte[0];
             (string?, float) textResult = ("", 0);
@@ -75,7 +75,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, floodValue);
 
-            if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length > 4)
+            if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
             {
                 s_results?.Add(textResult);
             }

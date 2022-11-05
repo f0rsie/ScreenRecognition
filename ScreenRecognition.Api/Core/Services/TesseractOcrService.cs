@@ -10,22 +10,22 @@ namespace ScreenRecognition.Api.Core.Services
 {
     public class TesseractOcrService
     {
-        private string _language;
+        private string _inputLanguage;
 
-        public TesseractOcrService(string language)
+        public TesseractOcrService(string inputLanguage)
         {
-            _language = language;
+            _inputLanguage = inputLanguage;
         }
 
         public (string, float) GetText(byte[] image)
         {
-            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", _language, EngineMode.LstmOnly);
+            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", "rus+eng", EngineMode.LstmOnly);
 
             var img = Pix.LoadFromMemory(image);
             var res = ocrEngine.Process(img);
             var r = res.GetMeanConfidence();
 
-            var result = (res.GetText(), r);
+            var result = (res.GetText().Replace("\n", ""), r);
 
             return result;
         }

@@ -18,11 +18,11 @@ namespace ScreenRecognition.Api.Controllers
     {
         [Route("Translate")]
         [HttpPost]
-        public string TextTranslate(string translationApiKey, List<byte> image, string language = "auto")
+        public string? TextTranslate(string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
         {
-            var textTranslator = new TextTranslatorService(translationApiKey, image, language);
+            var textTranslator = new TextTranslatorService(translationApiKey, image, inputLanguage, outputLanguage);
 
-            string result = textTranslator.GetTranslate();
+            string? result = textTranslator.GetTranslate();
 
             return result;
         }

@@ -23,7 +23,8 @@ namespace ScreenRecognition.Desktop.ViewModel
     {
         private string? _result;
         private string _apiKey = "123";
-        private string _language = "rus";
+        private string _inputLanguage = "rus";
+        private string _outputLanguage = "eng";
         UniversalController _controller;
 
         public string? Result
@@ -90,7 +91,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             try
             {
-                var result = await _controller.Post($"Screen/Translate?translationApiKey={_apiKey}&language={_language}", str);
+                var result = await _controller.Post($"Screen/Translate?translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
 
                 Result = result.ToString();
             }

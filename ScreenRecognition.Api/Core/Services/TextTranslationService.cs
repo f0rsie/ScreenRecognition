@@ -8,13 +8,13 @@ namespace ScreenRecognition.Api.Core.Services
 {
     public class TextTranslationService
     {
-        public string Translate(string text, string language)
+        public string Translate(string text, string inputLanguage, string outputLanguage)
         {
             TranslationServiceClient client = TranslationServiceClient.Create();
             TranslateTextRequest request = new TranslateTextRequest
             {
                 Contents = { text },
-                TargetLanguageCode = language,
+                TargetLanguageCode = inputLanguage,
                 Model = "",
             };
             TranslateTextResponse response = client.TranslateText(request);
@@ -23,7 +23,7 @@ namespace ScreenRecognition.Api.Core.Services
             return translation.TranslatedText;
         }
 
-        public string? TranslateWithMM(string text, string language)
+        public string? TranslateWithMM(string text, string inputLanguage, string outputLanguage)
         {
             string? res = "";
 
