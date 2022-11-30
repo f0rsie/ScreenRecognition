@@ -26,9 +26,6 @@ namespace ScreenRecognition.ImagePreparation.Services
             return result;
         }
 
-        // Эта функция не хочет инвертировать цвета, она ничего не меняет (в лучшую сторону по крайней мере). Исправлю позже, когда добавлю переводчик и т.д
-        // 05.10.2022 16:30 - а эта шляпа не работает на данный момент. Планирую в ближайшем будущем переделать её так, чтобы текст на фото всегда был черный, а фон белым.
-        // 06.10.2022 14:50 - функция переделана в необходимую
         private Bitmap InvertImageColor(Bitmap bitmap, int p, Color textColor, Color backgroundColor)
         {
             int textPixels = 0;

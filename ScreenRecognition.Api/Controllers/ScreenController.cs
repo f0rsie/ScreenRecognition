@@ -18,13 +18,18 @@ namespace ScreenRecognition.Api.Controllers
     {
         [Route("Translate")]
         [HttpPost]
-        public string? TextTranslate(string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
+        public async Task<string?> TextTranslate(string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
         {
-            var textTranslator = new TextTranslatorService(translationApiKey, image, inputLanguage, outputLanguage);
+            var asyncTask = await Task.Run(() =>
+            {
+                var textTranslator = new TextTranslatorService(translationApiKey, image, inputLanguage, outputLanguage);
 
-            string? result = textTranslator.GetTranslate();
+                string? result = textTranslator.GetTranslate();
 
-            return result;
+                return result;
+            });
+
+            return asyncTask;
         }
     }
 }

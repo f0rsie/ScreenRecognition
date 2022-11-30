@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ScreenRecognition.Desktop.Core;
+using ScreenRecognition.Desktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -17,7 +19,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ScreenRecognition.Desktop.View.Windows
 {
@@ -26,11 +27,19 @@ namespace ScreenRecognition.Desktop.View.Windows
     /// </summary>
     public partial class ScreenshotWindow : Window
     {
+        Core.ImagePreparation _imagePreparation = new Core.ImagePreparation();
+
+        private Point _startPoint;
+        private Rectangle? _rect;
+        private Rectangle? _lastRect;
+        private double _startX = 0;
+        private double _startY = 0;
+
         public ImageSource Image;
 
         public ScreenshotWindow(System.Drawing.Image image) : this()
         {
-            image1.ImageSource = ImageToImageSource(image);
+            backgroundImage.ImageSource = ImageToImageSource(image);
         }
 
         public ScreenshotWindow()
@@ -67,63 +76,56 @@ namespace ScreenRecognition.Desktop.View.Windows
 
             return bitmap;
         }
-
-        private Point startPoint;
-        private Rectangle rect;
-        private Rectangle lastRect;
-        private double _startX = 0;
-        private double _startY = 0;
-
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(Canvas.Children.Contains(lastRect) == true)
+            if (Canvas.Children.Contains(_lastRect) == true)
             {
-                Canvas.Children.Remove(lastRect);
+                Canvas.Children.Remove(_lastRect);
             }
 
-            startPoint = e.GetPosition(Canvas);
+            _startPoint = e.GetPosition(Canvas);
 
-            _startX = startPoint.X;
-            _startY = startPoint.Y;
+            _startX = _startPoint.X;
+            _startY = _startPoint.Y;
 
-            rect = new Rectangle
+            _rect = new Rectangle
             {
                 Stroke = Brushes.LightBlue,
                 StrokeThickness = 2
             };
-            Canvas.SetLeft(rect, startPoint.X);
-            Canvas.SetTop(rect, startPoint.Y);
-            Canvas.Children.Add(rect);
+            Canvas.SetLeft(_rect, _startPoint.X);
+            Canvas.SetTop(_rect, _startPoint.Y);
+            Canvas.Children.Add(_rect);
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Released || rect == null)
+            if (e.LeftButton == MouseButtonState.Released || _rect == null)
                 return;
 
             var pos = e.GetPosition(Canvas);
 
-            var x = Math.Min(pos.X, startPoint.X);
-            var y = Math.Min(pos.Y, startPoint.Y);
+            var x = Math.Min(pos.X, _startPoint.X);
+            var y = Math.Min(pos.Y, _startPoint.Y);
 
-            var w = Math.Max(pos.X, startPoint.X) - x;
-            var h = Math.Max(pos.Y, startPoint.Y) - y;
+            var w = Math.Max(pos.X, _startPoint.X) - x;
+            var h = Math.Max(pos.Y, _startPoint.Y) - y;
 
-            rect.Width = w;
-            rect.Height = h;
+            _rect.Width = w;
+            _rect.Height = h;
 
-            Canvas.SetLeft(rect, x);
-            Canvas.SetTop(rect, y);
+            Canvas.SetLeft(_rect, x);
+            Canvas.SetTop(_rect, y);
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if(rect != null)
+            if (_rect != null)
             {
-                lastRect = rect;
+                _lastRect = _rect;
             }
 
-            rect = null;
+            _rect = null;
 
             GetSelectedImage();
             this.Close();
@@ -131,37 +133,16 @@ namespace ScreenRecognition.Desktop.View.Windows
 
         private void GetSelectedImage()
         {
-            var img = image1.ImageSource;
+            var img = backgroundImage.ImageSource;
 
-            var prImg = ImageWpfToGDI(img);
+            var prImg = _imagePreparation.ImageWpfToGDI(img);
 
-            var result = Crop(prImg, new System.Drawing.Rectangle(int.Parse(_startX.ToString()), int.Parse(_startY.ToString()), int.Parse(lastRect.Width.ToString()), int.Parse(lastRect.Height.ToString())));
+            var result = _imagePreparation.Crop(prImg, new System.Drawing.Rectangle(int.Parse(_startX.ToString()), int.Parse(_startY.ToString()), int.Parse(_lastRect.Width.ToString()), int.Parse(_lastRect.Height.ToString())));
 
-            image1.ImageSource = ImageToImageSource(result);
+            backgroundImage.ImageSource = ImageToImageSource(result);
 
-            Image = image1.ImageSource;
+            Image = backgroundImage.ImageSource;
 
-        }
-        private System.Drawing.Image Crop(System.Drawing.Image image, System.Drawing.Rectangle selection)
-        {
-            System.Drawing.Bitmap bmp = image as System.Drawing.Bitmap;
-
-            // Crop the image:
-            System.Drawing.Bitmap cropBmp = bmp.Clone(selection, bmp.PixelFormat);
-
-            // Release the resources:
-            image.Dispose();
-
-            return cropBmp;
-        }
-        private System.Drawing.Image ImageWpfToGDI(System.Windows.Media.ImageSource image)
-        {
-            MemoryStream ms = new MemoryStream();
-            var encoder = new System.Windows.Media.Imaging.BmpBitmapEncoder();
-            encoder.Frames.Add(System.Windows.Media.Imaging.BitmapFrame.Create(image as System.Windows.Media.Imaging.BitmapSource));
-            encoder.Save(ms);
-            ms.Flush();
-            return System.Drawing.Image.FromStream(ms);
         }
     }
 }

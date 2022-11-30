@@ -6,10 +6,10 @@ namespace ScreenRecognition.Api.Core.Services
     public class ImageAnalyzerService
     {
         private string _inputLanguage;
-        private byte[] _image;
+        private byte[]? _image;
 
         private List<Thread> _threads;
-        private static List<(string?, float)>? s_results;
+        private List<(string?, float)>? _results;
         private Dictionary<string, int> _threadFloodValue;
 
         public ImageAnalyzerService(string inputLanguage = "eng")
@@ -17,21 +17,15 @@ namespace ScreenRecognition.Api.Core.Services
             _inputLanguage = inputLanguage;
 
             _threads = new List<Thread>();
-            s_results = new List<(string, float)>();
+            _results = new List<(string?, float)>();
             _threadFloodValue = new Dictionary<string, int>();
         }
 
-        // Над этим нужно будет ещё подумать
-        public (string, float) GetTextFromImage(byte[] image)
+        public (string?, float) GetTextFromImage(byte[] image)
         {
             _image = image;
             int currentThreadNumber = 0;
 
-            // Пока есть идея, чтобы этот цикл выполнялся все 5 раз (с 50 до 250), а после запускалось одновременно 5 экземпляров ОКРа.
-            // После завершения работы всех экземпляров ОКРа будут сравниваться результаты работы.
-            // Тот результат, где будет больше всего текста(?), будет финальным результатом, который будет передаваться в переводчик.
-            // Но так как в проекте кроме этого ничего нет, то пока пусть останется так, доработкой этого момента займусь позже.
-            // 05.10.2022 16:35 - Обновление: скорее всего следующее, чем я займусь в этом проекте - это реализация того, что ныписал выше
             for (int i = 50; i <= 250; i += 50)
             {
                 _threads.Add(new Thread(PreparedImageMethod));
@@ -47,14 +41,13 @@ namespace ScreenRecognition.Api.Core.Services
 
             }
 
-            // Будем из TesseractOcrService брать это: var r = res.GetMeanConfidence();, а после сравнивать результат. У кого больше всего точность распознавания (r), и больше всего символов, не считая /n и пробелы
-            // Тот и будет выводиться в результат
-            (string, float) result = ("", 0);
-            if (s_results.Count > 0)
-            {
-                result = s_results[0];
+            (string?, float) result = ("", 0);
 
-                foreach (var item in s_results)
+            if (_results?.Count > 0)
+            {
+                result = _results[0];
+
+                foreach (var item in _results)
                 {
                     if (result.Item2 < item.Item2)
                         result = item;
@@ -77,7 +70,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
             {
-                s_results?.Add(textResult);
+                _results?.Add(textResult);
             }
         }
     }

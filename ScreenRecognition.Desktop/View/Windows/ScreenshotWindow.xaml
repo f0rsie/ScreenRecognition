@@ -1,33 +1,30 @@
-﻿<Window x:Class="ScreenRecognition.Desktop.View.Windows.ScreenshotWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
+        xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+        x:Class="ScreenRecognition.Desktop.View.Windows.ScreenshotWindow"
         mc:Ignorable="d"
         Title="ScreenshotWindow"
         Height="450"
         Width="800"
         AllowsTransparency="True"
         WindowStyle="None"
-        Topmost="False"
+        Topmost="True"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized">
-    <Window.Background>
-        <SolidColorBrush />
-    </Window.Background>
-    <!--
-    <Image x:Name="image1"
-           OpacityMask="Gray"
-           Margin="7" />
-    !-->
+        WindowState="Maximized"
+        Background="#00000000">
+    <Window.DataContext>
+        <ViewModel:ScreenshotWindowViewModel />
+    </Window.DataContext>
     <Canvas MouseDown="Canvas_MouseDown"
             MouseMove="Canvas_MouseMove"
             MouseUp="Canvas_MouseUp"
-            x:Name="Canvas"
-            Margin="7">
+            Margin="7"
+            x:Name="Canvas">
         <Canvas.Background>
-            <ImageBrush x:Name="image1" />
+            <ImageBrush x:Name="backgroundImage"/>
         </Canvas.Background>
     </Canvas>
 </Window>
