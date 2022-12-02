@@ -59,18 +59,26 @@ namespace ScreenRecognition.Api.Core.Services
 
         private void PreparedImageMethod()
         {
-            var imagePreparationService = new ImagePreparationService();
-            var tesseractOcrService = new TesseractOcrService(_inputLanguage);
-
-            byte[]? preparedImage = new byte[0];
-            (string?, float) textResult = ("", 0);
-            int floodValue = _threadFloodValue.FirstOrDefault(e => e.Key == Thread.CurrentThread.Name).Value;
-
-            preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, floodValue);
-
-            if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
+            try
             {
-                _results?.Add(textResult);
+                var imagePreparationService = new ImagePreparationService();
+                var tesseractOcrService = new TesseractOcrService(_inputLanguage);
+
+                byte[]? preparedImage = new byte[0];
+                (string?, float) textResult = ("", 0);
+                int floodValue = _threadFloodValue.FirstOrDefault(e => e.Key == Thread.CurrentThread.Name).Value;
+
+                preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, floodValue);
+
+                if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
+                {
+                    _results?.Add(textResult);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

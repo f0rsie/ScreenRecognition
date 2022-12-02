@@ -6,9 +6,10 @@
         xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="Настройки"
         Height="450"
-        Width="800">
+        Width="800"
+        Closing="Window_Closing">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
@@ -21,10 +22,14 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding Result}"
                    TextWrapping="Wrap" />
-        <Image Grid.Column="1" x:Name="image1"/>
+        <Frame Grid.Column="1" x:Name="f"/>
         <Button Grid.Column="2"
-                Click="Button_Click" />
+                Click="Button_Click"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"/>
         <Button Grid.Column="3"
-                Click="ButtonScreenshot_Click" />
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="ButtonScreenshot_Click"/>
     </Grid>
 </Window>

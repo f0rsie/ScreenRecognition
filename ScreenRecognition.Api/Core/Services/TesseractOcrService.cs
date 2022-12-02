@@ -23,9 +23,9 @@ namespace ScreenRecognition.Api.Core.Services
 
             var img = Pix.LoadFromMemory(image);
             var res = ocrEngine.Process(img);
-            var r = res.GetMeanConfidence();
+            var confidence = res.GetMeanConfidence();
 
-            var result = (res.GetText().Replace("\n", ""), r);
+            var result = (res.GetText().Replace("\n", ""), confidence);
 
             return result;
         }

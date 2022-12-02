@@ -1,7 +1,10 @@
-﻿using ScreenRecognition.Desktop.ViewModel;
+﻿using GlobalHotKeys;
+using ScreenRecognition.Desktop.Core;
+using ScreenRecognition.Desktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +26,8 @@ namespace ScreenRecognition.Desktop.View.Windows
         public MainWindow()
         {
             InitializeComponent();
+
+            f.Content = new Pages.SettingsPage().Content;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -32,6 +37,12 @@ namespace ScreenRecognition.Desktop.View.Windows
         private void ButtonScreenshot_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as MainWindowViewModel)?.TakeScreenshot();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            RegisterGlobalHotkey.s_hotkey?.Dispose();
+            RegisterGlobalHotkey.s_subscription?.Dispose();
         }
     }
 }

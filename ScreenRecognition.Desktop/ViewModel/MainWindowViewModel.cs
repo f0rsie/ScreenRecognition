@@ -21,6 +21,8 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        RegisterGlobalHotkey _registerGlobalHotkey;
+
         private string? _result;
         private string _apiKey = "123";
         private string _inputLanguage = "rus";
@@ -39,6 +41,9 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public MainWindowViewModel()
         {
+            // А это регистрация кнопки для хоткея
+            _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
+
             _controller = new UniversalController("http://localhost:5046/api/");
             Result = "313123";
         }
@@ -77,7 +82,7 @@ namespace ScreenRecognition.Desktop.ViewModel
             }
             else if (img != null)
             {
-                var f = ConvertToBitmap((BitmapSource)img);
+                var f = ConvertBitmapSourceToBitmap((BitmapSource)img);
 
                 f.Save("tested.png", ImageFormat.Png);
                 await GetResultAsync(f);
@@ -101,7 +106,7 @@ namespace ScreenRecognition.Desktop.ViewModel
             }
         }
 
-        public Bitmap ConvertToBitmap(BitmapSource bitmapSource)
+        public Bitmap ConvertBitmapSourceToBitmap(BitmapSource bitmapSource)
         {
             var width = bitmapSource.PixelWidth;
             var height = bitmapSource.PixelHeight;
