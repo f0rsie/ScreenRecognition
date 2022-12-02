@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.ImagePreparation.Services;
+﻿using Google.Protobuf.WellKnownTypes;
+using ScreenRecognition.ImagePreparation.Services;
 using System.Drawing;
 
 namespace ScreenRecognition.Api.Core.Services
@@ -8,33 +9,34 @@ namespace ScreenRecognition.Api.Core.Services
         private string _inputLanguage;
         private byte[]? _image;
 
-        private List<Task> _tasks;
+        private List<Thread> _threads;
         private List<(string?, float)>? _results;
 
         public ImageAnalyzerService(string inputLanguage = "eng")
         {
             _inputLanguage = inputLanguage;
 
-            _tasks = new List<Task>();
+            _threads = new List<Thread>();
             _results = new List<(string?, float)>();
         }
 
         public (string?, float) GetTextFromImage(byte[] image)
         {
-            _image = image;
             int currentThreadNumber = 0;
+            _image = image;
 
             for (int i = 50; i <= 200; i += 50)
             {
-                _tasks.Add(Task.Run(() => 
-                {
-                    PreparedImageMethod(i);
-                }));
+                _threads.Add(new Thread(PreparedImageMethod));
+                _threads[currentThreadNumber].Start(i);
 
                 currentThreadNumber++;
             }
 
-            Task.WaitAll(_tasks.ToArray());
+            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0)
+            {
+
+            }
 
             (string?, float) result = ("", 0);
 
