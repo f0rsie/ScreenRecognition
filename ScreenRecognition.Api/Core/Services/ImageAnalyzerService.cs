@@ -10,7 +10,6 @@ namespace ScreenRecognition.Api.Core.Services
 
         private List<Thread> _threads;
         private List<(string?, float)>? _results;
-        private Dictionary<string, int> _threadFloodValue;
 
         public ImageAnalyzerService(string inputLanguage = "eng")
         {
@@ -18,7 +17,6 @@ namespace ScreenRecognition.Api.Core.Services
 
             _threads = new List<Thread>();
             _results = new List<(string?, float)>();
-            _threadFloodValue = new Dictionary<string, int>();
         }
 
         public (string?, float) GetTextFromImage(byte[] image)
@@ -26,12 +24,10 @@ namespace ScreenRecognition.Api.Core.Services
             _image = image;
             int currentThreadNumber = 0;
 
-            for (int i = 50; i <= 250; i += 50)
+            for (int i = 50; i <= 200; i += 50)
             {
                 _threads.Add(new Thread(PreparedImageMethod));
-                _threads[currentThreadNumber].Name = currentThreadNumber.ToString();
-                _threadFloodValue.Add(_threads[currentThreadNumber].Name, i);
-                _threads[currentThreadNumber].Start();
+                _threads[currentThreadNumber].Start(i);
 
                 currentThreadNumber++;
             }
@@ -57,7 +53,7 @@ namespace ScreenRecognition.Api.Core.Services
             return result;
         }
 
-        private void PreparedImageMethod()
+        private void PreparedImageMethod(object? floodValue)
         {
             try
             {
@@ -66,9 +62,8 @@ namespace ScreenRecognition.Api.Core.Services
 
                 byte[]? preparedImage = new byte[0];
                 (string?, float) textResult = ("", 0);
-                int floodValue = _threadFloodValue.FirstOrDefault(e => e.Key == Thread.CurrentThread.Name).Value;
 
-                preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, floodValue);
+                preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, int.Parse(floodValue.ToString()));
 
                 if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
                 {
