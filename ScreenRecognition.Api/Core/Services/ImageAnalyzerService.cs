@@ -8,14 +8,14 @@ namespace ScreenRecognition.Api.Core.Services
         private string _inputLanguage;
         private byte[]? _image;
 
-        private List<Thread> _threads;
+        private List<Task> _tasks;
         private List<(string?, float)>? _results;
 
         public ImageAnalyzerService(string inputLanguage = "eng")
         {
             _inputLanguage = inputLanguage;
 
-            _threads = new List<Thread>();
+            _tasks = new List<Task>();
             _results = new List<(string?, float)>();
         }
 
@@ -26,18 +26,15 @@ namespace ScreenRecognition.Api.Core.Services
 
             for (int i = 50; i <= 200; i += 50)
             {
-                _threads.Add(new Thread(PreparedImageMethod));
-                _threads[currentThreadNumber].Start(i);
+                _tasks.Add(Task.Run(() => 
+                {
+                    PreparedImageMethod(i);
+                }));
 
                 currentThreadNumber++;
             }
 
-            _threads.ForEach(new System.Threading.)
-
-            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0)
-            {
-
-            }
+            Task.WaitAll(_tasks.ToArray());
 
             (string?, float) result = ("", 0);
 
@@ -71,8 +68,8 @@ namespace ScreenRecognition.Api.Core.Services
                 {
                     _results?.Add(textResult);
                 }
-
             }
+
             catch (Exception ex)
             {
 
