@@ -32,6 +32,8 @@ namespace ScreenRecognition.Api.Core.Services
                 currentThreadNumber++;
             }
 
+            _threads.ForEach(new System.Threading.)
+
             while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0)
             {
 
