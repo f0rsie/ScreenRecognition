@@ -96,7 +96,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             try
             {
-                var result = await _controller.Post($"Screen/Translate?translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
+                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
 
                 Result = result.ToString();
             }

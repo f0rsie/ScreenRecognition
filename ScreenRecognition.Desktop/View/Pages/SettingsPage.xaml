@@ -26,7 +26,7 @@
                            FontSize="20" />
                 <DockPanel LastChildFill="False">
                     <TextBlock DockPanel.Dock="Left"
-                               Text="Выберите язык"
+                               Text="Выберите язык, на который будет переведён текст"
                                VerticalAlignment="Center"
                                Margin="5" />
                     <ComboBox DockPanel.Dock="Right"
@@ -39,7 +39,7 @@
                     <DockPanel DockPanel.Dock="Top"
                                LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
-                                   Text="Выберите переводчик"
+                                   Text="Выберите систему перевода"
                                    VerticalAlignment="Center"
                                    Margin="5" />
                         <ComboBox DockPanel.Dock="Right"
@@ -65,6 +65,66 @@
                 <TextBlock Text="OCR"
                            HorizontalAlignment="Center"
                            FontSize="20" />
+                <DockPanel LastChildFill="False">
+                    <TextBlock DockPanel.Dock="Left"
+                               Text="Выберите язык распознавания"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                    <ComboBox DockPanel.Dock="Right"
+                              Width="auto"
+                              Margin="5"
+                              HorizontalContentAlignment="Right"
+                              VerticalContentAlignment="Center" />
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Bottom"
+                           LastChildFill="False">
+                    <TextBlock DockPanel.Dock="Left"
+                               Text="Выберите систему распознавания текста"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                    <ComboBox DockPanel.Dock="Right"
+                              Width="auto"
+                              Margin="5"
+                              HorizontalContentAlignment="Right"
+                              VerticalContentAlignment="Center" />
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Bottom"
+                           LastChildFill="False"
+                           IsEnabled="False"
+                           Visibility="Collapsed">
+                    <TextBlock DockPanel.Dock="Left"
+                               Text="Включить систему улучшенного распознавания (coming soon)"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                    <CheckBox DockPanel.Dock="Right"
+                              Width="auto"
+                              Margin="5"
+                              HorizontalContentAlignment="Right"
+                              VerticalContentAlignment="Center" />
+                </DockPanel>
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Привязка клавиш"
+                           HorizontalAlignment="Center"
+                           FontSize="20" />
+                <DockPanel LastChildFill="False">
+                    <TextBlock DockPanel.Dock="Left"
+                               Text="Выберите клавиши"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                    <ComboBox DockPanel.Dock="Right"
+                              Width="auto"
+                              x:Name="keysComboBox"
+                              Margin="5"
+                              HorizontalContentAlignment="Right"
+                              VerticalContentAlignment="Center" />
+                    <ComboBox DockPanel.Dock="Right"
+                              Width="auto"
+                              x:Name="modifiersComboBox"
+                              Margin="5"
+                              HorizontalContentAlignment="Right"
+                              VerticalContentAlignment="Center"/>
+                </DockPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

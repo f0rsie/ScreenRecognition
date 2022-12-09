@@ -39,7 +39,7 @@ namespace ScreenRecognition.Desktop.View.Windows
 
         public ScreenshotWindow(System.Drawing.Image image) : this()
         {
-            backgroundImage.ImageSource = ImageToImageSource(image);
+            backgroundImage.ImageSource = _imagePreparation.ImageToImageSource(image);
         }
 
         public ScreenshotWindow()
@@ -55,27 +55,6 @@ namespace ScreenRecognition.Desktop.View.Windows
                 Close();
         }
 
-        private ImageSource ImageToImageSource(System.Drawing.Image image)
-        {
-            BitmapImage bitmap = new BitmapImage();
-
-            using (MemoryStream stream = new MemoryStream())
-            {
-                // Save to the stream
-                image.Save(stream, ImageFormat.Png);
-
-                // Rewind the stream
-                stream.Seek(0, SeekOrigin.Begin);
-
-                // Tell the WPF BitmapImage to use this stream
-                bitmap.BeginInit();
-                bitmap.StreamSource = stream;
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.EndInit();
-            }
-
-            return bitmap;
-        }
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Canvas.Children.Contains(_lastRect) == true)
@@ -139,10 +118,9 @@ namespace ScreenRecognition.Desktop.View.Windows
 
             var result = _imagePreparation.Crop(prImg, new System.Drawing.Rectangle(int.Parse(_startX.ToString()), int.Parse(_startY.ToString()), int.Parse(_lastRect.Width.ToString()), int.Parse(_lastRect.Height.ToString())));
 
-            backgroundImage.ImageSource = ImageToImageSource(result);
+            backgroundImage.ImageSource = _imagePreparation.ImageToImageSource(result);
 
             Image = backgroundImage.ImageSource;
-
         }
     }
 }

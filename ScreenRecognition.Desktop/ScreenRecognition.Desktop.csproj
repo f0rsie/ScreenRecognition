@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Command\" />
-    <Folder Include="Model\" />
     <Folder Include="Resources\Styles\" />
   </ItemGroup>
 

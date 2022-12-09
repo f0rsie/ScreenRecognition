@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Net.Mime;
 using ScreenRecognition.Api.Core;
 using ScreenRecognition.Api.Core.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScreenRecognition.Api.Controllers
 {

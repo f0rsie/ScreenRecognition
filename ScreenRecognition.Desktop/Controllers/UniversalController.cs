@@ -7,6 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Permissions;
 using System.Net.Http.Json;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.Text.Json;
+using System.Reflection.Metadata;
 
 namespace ScreenRecognition.Desktop.Controllers
 {
@@ -23,34 +28,70 @@ namespace ScreenRecognition.Desktop.Controllers
             }
         }
 
-        public async Task<string> Get<T>(string path)
-        {
-            HttpClient client = new HttpClient();
-
-            client.BaseAddress = new Uri($"{_webPath}");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = await client.GetAsync(path);
-
-            var result = await response.Content.ReadAsStringAsync();
-
-            return result;
-        }
-
-        //public async Task<T> Get<T>(string path)
+        //public async Task<P?> Get<T, P>(string path)
         //{
         //    HttpClient client = new HttpClient();
-        //    var stringTask = await client.GetStringAsync(_webPath + path);
 
-        //    var result = JsonSerializer.Deserialize<T>(stringTask);
+        //    client.BaseAddress = new Uri($"{_webPath}");
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-        //    client.Dispose();
+        //    HttpResponseMessage response = await client.GetAsync(path);
+
+        //    P? result;
+
+        //    try
+        //    {
+        //        result = await response.Content.ReadFromJsonAsync<P>();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return default(P);
+        //    }
 
         //    return result;
         //}
 
-        public async Task<string> Post<T>(string path, T cl)
+        public async Task<P?> Get<T, P>(string path)
+        {
+            var result = await ControllerOperations<T, P>("get", path);
+
+            return result;
+        }
+
+        public async Task<P?> Post<T, P>(string path, T? cl)
+        {
+            var result = await ControllerOperations<T, P>("post", path, cl);
+
+            return result;
+        }
+
+        //public async Task<P?> Post<T, P>(string path, T? cl)
+        //{
+        //    HttpClient client = new HttpClient();
+
+        //    client.BaseAddress = new Uri($"{_webPath}");
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        //    HttpResponseMessage response = await client.PostAsJsonAsync($"{path}", cl);
+        //    response.EnsureSuccessStatusCode();
+
+        //    P? result;
+
+        //    try
+        //    {
+        //        result = await response.Content.ReadFromJsonAsync<P>();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return default(P);
+        //    }
+
+        //    return result;
+        //}
+
+        private async Task<P?> ControllerOperations<T, P>(string type, string path, T? cl = default(T))
         {
             HttpClient client = new HttpClient();
 
@@ -58,66 +99,30 @@ namespace ScreenRecognition.Desktop.Controllers
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.PostAsJsonAsync($"{path}", cl);
-            response.EnsureSuccessStatusCode();
+            HttpResponseMessage response = new HttpResponseMessage();
 
-            var result = await response.Content.ReadAsStringAsync();
+            if (type == "get")
+            {
+                response = await client.GetAsync(path);
+            }
+            else if (type == "post")
+            {
+                response = await client.PostAsJsonAsync($"{path}", cl);
+                response.EnsureSuccessStatusCode();
+            }
+
+            P? result;
+
+            try
+            {
+                result = await response.Content.ReadFromJsonAsync<P>();
+            }
+            catch (Exception ex)
+            {
+                return default(P);
+            }
 
             return result;
         }
-
-        //public async Task<object> Post<T>(string path, T cl)
-        //{
-        //    var jsonObject = JsonConvert.SerializeObject(cl);
-        //    var url = _webPath + path;
-        //    HttpClient client = new HttpClient();
-
-        //    var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-        //    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-        //    //var result = await client.PostAsync(url, content);
-        //    var result = await client.PostAsJsonAsync(url, content);
-
-        //    //var parsedResult = JsonConvert.DeserializeObject<T>(await result.Content.ReadAsStringAsync());
-
-        //    var parsedResult = await content.ReadAsStringAsync();
-
-        //    client.Dispose();
-
-        //    return parsedResult;
-        //}
-
-        //public async Task<T> Put<T>(string path, T cl)
-        //{
-        //    var jsonObject = JsonSerializer.Serialize(cl);
-        //    var url = _webPath + path;
-        //    HttpClient client = new HttpClient();
-
-        //    var content = new StringContent(jsonObject, Encoding.UTF8, "application/json");
-
-        //    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-        //    var result = await client.PutAsync(url, content);
-
-        //    var parsedResult = JsonSerializer.Deserialize<T>(await result.Content.ReadAsStringAsync());
-
-        //    client.Dispose();
-
-        //    return parsedResult;
-        //}
-
-        //public async Task PostTest<T>(string path, T cl)
-        //{
-        //    HttpClient client = new HttpClient();
-        //    string url = _webPath + path;
-
-        //    var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-        //    options.Converters.Add(new JsonStringEnumConverter());
-
-        //    var result = await client.PostAsJsonAsync<T>(url, cl, options);
-
-        //    client.Dispose();
-        //}
     }
 }
