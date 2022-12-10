@@ -91,6 +91,20 @@
                                FontSize="20" />
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
+                                   Text="Роль"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    IsReadOnly="True"
+                                    hc:InfoElement.Placeholder="Роль"
+                                    Margin="5"
+                                    x:Name="userRole"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left"
                                    Text="Логин"
                                    VerticalAlignment="Center"
                                    Margin="5" />
