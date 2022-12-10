@@ -18,114 +18,274 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical"
-                    x:Name="mainPanel">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Перевод текста"
+        <hc:ScrollViewer Grid.Column="0"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="0"
+                        x:Name="profilePanel">
+                <TextBlock Text="Мой профиль"
                            HorizontalAlignment="Center"
                            FontSize="20" />
-                <DockPanel LastChildFill="False">
-                    <TextBlock DockPanel.Dock="Left"
-                               Text="Выберите язык, на который будет переведён текст"
-                               VerticalAlignment="Center"
-                               Margin="5" />
-                    <ComboBox DockPanel.Dock="Right"
-                              Width="auto"
-                              Margin="5"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center" />
-                </DockPanel>
-                <DockPanel LastChildFill="False">
-                    <DockPanel DockPanel.Dock="Top"
-                               LastChildFill="False">
+                <StackPanel Orientation="Vertical"
+                            Margin="0 5 0 0">
+                    <TextBlock Text="Обо мне"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
-                                   Text="Выберите систему перевода"
+                                   Text="Имя"
                                    VerticalAlignment="Center"
                                    Margin="5" />
-                        <ComboBox DockPanel.Dock="Right"
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    Margin="5"
+                                    x:Name="userFirstname"
+                                    hc:InfoElement.Placeholder="Имя"
+                                    HorizontalContentAlignment="Right"
+                                    VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Фамилия"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    Margin="5"
+                                    x:Name="userLastname"
+                                    hc:InfoElement.Placeholder="Фамилия"
+                                    HorizontalContentAlignment="Right"
+                                    VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Дата рождения"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:DatePicker DockPanel.Dock="Right"
+                                       Width="auto"
+                                       Margin="5"
+                                       hc:InfoElement.Placeholder="Дата рождения"
+                                       x:Name="userBirthday"
+                                       HorizontalContentAlignment="Right"
+                                       VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Страна проживания"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     Margin="5"
+                                     x:Name="userCountry"
+                                     hc:InfoElement.Placeholder="Страна"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Аккаунт"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Логин"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    hc:InfoElement.Placeholder="Логин"
+                                    Margin="5"
+                                    x:Name="userLogin"
+                                    HorizontalContentAlignment="Right"
+                                    VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Пароль"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:PasswordBox DockPanel.Dock="Right"
+                                        Width="auto"
+                                        Margin="5"
+                                        hc:InfoElement.Placeholder="Пароль"
+                                        x:Name="userPassword"
+                                        HorizontalContentAlignment="Right"
+                                        VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Электронная почта"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    Margin="5"
+                                    hc:InfoElement.Placeholder="Электронная почта"
+                                    x:Name="userEmail"
+                                    HorizontalContentAlignment="Right"
+                                    VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Профили настроек"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="False">
+                        <Button DockPanel.Dock="Left"
+                                Width="auto"
+                                Margin="5"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Center" />
+                        <Button DockPanel.Dock="Left"
+                                Width="auto"
+                                Margin="5"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Center" />
+                        <Button DockPanel.Dock="Left"
+                                Width="auto"
+                                Margin="5"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Center" />
+                        <Button DockPanel.Dock="Left"
+                                Width="auto"
+                                Margin="5"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
+            </StackPanel>
+        </hc:ScrollViewer>
+        <hc:ScrollViewer Grid.Column="1"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical"
+                        x:Name="settingsPanel"
+                        Grid.Column="1">
+                <TextBlock Text="Настройки программы"
+                           HorizontalAlignment="Center"
+                           FontSize="20" />
+                <StackPanel Orientation="Vertical"
+                            Margin="0 5 0 0">
+                    <TextBlock Text="Перевод текста"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Выберите язык, на который будет переведён текст"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     Margin="5"
+                                     hc:InfoElement.Placeholder="Язык"
+                                     x:Name="outputLanguage"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <DockPanel DockPanel.Dock="Top"
+                                   LastChildFill="False">
+                            <TextBlock DockPanel.Dock="Left"
+                                       Text="Выберите систему перевода"
+                                       VerticalAlignment="Center"
+                                       Margin="5" />
+                            <hc:ComboBox DockPanel.Dock="Right"
+                                         Width="auto"
+                                         Margin="5"
+                                         hc:InfoElement.Placeholder="Переводчик"
+                                         x:Name="translator"
+                                         HorizontalContentAlignment="Right"
+                                         VerticalContentAlignment="Center" />
+                        </DockPanel>
+                        <DockPanel DockPanel.Dock="Bottom"
+                                   LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Left"
+                                       Text="Введите Api Key (если есть)"
+                                       VerticalAlignment="Center"
+                                       Margin="5" />
+                            <hc:TextBox DockPanel.Dock="Right"
+                                        Margin="5"
+                                        hc:InfoElement.Placeholder="Api Key"
+                                        x:Name="apiKey"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center" />
+                        </DockPanel>
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="OCR"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Выберите язык распознавания"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     Margin="5"
+                                     x:Name="inputLanguage"
+                                     hc:InfoElement.Placeholder="Язык"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Выберите систему распознавания текста"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     Margin="5"
+                                     x:Name="ocr"
+                                     hc:InfoElement.Placeholder="OCR"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False"
+                               IsEnabled="False"
+                               Visibility="Collapsed">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Включить систему улучшенного распознавания (coming soon)"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <CheckBox DockPanel.Dock="Right"
                                   Width="auto"
                                   Margin="5"
+                                  x:Name="t9Status"
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center" />
                     </DockPanel>
-                    <DockPanel DockPanel.Dock="Bottom"
-                               LastChildFill="True">
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Привязка клавиш"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
-                                   Text="Введите Api Key (если есть)"
+                                   Text="Выберите клавиши"
                                    VerticalAlignment="Center"
                                    Margin="5" />
-                        <TextBox DockPanel.Dock="Right"
-                                 Margin="5"
-                                 HorizontalContentAlignment="Left"
-                                 VerticalContentAlignment="Center" />
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     x:Name="hotkeyKey"
+                                     Margin="5"
+                                     hc:InfoElement.Placeholder="Клавиша"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center" />
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     x:Name="hotkeyModifier"
+                                     Margin="5"
+                                     hc:InfoElement.Placeholder="Модификатор"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="Center" />
                     </DockPanel>
-                </DockPanel>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="OCR"
-                           HorizontalAlignment="Center"
-                           FontSize="20" />
-                <DockPanel LastChildFill="False">
-                    <TextBlock DockPanel.Dock="Left"
-                               Text="Выберите язык распознавания"
-                               VerticalAlignment="Center"
-                               Margin="5" />
-                    <ComboBox DockPanel.Dock="Right"
-                              Width="auto"
-                              Margin="5"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center" />
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Bottom"
-                           LastChildFill="False">
-                    <TextBlock DockPanel.Dock="Left"
-                               Text="Выберите систему распознавания текста"
-                               VerticalAlignment="Center"
-                               Margin="5" />
-                    <ComboBox DockPanel.Dock="Right"
-                              Width="auto"
-                              Margin="5"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center" />
-                </DockPanel>
-                <DockPanel DockPanel.Dock="Bottom"
-                           LastChildFill="False"
-                           IsEnabled="False"
-                           Visibility="Collapsed">
-                    <TextBlock DockPanel.Dock="Left"
-                               Text="Включить систему улучшенного распознавания (coming soon)"
-                               VerticalAlignment="Center"
-                               Margin="5" />
-                    <CheckBox DockPanel.Dock="Right"
-                              Width="auto"
-                              Margin="5"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center" />
-                </DockPanel>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Привязка клавиш"
-                           HorizontalAlignment="Center"
-                           FontSize="20" />
-                <DockPanel LastChildFill="False">
-                    <TextBlock DockPanel.Dock="Left"
-                               Text="Выберите клавиши"
-                               VerticalAlignment="Center"
-                               Margin="5" />
-                    <ComboBox DockPanel.Dock="Right"
-                              Width="auto"
-                              x:Name="keysComboBox"
-                              Margin="5"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center" />
-                    <ComboBox DockPanel.Dock="Right"
-                              Width="auto"
-                              x:Name="modifiersComboBox"
-                              Margin="5"
-                              HorizontalContentAlignment="Right"
-                              VerticalContentAlignment="Center"/>
-                </DockPanel>
-            </StackPanel>
-        </StackPanel>
+        </hc:ScrollViewer>
     </Grid>
 </Page>

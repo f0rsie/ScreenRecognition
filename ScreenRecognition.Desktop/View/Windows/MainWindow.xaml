@@ -9,27 +9,18 @@
         Title="Настройки"
         Height="450"
         Width="800"
-        Closing="Window_Closing">
+        Closed="Window_Closed">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="230*" />
-            <ColumnDefinition Width="180*" />
-            <ColumnDefinition Width="311*" />
-            <ColumnDefinition Width="79*" />
+            <ColumnDefinition Width="23*" />
+            <ColumnDefinition Width="57*" />
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding Result}"
                    TextWrapping="Wrap" />
-        <Frame Grid.Column="1" x:Name="f"/>
-        <Button Grid.Column="2"
-                Click="Button_Click"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"/>
-        <Button Grid.Column="3"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Click="ButtonScreenshot_Click"/>
+        <Frame Grid.Column="1"
+               x:Name="f" />
     </Grid>
 </Window>

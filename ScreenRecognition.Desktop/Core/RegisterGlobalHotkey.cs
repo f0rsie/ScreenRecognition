@@ -18,18 +18,18 @@ namespace ScreenRecognition.Desktop.Core
     /// </summary>
     public class RegisterGlobalHotkey
     {
-        public static IDisposable? s_hotkey;
-        public static IDisposable? s_subscription;
+        public static IDisposable? s_Hotkey { get; set; }
+        public static IDisposable? s_Subscription { get; set; }
 
-        private HotKeyManager? _hotKeyManager;
+        public static HotKeyManager? s_HotKeyManager { get; set; }
 
         public RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode key, GlobalHotKeys.Native.Types.Modifiers modifiers, Action func)
         {
-            _hotKeyManager = new HotKeyManager();
+            s_HotKeyManager = new HotKeyManager();
 
-            s_hotkey = _hotKeyManager.Register(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control);
+            s_Hotkey = s_HotKeyManager.Register(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control);
 
-            s_subscription = _hotKeyManager.HotKeyPressed
+            s_Subscription = s_HotKeyManager.HotKeyPressed
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(hotkey => func());
         }
