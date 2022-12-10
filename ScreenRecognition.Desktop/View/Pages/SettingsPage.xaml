@@ -42,7 +42,7 @@
                                     Margin="5"
                                     x:Name="userFirstname"
                                     hc:InfoElement.Placeholder="Имя"
-                                    HorizontalContentAlignment="Right"
+                                    HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
@@ -55,7 +55,7 @@
                                     Margin="5"
                                     x:Name="userLastname"
                                     hc:InfoElement.Placeholder="Фамилия"
-                                    HorizontalContentAlignment="Right"
+                                    HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
@@ -68,7 +68,7 @@
                                        Margin="5"
                                        hc:InfoElement.Placeholder="Дата рождения"
                                        x:Name="userBirthday"
-                                       HorizontalContentAlignment="Right"
+                                       HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
@@ -81,7 +81,7 @@
                                      Margin="5"
                                      x:Name="userCountry"
                                      hc:InfoElement.Placeholder="Страна"
-                                     HorizontalContentAlignment="Right"
+                                     HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center" />
                     </DockPanel>
                 </StackPanel>
@@ -99,7 +99,7 @@
                                     hc:InfoElement.Placeholder="Логин"
                                     Margin="5"
                                     x:Name="userLogin"
-                                    HorizontalContentAlignment="Right"
+                                    HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
@@ -112,8 +112,21 @@
                                         Margin="5"
                                         hc:InfoElement.Placeholder="Пароль"
                                         x:Name="userPassword"
-                                        HorizontalContentAlignment="Right"
+                                        HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Никнейм"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    Margin="5"
+                                    hc:InfoElement.Placeholder="Никнейм"
+                                    x:Name="userNickname"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -125,7 +138,7 @@
                                     Margin="5"
                                     hc:InfoElement.Placeholder="Электронная почта"
                                     x:Name="userEmail"
-                                    HorizontalContentAlignment="Right"
+                                    HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center" />
                     </DockPanel>
                 </StackPanel>
@@ -182,7 +195,7 @@
                                      Margin="5"
                                      hc:InfoElement.Placeholder="Язык"
                                      x:Name="outputLanguage"
-                                     HorizontalContentAlignment="Right"
+                                     HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
@@ -197,7 +210,7 @@
                                          Margin="5"
                                          hc:InfoElement.Placeholder="Переводчик"
                                          x:Name="translator"
-                                         HorizontalContentAlignment="Right"
+                                         HorizontalContentAlignment="Center"
                                          VerticalContentAlignment="Center" />
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Bottom"
@@ -229,7 +242,7 @@
                                      Margin="5"
                                      x:Name="inputLanguage"
                                      hc:InfoElement.Placeholder="Язык"
-                                     HorizontalContentAlignment="Right"
+                                     HorizontalContentAlignment="Left"
                                      VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
@@ -242,7 +255,7 @@
                                      Margin="5"
                                      x:Name="ocr"
                                      hc:InfoElement.Placeholder="OCR"
-                                     HorizontalContentAlignment="Right"
+                                     HorizontalContentAlignment="Left"
                                      VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="False"
@@ -274,14 +287,14 @@
                                      x:Name="hotkeyKey"
                                      Margin="5"
                                      hc:InfoElement.Placeholder="Клавиша"
-                                     HorizontalContentAlignment="Right"
+                                     HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center" />
                         <hc:ComboBox DockPanel.Dock="Right"
                                      Width="auto"
                                      x:Name="hotkeyModifier"
                                      Margin="5"
                                      hc:InfoElement.Placeholder="Модификатор"
-                                     HorizontalContentAlignment="Right"
+                                     HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center" />
                     </DockPanel>
                 </StackPanel>
