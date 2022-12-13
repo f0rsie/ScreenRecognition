@@ -68,7 +68,7 @@
                                        Margin="5"
                                        hc:InfoElement.Placeholder="Дата рождения"
                                        x:Name="userBirthday"
-                                       HorizontalContentAlignment="Center"
+                                       HorizontalContentAlignment="Left"
                                        VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">

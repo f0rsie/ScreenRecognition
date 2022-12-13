@@ -26,15 +26,16 @@ namespace ScreenRecognition.Desktop.View.Windows
         public MainWindow()
         {
             InitializeComponent();
-
-            f.Content = new Pages.SettingsPage().Content;
         }
-       
+
         private void Window_Closed(object sender, EventArgs e)
         {
-            RegisterGlobalHotkey.s_Hotkey?.Dispose();
-            RegisterGlobalHotkey.s_Subscription?.Dispose();
-            RegisterGlobalHotkey.s_HotKeyManager?.Dispose();
+            RegisterGlobalHotkey.Dispose();
+        }
+
+        private void NavigateButtons_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindowViewModel)?.NavigateToPage(sender);
         }
     }
 }

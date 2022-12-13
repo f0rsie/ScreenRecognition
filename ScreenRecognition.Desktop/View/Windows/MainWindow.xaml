@@ -2,25 +2,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
         xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
         Title="Настройки"
         Height="450"
+        MinHeight="450"
         Width="800"
+        MinWidth="800"
         Closed="Window_Closed">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="23*" />
-            <ColumnDefinition Width="57*" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock Text="{Binding Result}"
-                   TextWrapping="Wrap" />
-        <Frame Grid.Column="1"
-               x:Name="f" />
+        <DockPanel LastChildFill="False">
+            <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Left"
+                        Margin="5">
+                <Button Content="Настройки"
+                        Margin="0 0 5 0"
+                        x:Name="Settings"
+                        Click="NavigateButtons_Click" />
+                <Button Content="Получить текст с фото"
+                        Margin="0 0 5 0"
+                        x:Name="TextFromPhoto"
+                        Click="NavigateButtons_Click" />
+                <Button Content="История переводов"
+                        Margin="0 0 5 0"
+                        x:Name="TranslateHistory"
+                        Click="NavigateButtons_Click" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Right"
+                        Margin="5">
+                <Button Content="*User NickName*"
+                        Style="{StaticResource ButtonCustom}"
+                        VerticalAlignment="Center" />
+            </StackPanel>
+        </DockPanel>
+        <Frame Grid.Row="1"
+               Content="{Binding CurrentPage.Content}"
+               NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

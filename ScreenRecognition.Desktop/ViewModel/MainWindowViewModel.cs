@@ -9,25 +9,45 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Windows.Navigation;
+using System.CodeDom;
+using System.Xml.Linq;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        RegisterGlobalHotkey _registerGlobalHotkey;
+        private RegisterGlobalHotkey _registerGlobalHotkey;
+
+        private Page? _currentPage;
 
         private string? _result;
         private string _apiKey = "123";
         private string _inputLanguage = "rus";
         private string _outputLanguage = "eng";
         UniversalController _controller;
+
+        public Page? CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                _currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
+            }
+        }
 
         public string? Result
         {
@@ -45,7 +65,15 @@ namespace ScreenRecognition.Desktop.ViewModel
             _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
 
             _controller = new UniversalController("http://localhost:5046/api/");
-            Result = "313123";
+
+            CurrentPage = new View.Pages.SettingsPage();
+        }
+
+        public void NavigateToPage(object sender)
+        {
+            var pageName = (sender as Button)?.Name;
+
+            CurrentPage = PageFinder.FindPageByName(pageName);
         }
 
         public void TakeScreenshot()
