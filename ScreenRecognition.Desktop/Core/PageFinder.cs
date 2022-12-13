@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace ScreenRecognition.Desktop.Core
 {
-    public class PageFinder : Page
+    public class PageFinder
     {
         public static Page? FindPageByName(string? name)
         {
