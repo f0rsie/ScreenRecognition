@@ -27,18 +27,18 @@ namespace ScreenRecognition.Desktop.Core
         {
             s_hotKeyManager = new HotKeyManager();
 
-            s_Hotkey = s_hotKeyManager.Register(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control);
+            s_hotkey = s_hotKeyManager.Register(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control);
 
-            s_Subscription = s_hotKeyManager.HotKeyPressed
+            s_subscription = s_hotKeyManager.HotKeyPressed
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(hotkey => func());
         }
 
         public static void Dispose()
         {
-            RegisterGlobalHotkey.s_Hotkey?.Dispose();
-            RegisterGlobalHotkey.s_Subscription?.Dispose();
-            RegisterGlobalHotkey.s_hotKeyManager?.Dispose();
+            s_hotkey?.Dispose();
+            s_subscription?.Dispose();
+            s_hotKeyManager?.Dispose();
         }
     }
 }

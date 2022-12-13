@@ -17,24 +17,10 @@ namespace ScreenRecognition.Desktop.Core
                 return null;
             }
 
-            List<Page?> pageList = new List<Page?>();
+            var page = Assembly.GetExecutingAssembly().GetTypes()
+                .FirstOrDefault(type => type.Name == $"{name}Page");
 
-            var f = Assembly.GetAssembly(typeof(Page)).GetTypes()
-                .Where(type=> type.IsClass);
-
-            foreach (var item in f)
-            {
-
-            }
-
-            Uri? pageUri = new Uri($"/View/Pages/{name}Page.xaml");
-
-            Page? result = new Page();
-
-            if (pageUri != null)
-            {
-
-            }
+            var result = (Page?)Activator.CreateInstance(page);
 
             return result;
         }

@@ -22,12 +22,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
+using System.CodeDom;
+using System.Xml.Linq;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        RegisterGlobalHotkey _registerGlobalHotkey;
+        private RegisterGlobalHotkey _registerGlobalHotkey;
 
         private Page? _currentPage;
 
@@ -42,8 +44,8 @@ namespace ScreenRecognition.Desktop.ViewModel
             get => _currentPage;
             set
             {
-                OnPropertyChanged(nameof(CurrentPage));
                 _currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
             }
         }
 
@@ -71,41 +73,7 @@ namespace ScreenRecognition.Desktop.ViewModel
         {
             var pageName = (sender as Button)?.Name;
 
-            CurrentPage = FindPageByName(pageName);
-        }
-
-        private Page? FindPageByName(string? name)
-        {
-            if(name == null)
-            {
-                return null;
-            }
-
-            //Uri? pageUri = new Uri(@$"\View\Pages\{name}Page.xaml");
-
-            Page? result = new Page();
-
-            var r = PageFinder.FindPageByName(name);
-
-            return result;
-        }
-
-        private object DeserializeFromStream(Stream stream)
-        {
-            var memoryStream= StreamTomemoryStream(stream);
-
-            IFormatter formatter = new BinaryFormatter();
-            memoryStream?.Seek(0, SeekOrigin.Begin);
-            object o = formatter.Deserialize(memoryStream);
-            return o;
-        }
-
-        private MemoryStream? StreamTomemoryStream(Stream? stream)
-        {
-            var memoryStream = new MemoryStream();
-            stream?.CopyTo(memoryStream);
-
-            return memoryStream;
+            CurrentPage = PageFinder.FindPageByName(pageName);
         }
 
         public void TakeScreenshot()
