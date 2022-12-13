@@ -312,6 +312,23 @@
                                      VerticalContentAlignment="Center" />
                     </DockPanel>
                 </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Прочее"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Автозапуск вместе с системой"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <CheckBox DockPanel.Dock="Right"
+                                  Width="auto"
+                                  Margin="5"
+                                  x:Name="autostartWithSystem"
+                                  HorizontalContentAlignment="Right"
+                                  VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
             </StackPanel>
         </hc:ScrollViewer>
     </Grid>

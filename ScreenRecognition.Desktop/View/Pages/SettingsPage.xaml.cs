@@ -24,5 +24,10 @@ namespace ScreenRecognition.Desktop.View.Pages
         {
             InitializeComponent();
         }
+
+        private void apiKey_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
