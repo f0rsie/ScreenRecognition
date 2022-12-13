@@ -9,13 +9,19 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Windows.Navigation;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -23,11 +29,23 @@ namespace ScreenRecognition.Desktop.ViewModel
     {
         RegisterGlobalHotkey _registerGlobalHotkey;
 
+        private Page? _currentPage;
+
         private string? _result;
         private string _apiKey = "123";
         private string _inputLanguage = "rus";
         private string _outputLanguage = "eng";
         UniversalController _controller;
+
+        public Page? CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                OnPropertyChanged(nameof(CurrentPage));
+                _currentPage = value;
+            }
+        }
 
         public string? Result
         {
@@ -45,7 +63,49 @@ namespace ScreenRecognition.Desktop.ViewModel
             _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
 
             _controller = new UniversalController("http://localhost:5046/api/");
-            Result = "313123";
+
+            CurrentPage = new View.Pages.SettingsPage();
+        }
+
+        public void NavigateToPage(object sender)
+        {
+            var pageName = (sender as Button)?.Name;
+
+            CurrentPage = FindPageByName(pageName);
+        }
+
+        private Page? FindPageByName(string? name)
+        {
+            if(name == null)
+            {
+                return null;
+            }
+
+            //Uri? pageUri = new Uri(@$"\View\Pages\{name}Page.xaml");
+
+            Page? result = new Page();
+
+            var r = PageFinder.FindPageByName(name);
+
+            return result;
+        }
+
+        private object DeserializeFromStream(Stream stream)
+        {
+            var memoryStream= StreamTomemoryStream(stream);
+
+            IFormatter formatter = new BinaryFormatter();
+            memoryStream?.Seek(0, SeekOrigin.Begin);
+            object o = formatter.Deserialize(memoryStream);
+            return o;
+        }
+
+        private MemoryStream? StreamTomemoryStream(Stream? stream)
+        {
+            var memoryStream = new MemoryStream();
+            stream?.CopyTo(memoryStream);
+
+            return memoryStream;
         }
 
         public void TakeScreenshot()
