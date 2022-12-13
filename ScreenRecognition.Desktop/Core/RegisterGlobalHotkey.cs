@@ -21,7 +21,7 @@ namespace ScreenRecognition.Desktop.Core
         private static IDisposable? s_hotkey;
         private static IDisposable? s_subscription;
 
-        private static HotKeyManager? s_hotKeyManager { get; set; }
+        private static HotKeyManager? s_hotKeyManager;
 
         public RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode key, GlobalHotKeys.Native.Types.Modifiers modifiers, Action func)
         {
