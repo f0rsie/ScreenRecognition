@@ -328,6 +328,18 @@
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center" />
                     </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Сворачивать в трей, вместо закрытия"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <CheckBox DockPanel.Dock="Right"
+                                  Width="auto"
+                                  Margin="5"
+                                  x:Name="toTrayIcon"
+                                  HorizontalContentAlignment="Right"
+                                  VerticalContentAlignment="Center" />
+                    </DockPanel>
                 </StackPanel>
             </StackPanel>
         </hc:ScrollViewer>
