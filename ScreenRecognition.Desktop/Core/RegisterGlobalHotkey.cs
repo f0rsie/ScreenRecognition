@@ -18,8 +18,8 @@ namespace ScreenRecognition.Desktop.Core
     /// </summary>
     public class RegisterGlobalHotkey
     {
-        public static IDisposable? s_Hotkey { get; set; }
-        public static IDisposable? s_Subscription { get; set; }
+        private static IDisposable? s_hotkey;
+        private static IDisposable? s_subscription;
 
         private static HotKeyManager? s_hotKeyManager { get; set; }
 

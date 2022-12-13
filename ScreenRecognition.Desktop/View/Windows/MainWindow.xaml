@@ -7,7 +7,7 @@
         xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
-        Title="Настройки"
+        Title="Screen Recognition"
         Height="450"
         MinHeight="450"
         Width="800"
