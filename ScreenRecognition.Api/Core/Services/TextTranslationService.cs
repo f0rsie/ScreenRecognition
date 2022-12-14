@@ -48,7 +48,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             }
 
-            return $"Original: {text} Translate: {res}";
+            return $"{res}";
         }
     }
 }

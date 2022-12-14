@@ -27,7 +27,7 @@
             return translateResult;
         }
 
-        private string GetText()
+        private string? GetText()
         {
             var imageAnalyzerService = new ImageAnalyzerService(_inputLanguage);
 

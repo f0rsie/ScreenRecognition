@@ -32,8 +32,8 @@ namespace ScreenRecognition.Desktop.View.Windows
         private Point _startPoint;
         private Rectangle? _rect;
         private Rectangle? _lastRect;
-        private double _startX = 0;
-        private double _startY = 0;
+        public double _startX = 0;
+        public double _startY = 0;
 
         public ImageSource Image;
 

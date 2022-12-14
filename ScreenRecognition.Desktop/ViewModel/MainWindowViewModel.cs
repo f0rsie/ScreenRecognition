@@ -24,6 +24,8 @@ using System.Windows.Shapes;
 using System.Windows.Navigation;
 using System.CodeDom;
 using System.Xml.Linq;
+using HandyControl.Interactivity;
+using System.Windows.Input;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -32,6 +34,9 @@ namespace ScreenRecognition.Desktop.ViewModel
         private RegisterGlobalHotkey _registerGlobalHotkey;
 
         private Page? _currentPage;
+
+        private double _startX = 0;
+        private double _startY = 0;
 
         private string? _result;
         private string _apiKey = "123";
@@ -76,43 +81,30 @@ namespace ScreenRecognition.Desktop.ViewModel
             CurrentPage = PageFinder.FindPageByName(pageName);
         }
 
-        public void TakeScreenshot()
+        private async void TakeScreenshot()
         {
             var screenshot = ScreenCapture.CaptureDesktop();
-
-            screenshot.Save("test.png", ImageFormat.Png);
 
             var window = new ScreenshotWindow(screenshot);
             if (window.ShowDialog() == false)
             {
-                var img = window.Image;
-                Start(img);
-            }
-        }
+                _startX = window._startX;
+                _startY = window._startY;
 
-        public async void Start(ImageSource? img)
-        {
-            await StartAsync(img);
+                if(window.Image != null)
+                {
+                    var img = window.Image;
+                    await StartAsync(img);
+                }
+            }
         }
 
         private async Task StartAsync(ImageSource? img)
         {
-            if (img == null)
-            {
-                var ofd = new OpenFileDialog();
-
-                if (ofd.ShowDialog() == true)
-                {
-                    var f = new Bitmap(ofd.FileName);
-
-                    await GetResultAsync(f);
-                }
-            }
-            else if (img != null)
+            if (img != null)
             {
                 var f = ConvertBitmapSourceToBitmap((BitmapSource)img);
 
-                f.Save("tested.png", ImageFormat.Png);
                 await GetResultAsync(f);
             }
         }
@@ -126,7 +118,13 @@ namespace ScreenRecognition.Desktop.ViewModel
             {
                 var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
 
-                Result = result.ToString();
+                Result = result;
+
+                var resultWindow = new MessageResultWindow(Result, f.Width, f.Height);
+                resultWindow.Left = _startX;
+                resultWindow.Top = _startY + 20;
+
+                resultWindow.Show();
             }
             catch
             {
@@ -134,7 +132,7 @@ namespace ScreenRecognition.Desktop.ViewModel
             }
         }
 
-        public Bitmap ConvertBitmapSourceToBitmap(BitmapSource bitmapSource)
+        private Bitmap ConvertBitmapSourceToBitmap(BitmapSource bitmapSource)
         {
             var width = bitmapSource.PixelWidth;
             var height = bitmapSource.PixelHeight;

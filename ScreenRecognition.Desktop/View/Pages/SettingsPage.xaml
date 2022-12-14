@@ -293,7 +293,7 @@
                                FontSize="20" />
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
-                                   Text="Выберите клавиши"
+                                   Text="Выделить текст на экране"
                                    VerticalAlignment="Center"
                                    Margin="5" />
                         <hc:ComboBox DockPanel.Dock="Right"

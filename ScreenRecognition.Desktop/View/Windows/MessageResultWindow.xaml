@@ -1,0 +1,30 @@
+﻿<Window x:Class="ScreenRecognition.Desktop.View.Windows.MessageResultWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
+        mc:Ignorable="d"
+        Title="MessageResultWindow"
+        Height="450"
+        Width="800"
+        x:Name="resultWindow"
+        Background="#00000000"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Topmost="True"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterOwner"
+        MouseDoubleClick="resultWindow_MouseDoubleClick">
+    <Grid>
+        <TextBlock x:Name="result" 
+                   TextWrapping="Wrap"
+                   TextAlignment="Center"
+                   FontWeight="Bold"
+                   FontStyle="Normal"
+                   Foreground="Black"
+                   Width="auto"
+                   Height="auto"/>
+    </Grid>
+</Window>
