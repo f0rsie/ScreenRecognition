@@ -2,7 +2,7 @@
 {
     public interface ITextTranslatorService
     {
-        string Translate(string text, string inputLanguage, string outputLanguage, string? apiKey = null);
+        Task<string> Translate(string text, string inputLanguage, string outputLanguage, string? apiKey = null);
         bool ApiKeyValidation(string? apiKey);
     }
 }

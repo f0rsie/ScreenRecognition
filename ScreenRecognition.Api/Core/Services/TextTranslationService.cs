@@ -21,10 +21,10 @@ namespace ScreenRecognition.Api.Core.Services
             _textTranslatorService = new MyMemoryTextTranslator();
         }
 
-        public string? GetTranslate()
+        public async Task<string?> GetTranslate()
         {
             string textFromImage = GetText();
-            string? translateResult = _textTranslatorService.Translate(textFromImage, _inputLanguage, _outputLanguage, _translationApiKey);
+            string? translateResult = await _textTranslatorService.Translate(textFromImage, _inputLanguage, _outputLanguage, _translationApiKey);
 
             return translateResult;
         }

@@ -8,7 +8,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 {
     public class MyMemoryTextTranslator : ITextTranslatorService
     {
-        public string Translate(string text, string inputLanguage, string outputLanguage, string? apiKey = null)
+        public async Task<string> Translate(string text, string inputLanguage, string outputLanguage, string? apiKey = null)
         {
             string? res = "";
             string? translatorUrl = "";
@@ -29,7 +29,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
                     translatorUrl += $"&key={apiKey}";
                 }
 
-                var stringTask = client.GetStringAsync(translatorUrl).Result;
+                var stringTask = await client.GetStringAsync(translatorUrl);
 
                 var result = JsonSerializer.Deserialize<Models.responseData>(stringTask);
 

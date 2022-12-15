@@ -21,11 +21,11 @@ namespace ScreenRecognition.Api.Controllers
         [HttpPost]
         public async Task<string?> TextTranslate(string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
         {
-            var asyncTask = await Task.Run(() =>
+            var asyncTask = await Task.Run(async() =>
             {
                 var textTranslator = new TextTranslationService(translationApiKey, image, inputLanguage, outputLanguage);
 
-                string? result = textTranslator.GetTranslate();
+                string? result = await textTranslator.GetTranslate();
 
                 return result;
             });
