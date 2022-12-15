@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
-    public class TranslateHistoryPageViewModel : BaseViewModel
+    public class HistoryAndTranslatePageViewModel : BaseViewModel
     {
 
     }
