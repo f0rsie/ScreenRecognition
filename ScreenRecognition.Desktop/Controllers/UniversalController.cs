@@ -18,7 +18,6 @@ namespace ScreenRecognition.Desktop.Controllers
     public class UniversalController
     {
         private readonly string _webPath = "http://localhost:80/api/";
-        // Lastest version of Universal Controller
 
         public UniversalController(string webPath = "")
         {
@@ -27,30 +26,6 @@ namespace ScreenRecognition.Desktop.Controllers
                 _webPath = webPath;
             }
         }
-
-        //public async Task<P?> Get<T, P>(string path)
-        //{
-        //    HttpClient client = new HttpClient();
-
-        //    client.BaseAddress = new Uri($"{_webPath}");
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    HttpResponseMessage response = await client.GetAsync(path);
-
-        //    P? result;
-
-        //    try
-        //    {
-        //        result = await response.Content.ReadFromJsonAsync<P>();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return default(P);
-        //    }
-
-        //    return result;
-        //}
 
         public async Task<P?> Get<T, P>(string path)
         {
@@ -65,31 +40,6 @@ namespace ScreenRecognition.Desktop.Controllers
 
             return result;
         }
-
-        //public async Task<P?> Post<T, P>(string path, T? cl)
-        //{
-        //    HttpClient client = new HttpClient();
-
-        //    client.BaseAddress = new Uri($"{_webPath}");
-        //    client.DefaultRequestHeaders.Accept.Clear();
-        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //    HttpResponseMessage response = await client.PostAsJsonAsync($"{path}", cl);
-        //    response.EnsureSuccessStatusCode();
-
-        //    P? result;
-
-        //    try
-        //    {
-        //        result = await response.Content.ReadFromJsonAsync<P>();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return default(P);
-        //    }
-
-        //    return result;
-        //}
 
         private async Task<P?> ControllerOperations<T, P>(string type, string path, T? cl = default(T))
         {

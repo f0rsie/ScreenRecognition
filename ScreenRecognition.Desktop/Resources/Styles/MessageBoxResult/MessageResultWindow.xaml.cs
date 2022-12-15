@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace ScreenRecognition.Desktop.View.Windows
+namespace ScreenRecognition.Desktop.Resources.Styles.MessageBoxResult
 {
     /// <summary>
     /// Логика взаимодействия для MessageResultWindow.xaml
