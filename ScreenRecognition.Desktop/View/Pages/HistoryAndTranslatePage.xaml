@@ -58,7 +58,7 @@
                 <TextBlock x:Name="translateResult"
                            Text=""
                            Margin="5"
-                           DockPanel.Dock="Bottom"
+                           DockPanel.Dock="Left"
                            VerticalAlignment="Bottom"
                            FontSize="20" />
             </DockPanel>
