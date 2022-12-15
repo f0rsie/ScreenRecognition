@@ -4,6 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Pages"
       xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
       x:Class="ScreenRecognition.Desktop.View.Pages.TranslateHistoryPage"
       mc:Ignorable="d"
       d:DesignHeight="450"
@@ -13,6 +14,54 @@
         <ViewModel:TranslateHistoryPageViewModel />
     </Page.DataContext>
     <Grid>
-        <TextBlock Text="HistoryPage" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <hc:ScrollViewer Grid.Column="0"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="0"
+                        x:Name="translateHistory">
+                <TextBlock Text="История переводов"
+                           HorizontalAlignment="Center"
+                           FontSize="20" />
+                <DockPanel LastChildFill="True">
+                    <ListView Margin="5" />
+                </DockPanel>
+            </StackPanel>
+        </hc:ScrollViewer>
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="1"
+                    x:Name="translateTextFromPhoto">
+            <TextBlock Text="Получить текст и перевод с картинки"
+                       HorizontalAlignment="Center"
+                       FontSize="20" />
+            <DockPanel LastChildFill="False">
+                <hc:ImageSelector x:Name="image"
+                                  Margin="5"
+                                  Width="50"
+                                  Height="50"
+                                  DockPanel.Dock="Left"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Stretch"
+                                  hc:BorderElement.CornerRadius="50"
+                                  StrokeDashArray="10,5"
+                                  VerticalContentAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  DefaultExt="PNG Files (*.png)|*.png"
+                                  Filter="All files|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif" />
+                <Image DockPanel.Dock="Top"
+                       Source="{Binding ElementName=image, Path=Uri}"
+                       Margin="5"/>
+                <TextBlock x:Name="translateResult"
+                           Text=""
+                           Margin="5"
+                           DockPanel.Dock="Bottom"
+                           VerticalAlignment="Bottom"
+                           FontSize="20" />
+            </DockPanel>
+        </StackPanel>
     </Grid>
 </Page>
