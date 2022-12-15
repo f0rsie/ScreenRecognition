@@ -1,4 +1,4 @@
-﻿<Window x:Class="ScreenRecognition.Desktop.Resources.Styles.MessageBoxResult.MessageResultWindow"
+﻿<Window x:Class="ScreenRecognition.Desktop.Resources.Styles.MessageResult.MessageResultWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:hc="https://handyorg.github.io/handycontrol"

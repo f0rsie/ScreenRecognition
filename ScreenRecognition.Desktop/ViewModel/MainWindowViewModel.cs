@@ -26,7 +26,7 @@ using System.CodeDom;
 using System.Xml.Linq;
 using HandyControl.Interactivity;
 using System.Windows.Input;
-using ScreenRecognition.Desktop.Resources.Styles.MessageBoxResult;
+using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
