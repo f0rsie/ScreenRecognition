@@ -34,7 +34,7 @@
                         Click="NavigateButtons_Click" />
                 <Button Content="История переводов и перевод с картинки"
                         Margin="0 0 5 0"
-                        x:Name="TranslateHistory"
+                        x:Name="HistoryAndTranslate"
                         Click="NavigateButtons_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"

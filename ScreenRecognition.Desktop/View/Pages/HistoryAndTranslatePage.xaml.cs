@@ -18,9 +18,9 @@ namespace ScreenRecognition.Desktop.View.Pages
     /// <summary>
     /// Логика взаимодействия для TranslateHistoryPage.xaml
     /// </summary>
-    public partial class TranslateHistoryPage : Page
+    public partial class HistoryAndTranslatePage : Page
     {
-        public TranslateHistoryPage()
+        public HistoryAndTranslatePage()
         {
             InitializeComponent();
         }
