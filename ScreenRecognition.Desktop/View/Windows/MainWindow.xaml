@@ -32,11 +32,7 @@
                         Margin="0 0 5 0"
                         x:Name="Settings"
                         Click="NavigateButtons_Click" />
-                <Button Content="Получить текст с фото"
-                        Margin="0 0 5 0"
-                        x:Name="TextFromPhoto"
-                        Click="NavigateButtons_Click" />
-                <Button Content="История переводов"
+                <Button Content="История переводов и перевод с картинки"
                         Margin="0 0 5 0"
                         x:Name="TranslateHistory"
                         Click="NavigateButtons_Click" />
