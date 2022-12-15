@@ -1,4 +1,5 @@
 ﻿using Google.Protobuf.WellKnownTypes;
+using ScreenRecognition.Api.Models;
 using ScreenRecognition.ImagePreparation.Services;
 using System.Drawing;
 
@@ -10,17 +11,17 @@ namespace ScreenRecognition.Api.Core.Services
         private byte[]? _image;
 
         private List<Thread> _threads;
-        private List<(string?, float)>? _results;
+        private List<OcrResultModel>? _results;
 
-        public ImageAnalyzerService(string inputLanguage = "eng")
+        public ImageAnalyzerService(string inputLanguage)
         {
             _inputLanguage = inputLanguage;
 
             _threads = new List<Thread>();
-            _results = new List<(string?, float)>();
+            _results = new List<OcrResultModel>();
         }
 
-        public (string?, float) GetTextFromImage(byte[] image)
+        public OcrResultModel GetTextFromImage(byte[] image)
         {
             int currentThreadNumber = 0;
             _image = image;
@@ -38,7 +39,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             }
 
-            (string?, float) result = ("", 0);
+            OcrResultModel result = new OcrResultModel();
 
             if (_results?.Count > 0)
             {
@@ -46,7 +47,7 @@ namespace ScreenRecognition.Api.Core.Services
 
                 foreach (var item in _results)
                 {
-                    if (result.Item2 < item.Item2)
+                    if (result.Confidence < item.Confidence)
                         result = item;
                 }
             }
@@ -62,20 +63,17 @@ namespace ScreenRecognition.Api.Core.Services
                 var tesseractOcrService = new TesseractOcrService(_inputLanguage);
 
                 byte[]? preparedImage = new byte[0];
-                (string?, float) textResult = ("", 0);
+                OcrResultModel textResult;
 
                 preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, int.Parse(floodValue.ToString()));
 
-                if ((textResult = tesseractOcrService.GetText(preparedImage)).Item1?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
+                if ((textResult = tesseractOcrService.GetText(preparedImage)).TextResult?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
                 {
                     _results?.Add(textResult);
                 }
             }
 
-            catch (Exception ex)
-            {
-
-            }
+            catch { }
         }
     }
 }

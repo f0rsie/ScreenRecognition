@@ -23,7 +23,7 @@ namespace ScreenRecognition.Api.Controllers
         {
             var asyncTask = await Task.Run(() =>
             {
-                var textTranslator = new TextTranslatorService(translationApiKey, image, inputLanguage, outputLanguage);
+                var textTranslator = new TextTranslationService(translationApiKey, image, inputLanguage, outputLanguage);
 
                 string? result = textTranslator.GetTranslate();
 
@@ -31,6 +31,17 @@ namespace ScreenRecognition.Api.Controllers
             });
 
             return asyncTask;
+        }
+
+        [Route("ApiKeyValidation")]
+        [HttpGet]
+        public bool ApiKeyValidation(string apiKey)
+        {
+            var api = new Core.Services.Translators.MyMemoryTextTranslator();
+            
+            var result = api.ApiKeyValidation(apiKey);
+
+            return result;
         }
     }
 }

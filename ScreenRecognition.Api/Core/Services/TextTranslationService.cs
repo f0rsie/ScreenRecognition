@@ -1,54 +1,41 @@
-﻿using Google.Api.Gax.ResourceNames;
-using Google.Cloud.Translate.V3;
-using System.IO;
-using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using ScreenRecognition.Api.Core.Services.Translators;
 
 namespace ScreenRecognition.Api.Core.Services
 {
     public class TextTranslationService
     {
-        public string Translate(string text, string inputLanguage, string outputLanguage)
-        {
-            TranslationServiceClient client = TranslationServiceClient.Create();
-            TranslateTextRequest request = new TranslateTextRequest
-            {
-                Contents = { text },
-                TargetLanguageCode = inputLanguage,
-                Model = "",
-            };
-            TranslateTextResponse response = client.TranslateText(request);
-            Translation translation = response.Translations[0];
+        private readonly string _translationApiKey;
+        private readonly byte[] _image;
+        private readonly string _inputLanguage;
+        private readonly string _outputLanguage;
 
-            return translation.TranslatedText;
+        private ITextTranslatorService _textTranslatorService;
+
+        public TextTranslationService(string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
+        {
+            _translationApiKey = translationApiKey;
+            _image = image.ToArray();
+            _inputLanguage = inputLanguage;
+            _outputLanguage = outputLanguage;
+
+            _textTranslatorService = new MyMemoryTextTranslator();
         }
 
-        public string? TranslateWithMM(string text, string inputLanguage, string outputLanguage)
+        public string? GetTranslate()
         {
-            string? res = "";
+            string textFromImage = GetText();
+            string? translateResult = _textTranslatorService.Translate(textFromImage, _inputLanguage, _outputLanguage, _translationApiKey);
 
-            try
-            {
-                string key = "b70fae420f93dbe21880";
-                //string path = $"get?q={text}&langpair=en|ru&key={key}";
+            return translateResult;
+        }
 
-                HttpClient client = new HttpClient();
+        private string? GetText()
+        {
+            var imageAnalyzerService = new ImageAnalyzerService(_inputLanguage);
 
-                //client.BaseAddress = new Uri($"https://api.mymemory.translated.net/");
-                var stringTask = client.GetStringAsync($"https://api.mymemory.translated.net/get?q={text}&langpair=ru|en&key={key}").Result;
+            var result = imageAnalyzerService.GetTextFromImage(_image);
 
-                var result = JsonSerializer.Deserialize<Models.responseData>(stringTask);
-
-                res = result?.matches?[0].translation;
-
-                client.Dispose();
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            return $"{res}";
+            return result.TextResult;
         }
     }
 }

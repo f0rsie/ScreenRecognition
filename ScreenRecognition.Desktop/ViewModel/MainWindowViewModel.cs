@@ -31,7 +31,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        private RegisterGlobalHotkey _registerGlobalHotkey;
+        private readonly RegisterGlobalHotkey _registerGlobalHotkey;
 
         private Page? _currentPage;
 
@@ -39,10 +39,11 @@ namespace ScreenRecognition.Desktop.ViewModel
         private double _startY = 0;
 
         private string? _result;
-        private string _apiKey = "123";
-        private string _inputLanguage = "rus";
-        private string _outputLanguage = "eng";
-        UniversalController _controller;
+        private string _apiKey = "b70fae420f93dbe21880";
+        private string _inputLanguage = "eng_rus";
+        private string _outputLanguage = "rus";
+
+        private readonly UniversalController _controller;
 
         public Page? CurrentPage
         {
