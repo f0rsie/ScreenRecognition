@@ -73,7 +73,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             _controller = new UniversalController("http://localhost:5046/api/");
 
-            CurrentPage = new View.Pages.SettingsPage();
+            //CurrentPage = new View.Pages.SettingsPage();
         }
 
         public void NavigateToPage(object sender)
