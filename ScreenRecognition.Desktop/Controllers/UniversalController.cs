@@ -67,7 +67,7 @@ namespace ScreenRecognition.Desktop.Controllers
             {
                 result = await response.Content.ReadFromJsonAsync<P>();
             }
-            catch (Exception ex)
+            catch
             {
                 return default(P);
             }
