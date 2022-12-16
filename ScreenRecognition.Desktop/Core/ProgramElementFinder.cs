@@ -8,19 +8,19 @@ using System.Windows.Controls;
 
 namespace ScreenRecognition.Desktop.Core
 {
-    public class PageFinder
+    public class ProgramElementFinder
     {
-        public static Page? FindPageByName(string? name)
+        public static T? FindByName<T>(string? name)
         {
             if (name == null)
             {
-                return null;
+                return default(T);
             }
 
-            var page = Assembly.GetExecutingAssembly().GetTypes()
-                .FirstOrDefault(type => type.Name == $"{name}Page");
+            var item = Assembly.GetExecutingAssembly().GetTypes()
+                .FirstOrDefault(type => type.Name == name);
 
-            var result = (Page?)Activator.CreateInstance(page);
+            var result = (T?)Activator.CreateInstance(item);
 
             return result;
         }

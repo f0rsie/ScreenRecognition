@@ -108,7 +108,7 @@ namespace ScreenRecognition.Desktop.ViewModel
         {
             var pageName = (sender as Button)?.Name;
 
-            CurrentPage = PageFinder.FindPageByName(pageName);
+            CurrentPage = ProgramElementFinder.FindByName<Page?>($"{pageName}Page");
         }
 
         private async void TakeScreenshot()
