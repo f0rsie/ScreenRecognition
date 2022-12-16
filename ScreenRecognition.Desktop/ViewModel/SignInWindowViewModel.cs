@@ -1,4 +1,6 @@
-﻿using ScreenRecognition.Desktop.View.Pages;
+﻿using ScreenRecognition.Desktop.Controllers;
+using ScreenRecognition.Desktop.Models;
+using ScreenRecognition.Desktop.View.Pages;
 using ScreenRecognition.Desktop.View.Windows;
 using System;
 using System.Collections.Generic;
@@ -12,18 +14,22 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class SignInWindowViewModel : BaseViewModel
     {
-        private Visibility _currentWindowVisibility;
+        private readonly UniversalController _controller;
+
+        private bool? _enabledWindowStatus;
+
+        private User? _user;
 
         private string? _login;
         private string? _password;
 
-        public Visibility CurrentWindowVisibility
+        public bool? EnabledWindowStatus
         {
-            get => _currentWindowVisibility;
+            get => _enabledWindowStatus;
             set
             {
-                _currentWindowVisibility = value;
-                OnPropertyChanged(nameof(CurrentWindowVisibility));
+                _enabledWindowStatus = value;
+                OnPropertyChanged(nameof(EnabledWindowStatus));
             }
         }
 
@@ -48,12 +54,37 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public SignInWindowViewModel()
         {
+            _controller = new UniversalController("http://localhost:5046/api/");
+        }
 
+        public async void SignIn()
+        {
+            EnabledWindowStatus = false;
+
+            _user = await _controller.Get<string, User?>($"User/Auth?login={Login}&password={Password}");
+
+            if (_user != null)
+            {
+                ConnectedUserSingleton.Login = Login;
+                ConnectedUserSingleton.Password = Password;
+                ConnectedUserSingleton.ConnectionStatus = true;
+
+                App.Current.Windows[2].Close();
+            }
+
+            HandyControl.Controls.MessageBox.Show("Аккаунт не найден", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            EnabledWindowStatus = true;
         }
 
         public void SignUp()
         {
+            var window = new SignUpWindow();
 
+            if(window.ShowDialog() == false)
+            {
+
+            }
         }
     }
 }

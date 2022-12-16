@@ -112,15 +112,20 @@ namespace ScreenRecognition.Desktop.View.Windows
 
         private void GetSelectedImage()
         {
-            var img = backgroundImage.ImageSource;
+            try
+            {
+                var img = backgroundImage.ImageSource;
 
-            var prImg = _imagePreparation.ImageWpfToGDI(img);
+                var prImg = _imagePreparation.ImageWpfToGDI(img);
 
-            var result = _imagePreparation.Crop(prImg, new System.Drawing.Rectangle(int.Parse(_startX.ToString()), int.Parse(_startY.ToString()), int.Parse(_lastRect.Width.ToString()), int.Parse(_lastRect.Height.ToString())));
+                var result = _imagePreparation.Crop(prImg, new System.Drawing.Rectangle(int.Parse(_startX.ToString()), int.Parse(_startY.ToString()), int.Parse(_lastRect.Width.ToString()), int.Parse(_lastRect.Height.ToString())));
 
-            backgroundImage.ImageSource = _imagePreparation.ImageToImageSource(result);
+                backgroundImage.ImageSource = _imagePreparation.ImageToImageSource(result);
 
-            Image = backgroundImage.ImageSource;
+                Image = backgroundImage.ImageSource;
+
+            }
+            catch { }
         }
     }
 }

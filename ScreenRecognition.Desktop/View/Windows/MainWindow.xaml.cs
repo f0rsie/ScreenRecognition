@@ -31,7 +31,10 @@ namespace ScreenRecognition.Desktop.View.Windows
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            RegisterGlobalHotkey.Dispose();
+            if (App.Current.MainWindow == this)
+            {
+                RegisterGlobalHotkey.Dispose();
+            }
         }
 
         private void NavigateButtons_Click(object sender, RoutedEventArgs e)

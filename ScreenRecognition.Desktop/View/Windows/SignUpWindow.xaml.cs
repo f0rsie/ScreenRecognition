@@ -1,5 +1,4 @@
-﻿using ScreenRecognition.Desktop.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,23 +17,11 @@ namespace ScreenRecognition.Desktop.View.Windows
     /// <summary>
     /// Логика взаимодействия для SignUpWindow.xaml
     /// </summary>
-    public partial class SignInWindow : Window
+    public partial class SignUpWindow : Window
     {
-        public SignInWindow()
+        public SignUpWindow()
         {
             InitializeComponent();
-        }
-
-        private void SignUp_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as SignInWindowViewModel)?.SignUp();
-        }
-
-        private void SignIn_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as SignInWindowViewModel).Password = Password.Password;
-
-            (DataContext as SignInWindowViewModel)?.SignIn();
         }
     }
 }

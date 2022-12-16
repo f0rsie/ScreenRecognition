@@ -21,15 +21,25 @@ namespace ScreenRecognition.Desktop.Core
         private static IDisposable? s_hotkey;
         private static IDisposable? s_subscription;
 
-        private static HotKeyManager? s_hotKeyManager = new HotKeyManager();
+        private static HotKeyManager? s_hotKeyManager;
 
         public RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode key, GlobalHotKeys.Native.Types.Modifiers modifiers, Action func)
         {
+            s_hotKeyManager = new HotKeyManager();
+
             s_hotkey = s_hotKeyManager?.Register(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control);
 
             s_subscription = s_hotKeyManager?.HotKeyPressed
                 .ObserveOn(SynchronizationContext.Current)
                 .Subscribe(hotkey => func());
+        }
+
+        public static bool HotkeyEnabledStatus()
+        {
+            if (s_hotKeyManager != null)
+                return true;
+
+            return false;
         }
 
         public static void Dispose()

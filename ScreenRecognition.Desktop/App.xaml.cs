@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ScreenRecognition.Desktop.Core;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -13,5 +15,9 @@ namespace ScreenRecognition.Desktop
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+
+        }
     }
 }

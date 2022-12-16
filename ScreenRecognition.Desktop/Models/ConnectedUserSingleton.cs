@@ -23,8 +23,16 @@ namespace ScreenRecognition.Desktop.Models
             set => Password = value;
         }
 
+        private bool? connectionStatus
+        {
+            get => ConnectionStatus;
+            set => ConnectionStatus = value;
+        }
+
         public static string? Login { get; set; } = "Guest";
         public static string? Password { get; set; } = null;
+
+        public static bool? ConnectionStatus { get; set; } = false;
 
 
         public static implicit operator ConnectedUserSingleton(User user) => s_fromSource(user);
@@ -35,6 +43,8 @@ namespace ScreenRecognition.Desktop.Models
             {
                 login = user.Login,
                 password = user.Password,
+
+                connectionStatus = true,
             };
         }
     }

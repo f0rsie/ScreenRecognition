@@ -28,6 +28,7 @@ using HandyControl.Interactivity;
 using System.Windows.Input;
 using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
 using ScreenRecognition.Desktop.Models;
+using GlobalHotKeys;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -80,7 +81,10 @@ namespace ScreenRecognition.Desktop.ViewModel
         public MainWindowViewModel()
         {
             // А это регистрация кнопки для хоткея
-            _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
+            if(RegisterGlobalHotkey.HotkeyEnabledStatus() == false)
+            {
+                _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
+            }
 
             _controller = new UniversalController("http://localhost:5046/api/");
 
@@ -90,9 +94,13 @@ namespace ScreenRecognition.Desktop.ViewModel
         public void SignWindow()
         {
             var window = new SignInWindow();
+
             if(window.ShowDialog() == false)
             {
-
+                if(ConnectedUserSingleton.ConnectionStatus == true)
+                {
+                    MainWindowManager.Set(new MainWindow());
+                }
             }
         }
 
