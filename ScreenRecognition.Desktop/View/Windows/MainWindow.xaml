@@ -9,6 +9,7 @@
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
         Title="Screen Recognition"
+        WindowStartupLocation="CenterScreen"
         Height="550"
         MinHeight="450"
         Width="1000"
@@ -29,6 +30,10 @@
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Left"
                         Margin="5">
+                <Button Content="Авторизация/регистрация"
+                        Margin="0 0 5 0"
+                        x:Name="Sign"
+                        Click="SignButton_Click"/>
                 <Button Content="Настройки"
                         Margin="0 0 5 0"
                         x:Name="Settings"
@@ -41,12 +46,9 @@
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Right"
                         Margin="5">
-                <Button Content="{Binding Login, Mode=TwoWay}"
+                <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                         Style="{StaticResource ButtonCustom}"
                         VerticalAlignment="Center">
-                    <Button.DataContext>
-                        <Models:ConnectedUserSingleton />
-                    </Button.DataContext>
                 </Button>
             </StackPanel>
         </DockPanel>

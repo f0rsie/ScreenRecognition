@@ -23,8 +23,8 @@ namespace ScreenRecognition.Desktop.Models
             set => Password = value;
         }
 
-        public static string? Login { get; set; }
-        public static string? Password { get; set; }
+        public static string? Login { get; set; } = "Guest";
+        public static string? Password { get; set; } = null;
 
 
         public static implicit operator ConnectedUserSingleton(User user) => s_fromSource(user);

@@ -33,6 +33,16 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        public string? CurrentLogin
+        {
+            get => ConnectedUserSingleton.Login;
+            set
+            {
+                ConnectedUserSingleton.Login = value;
+                OnPropertyChanged(nameof(CurrentLogin));
+            }
+        }
+
         private readonly RegisterGlobalHotkey _registerGlobalHotkey;
 
         private Page? _currentPage;
@@ -75,6 +85,15 @@ namespace ScreenRecognition.Desktop.ViewModel
             _controller = new UniversalController("http://localhost:5046/api/");
 
             //CurrentPage = new View.Pages.SettingsPage();
+        }
+
+        public void SignWindow()
+        {
+            var window = new SignInWindow();
+            if(window.ShowDialog() == false)
+            {
+
+            }
         }
 
         public void NavigateToPage(object sender)

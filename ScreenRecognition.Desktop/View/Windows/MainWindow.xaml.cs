@@ -1,5 +1,6 @@
 ﻿using GlobalHotKeys;
 using ScreenRecognition.Desktop.Core;
+using ScreenRecognition.Desktop.Models;
 using ScreenRecognition.Desktop.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,11 @@ namespace ScreenRecognition.Desktop.View.Windows
         private void NavigateButtons_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as MainWindowViewModel)?.NavigateToPage(sender);
+        }
+
+        private void SignButton_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as MainWindowViewModel)?.SignWindow();
         }
     }
 }
