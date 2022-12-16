@@ -44,27 +44,25 @@ namespace ScreenRecognition.Desktop.Controllers
         private async Task<P?> ControllerOperations<T, P>(string type, string path, T? cl = default(T))
         {
             HttpClient client = new HttpClient();
+            P? result;
 
             client.BaseAddress = new Uri($"{_webPath}");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             HttpResponseMessage response = new HttpResponseMessage();
-
-            if (type == "get")
-            {
-                response = await client.GetAsync(path);
-            }
-            else if (type == "post")
-            {
-                response = await client.PostAsJsonAsync($"{path}", cl);
-                response.EnsureSuccessStatusCode();
-            }
-
-            P? result;
-
             try
             {
+                if (type == "get")
+                {
+                    response = await client.GetAsync(path);
+                }
+                else if (type == "post")
+                {
+                    response = await client.PostAsJsonAsync($"{path}", cl);
+                    response.EnsureSuccessStatusCode();
+                }
+
                 result = await response.Content.ReadFromJsonAsync<P>();
             }
             catch

@@ -29,7 +29,7 @@ namespace ScreenRecognition.Desktop.View.Windows
             InitializeComponent();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void Window_Closing(object sender, EventArgs e)
         {
             if (App.Current.MainWindow == this)
             {

@@ -2,7 +2,6 @@
 using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Core;
 using ScreenRecognition.Desktop.View.Windows;
-using ScreenRecognition.ImagePreparation.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,6 +28,7 @@ using System.Windows.Input;
 using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
 using ScreenRecognition.Desktop.Models;
 using GlobalHotKeys;
+using ScreenRecognition.ImagePreparation.Services;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -149,6 +149,9 @@ namespace ScreenRecognition.Desktop.ViewModel
                 var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
 
                 Result = result;
+
+                if (Result == null || Result == String.Empty)
+                    return;
 
                 var resultWindow = new MessageResultWindow(Result, f.Width, f.Height);
                 resultWindow.Left = _startX;
