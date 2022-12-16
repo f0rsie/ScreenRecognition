@@ -5,6 +5,7 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
         xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+        xmlns:Models="clr-namespace:ScreenRecognition.Desktop.Models"
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
         Title="Screen Recognition"
@@ -40,9 +41,13 @@
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Right"
                         Margin="5">
-                <Button Content="*User NickName*"
+                <Button Content="{Binding Login, Mode=TwoWay}"
                         Style="{StaticResource ButtonCustom}"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center">
+                    <Button.DataContext>
+                        <Models:ConnectedUserSingleton />
+                    </Button.DataContext>
+                </Button>
             </StackPanel>
         </DockPanel>
         <Frame Grid.Row="1"
