@@ -81,7 +81,7 @@ namespace ScreenRecognition.Desktop.ViewModel
         public MainWindowViewModel()
         {
             // А это регистрация кнопки для хоткея
-            if(RegisterGlobalHotkey.HotkeyEnabledStatus() == false)
+            if (RegisterGlobalHotkey.HotkeyEnabledStatus() == false)
             {
                 _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
             }
@@ -93,19 +93,33 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public void SignWindow()
         {
-            var window = new SignInWindow();
-
-            if(window.ShowDialog() == false)
+            if (ConnectedUserSingleton.ConnectionStatus == true)
             {
-                if(ConnectedUserSingleton.ConnectionStatus == true)
+                if (HandyControl.Controls.MessageBox.Show("Вы действительно хотите выйти?", "Выход", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
+                    ConnectedUserSingleton.Disconnect();
                     MainWindowManager.Set(new MainWindow());
                 }
+
+                return;
+            }
+
+            var window = new SignInWindow();
+
+            if (window.ShowDialog() == false)
+            {
+                MainWindowManager.Set(new MainWindow());
             }
         }
 
         public void NavigateToPage(object sender)
         {
+            if (ConnectedUserSingleton.ConnectionStatus == false)
+            {
+                SignWindow();
+                return;
+            }
+
             var pageName = (sender as Button)?.Name;
 
             CurrentPage = ProgramElementFinder.FindByName<Page?>($"{pageName}Page");
@@ -121,7 +135,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                 _startX = window._startX;
                 _startY = window._startY;
 
-                if(window.Image != null)
+                if (window.Image != null)
                 {
                     var img = window.Image;
                     await StartAsync(img);

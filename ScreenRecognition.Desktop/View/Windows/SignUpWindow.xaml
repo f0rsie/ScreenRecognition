@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        x:Name="RegistrationWindow"
         Title="SR: Регистрация"
         Height="500"
         MinHeight="500"

@@ -47,5 +47,12 @@ namespace ScreenRecognition.Desktop.Models
                 connectionStatus = true,
             };
         }
+
+        public static void Disconnect()
+        {
+            ConnectionStatus = false;
+            Login = "Авторизация";
+            Password = null;
+        }
     }
 }

@@ -69,7 +69,14 @@ namespace ScreenRecognition.Desktop.ViewModel
                 ConnectedUserSingleton.Password = Password;
                 ConnectedUserSingleton.ConnectionStatus = true;
 
-                App.Current.Windows[2].Close();
+                foreach (var item in App.Current.Windows)
+                {
+                    if ((item as Window)?.Name == "AuthWindow")
+                    {
+                        (item as Window)?.Close();
+                        return;
+                    }
+                }
             }
 
             HandyControl.Controls.MessageBox.Show("Аккаунт не найден", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Error);

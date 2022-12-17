@@ -7,6 +7,7 @@
         xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
         x:Class="ScreenRecognition.Desktop.View.Windows.SignInWindow"
         mc:Ignorable="d"
+        x:Name="AuthWindow"
         Title="SR: Авторизация"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
