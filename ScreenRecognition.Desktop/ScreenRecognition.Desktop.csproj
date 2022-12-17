@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScreenRecognition.ImagePreparation\ScreenRecognition.ImagePreparation.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="ScreenRecognition.ImagePreparation">
       <HintPath>..\ScreenRecognition.ImagePreparation\bin\Debug\net6.0\ScreenRecognition.ImagePreparation.dll</HintPath>
     </Reference>
