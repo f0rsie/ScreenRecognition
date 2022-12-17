@@ -57,11 +57,11 @@
                        Source="{Binding ElementName=image, Path=Uri}"
                        Margin="5"/>
                 <TextBlock x:Name="translateResult"
-                           Text=""
+                           Text="Тестовое изображение"
                            Margin="5"
                            DockPanel.Dock="Left"
                            VerticalAlignment="Bottom"
-                           FontSize="20" />
+                           FontSize="16" />
             </DockPanel>
         </StackPanel>
     </Grid>

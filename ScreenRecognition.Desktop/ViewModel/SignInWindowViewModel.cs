@@ -74,6 +74,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                     if ((item as Window)?.Name == "AuthWindow")
                     {
                         (item as Window)?.Close();
+
                         return;
                     }
                 }
