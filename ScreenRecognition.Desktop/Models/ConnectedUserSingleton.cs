@@ -29,7 +29,7 @@ namespace ScreenRecognition.Desktop.Models
             set => ConnectionStatus = value;
         }
 
-        public static string? Login { get; set; } = "Guest";
+        public static string? Login { get; set; } = "Авторизация";
         public static string? Password { get; set; } = null;
 
         public static bool? ConnectionStatus { get; set; } = false;

@@ -16,6 +16,8 @@ public partial class ScreenRecognitionContext : DbContext
     {
     }
 
+    public virtual DbSet<Country> Countries { get; set; }
+
     public virtual DbSet<History> Histories { get; set; }
 
     public virtual DbSet<Language> Languages { get; set; }
@@ -36,9 +38,19 @@ public partial class ScreenRecognitionContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC2722B37303");
+
+            entity.ToTable("Country");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<History>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Id }).HasName("PK__History__74A9826E24D57797");
+            entity.HasKey(e => new { e.UserId, e.Id }).HasName("PK__History__74A9826E7F67A9FA");
 
             entity.ToTable("History");
 
@@ -51,29 +63,29 @@ public partial class ScreenRecognitionContext : DbContext
 
             entity.HasOne(d => d.InputLanguage).WithMany(p => p.HistoryInputLanguages)
                 .HasForeignKey(d => d.InputLanguageId)
-                .HasConstraintName("FK__History__InputLa__38996AB5");
+                .HasConstraintName("FK__History__InputLa__3B75D760");
 
             entity.HasOne(d => d.OutputLanguage).WithMany(p => p.HistoryOutputLanguages)
                 .HasForeignKey(d => d.OutputLanguageId)
-                .HasConstraintName("FK__History__OutputL__398D8EEE");
+                .HasConstraintName("FK__History__OutputL__3C69FB99");
 
             entity.HasOne(d => d.SelectedOcr).WithMany(p => p.Histories)
                 .HasForeignKey(d => d.SelectedOcrid)
-                .HasConstraintName("FK__History__Selecte__36B12243");
+                .HasConstraintName("FK__History__Selecte__398D8EEE");
 
             entity.HasOne(d => d.SelectedTranslator).WithMany(p => p.Histories)
                 .HasForeignKey(d => d.SelectedTranslatorId)
-                .HasConstraintName("FK__History__Selecte__37A5467C");
+                .HasConstraintName("FK__History__Selecte__3A81B327");
 
             entity.HasOne(d => d.User).WithMany(p => p.Histories)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__History__UserID__35BCFE0A");
+                .HasConstraintName("FK__History__UserID__38996AB5");
         });
 
         modelBuilder.Entity<Language>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Language__3214EC27DF08BC03");
+            entity.HasKey(e => e.Id).HasName("PK__Language__3214EC274955F1CE");
 
             entity.ToTable("Language");
 
@@ -87,7 +99,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Ocr>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OCR__3214EC27C31CF7D9");
+            entity.HasKey(e => e.Id).HasName("PK__OCR__3214EC2778358734");
 
             entity.ToTable("OCR");
 
@@ -97,7 +109,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC27CC13BC8C");
+            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC278B1AE569");
 
             entity.ToTable("Role");
 
@@ -107,7 +119,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Setting>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Name }).HasName("PK__Settings__70BF94E3D817A39A");
+            entity.HasKey(e => new { e.UserId, e.Name }).HasName("PK__Settings__70BF94E37BBAA28C");
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -118,29 +130,29 @@ public partial class ScreenRecognitionContext : DbContext
 
             entity.HasOne(d => d.InputLanguage).WithMany(p => p.SettingInputLanguages)
                 .HasForeignKey(d => d.InputLanguageId)
-                .HasConstraintName("FK__Settings__InputL__31EC6D26");
+                .HasConstraintName("FK__Settings__InputL__34C8D9D1");
 
             entity.HasOne(d => d.OutputLanguage).WithMany(p => p.SettingOutputLanguages)
                 .HasForeignKey(d => d.OutputLanguageId)
-                .HasConstraintName("FK__Settings__Output__32E0915F");
+                .HasConstraintName("FK__Settings__Output__35BCFE0A");
 
             entity.HasOne(d => d.SelectedOcr).WithMany(p => p.Settings)
                 .HasForeignKey(d => d.SelectedOcrid)
-                .HasConstraintName("FK__Settings__Select__300424B4");
+                .HasConstraintName("FK__Settings__Select__32E0915F");
 
             entity.HasOne(d => d.SelectedTranslator).WithMany(p => p.Settings)
                 .HasForeignKey(d => d.SelectedTranslatorId)
-                .HasConstraintName("FK__Settings__Select__30F848ED");
+                .HasConstraintName("FK__Settings__Select__33D4B598");
 
             entity.HasOne(d => d.User).WithMany(p => p.Settings)
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Settings__UserID__2F10007B");
+                .HasConstraintName("FK__Settings__UserID__31EC6D26");
         });
 
         modelBuilder.Entity<Translator>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Translat__3214EC272599350C");
+            entity.HasKey(e => e.Id).HasName("PK__Translat__3214EC271913DD53");
 
             entity.ToTable("Translator");
 
@@ -150,21 +162,27 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC27CBEE364F");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC27FEFFDAC2");
 
             entity.ToTable("User");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Birthday).HasColumnType("date");
+            entity.Property(e => e.CountryId).HasColumnName("CountryID");
             entity.Property(e => e.FirstName).HasMaxLength(50);
             entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.Login).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
 
+            entity.HasOne(d => d.Country).WithMany(p => p.Users)
+                .HasForeignKey(d => d.CountryId)
+                .HasConstraintName("FK__User__CountryID__2F10007B");
+
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__User__RoleID__2C3393D0");
+                .HasConstraintName("FK__User__RoleID__2E1BDC42");
         });
 
         OnModelCreatingPartial(modelBuilder);

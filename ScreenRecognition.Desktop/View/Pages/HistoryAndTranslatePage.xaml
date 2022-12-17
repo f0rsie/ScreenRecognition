@@ -28,7 +28,8 @@
                            HorizontalAlignment="Center"
                            FontSize="20" />
                 <DockPanel LastChildFill="True">
-                    <ListView Margin="5" />
+                    <ListView Margin="5"
+                              ItemsSource="{Binding}"/>
                 </DockPanel>
             </StackPanel>
         </hc:ScrollViewer>

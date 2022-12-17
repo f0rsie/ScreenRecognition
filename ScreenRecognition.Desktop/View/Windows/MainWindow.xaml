@@ -30,17 +30,13 @@
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Left"
                         Margin="5">
-                <Button Content="Авторизация/регистрация"
+                <Button Content="История"
                         Margin="0 0 5 0"
-                        x:Name="Sign"
-                        Click="SignButton_Click"/>
+                        x:Name="HistoryAndTranslate"
+                        Click="NavigateButtons_Click" />
                 <Button Content="Настройки"
                         Margin="0 0 5 0"
                         x:Name="Settings"
-                        Click="NavigateButtons_Click" />
-                <Button Content="История переводов и перевод с картинки"
-                        Margin="0 0 5 0"
-                        x:Name="HistoryAndTranslate"
                         Click="NavigateButtons_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
@@ -48,8 +44,8 @@
                         Margin="5">
                 <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                         Style="{StaticResource ButtonCustom}"
-                        VerticalAlignment="Center">
-                </Button>
+                        VerticalAlignment="Center"
+                        Click="SignButton_Click" />
             </StackPanel>
         </DockPanel>
         <Frame Grid.Row="1"

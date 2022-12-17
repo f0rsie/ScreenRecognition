@@ -7,9 +7,9 @@
         xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
         x:Class="ScreenRecognition.Desktop.View.Windows.SignInWindow"
         mc:Ignorable="d"
-        Title="Авторизация"
+        Title="SR: Авторизация"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+        ResizeMode="NoResize"
         Height="320"
         MinHeight="320"
         MaxHeight="320"
@@ -54,7 +54,15 @@
                                     HorizontalContentAlignment="Left" />
                 </DockPanel>
                 <DockPanel LastChildFill="False"
-                           Margin="0 30 0 0"
+                           DockPanel.Dock="Top">
+                    <Button Content="Забыли пароль?"
+                            Margin="5"
+                            DockPanel.Dock="Right"
+                            Style="{StaticResource ButtonCustom}"
+                            HorizontalAlignment="Right" />
+                </DockPanel>
+                <DockPanel LastChildFill="False"
+                           Margin="0 25 0 0"
                            DockPanel.Dock="Top">
                     <Button DockPanel.Dock="Left"
                             x:Name="SignIn"
