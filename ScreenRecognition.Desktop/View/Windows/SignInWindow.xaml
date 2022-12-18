@@ -11,12 +11,12 @@
         Title="SR: Авторизация"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="340"
-        MinHeight="340"
-        MaxHeight="340"
-        Width="250"
-        MinWidth="250"
-        MaxWidth="250"
+        Height="400"
+        MinHeight="400"
+        MaxHeight="400"
+        Width="320"
+        MinWidth="320"
+        MaxWidth="320"
         IsEnabled="{Binding EnabledWindowStatus}">
     <Window.DataContext>
         <ViewModel:SignInWindowViewModel />
@@ -39,7 +39,7 @@
                                FontSize="20"
                                Margin="5"
                                DockPanel.Dock="Top" />
-                    <hc:TextBox Margin="5"
+                    <hc:TextBox Margin="25 5 25 5"
                                 FontSize="14"
                                 x:Name="Login"
                                 Text="{Binding Login}"
@@ -54,7 +54,7 @@
                                FontSize="20"
                                Margin="5"
                                DockPanel.Dock="Top" />
-                    <hc:PasswordBox Margin="5"
+                    <hc:PasswordBox Margin="25 5 25 5"
                                     FontSize="14"
                                     ShowEyeButton="True"
                                     x:Name="Password"
@@ -63,19 +63,20 @@
                                     HorizontalContentAlignment="Left" />
                 </DockPanel>
                 <DockPanel LastChildFill="False"
-                           DockPanel.Dock="Top">
-                    <CheckBox Margin="5"
+                           DockPanel.Dock="Top"
+                           Margin="0 15 0 0">
+                    <CheckBox Margin="25 5 25 5"
                               Content="Запомнить"
                               Padding="3"
                               VerticalContentAlignment="Center"/>
                     <Button Content="Забыли пароль?"
-                            Margin="5"
+                            Margin="5 5 25 5"
                             DockPanel.Dock="Right"
                             Style="{StaticResource ButtonCustom}"
                             HorizontalAlignment="Right" />
                 </DockPanel>
                 <DockPanel LastChildFill="False"
-                           Margin="0 25 0 0"
+                           Margin="25 25 0 0"
                            DockPanel.Dock="Top">
                     <Button DockPanel.Dock="Left"
                             x:Name="SignIn"
@@ -88,7 +89,7 @@
                             x:Name="SignUp"
                             Width="100"
                             Click="SignUp_Click"
-                            Margin="5"
+                            Margin="5 5 25 5"
                             Content="Регистрация"
                             BorderBrush="#FF4862F1" />
                 </DockPanel>

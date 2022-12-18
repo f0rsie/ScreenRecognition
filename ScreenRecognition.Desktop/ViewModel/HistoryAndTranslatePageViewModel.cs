@@ -63,7 +63,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                         Id = 0,
                         Name = "MyMemory",
                     },
-                    Translate = "Привет",
+                    Translate = "ПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПривет",
                     User = new User
                     {
                         Id = 0,

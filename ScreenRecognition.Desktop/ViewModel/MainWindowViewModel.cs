@@ -34,6 +34,18 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        private Visibility _loginPanelVisibility;
+
+        public Visibility LoginPanelVisibility
+        {
+            get => _loginPanelVisibility;
+            set
+            {
+                _loginPanelVisibility = value;
+                OnPropertyChanged(nameof(LoginPanelVisibility));
+            }
+        }
+
         public string? CurrentLogin
         {
             get => ConnectedUserSingleton.Login;
@@ -84,6 +96,15 @@ namespace ScreenRecognition.Desktop.ViewModel
             if (RegisterGlobalHotkey.HotkeyEnabledStatus() == false)
             {
                 _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
+            }
+
+            if(ConnectedUserSingleton.ConnectionStatus == false)
+            {
+                LoginPanelVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                LoginPanelVisibility = Visibility.Visible;
             }
 
             _controller = new UniversalController("http://localhost:5046/api/");

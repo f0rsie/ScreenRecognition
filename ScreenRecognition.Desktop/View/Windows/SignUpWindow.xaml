@@ -9,9 +9,9 @@
         WindowStartupLocation="CenterScreen"
         x:Name="RegistrationWindow"
         Title="SR: Регистрация"
-        Height="500"
-        MinHeight="500"
-        MaxHeight="500"
+        Height="530"
+        MinHeight="530"
+        MaxHeight="530"
         Width="450"
         MinWidth="450"
         MaxWidth="450"
@@ -27,7 +27,7 @@
                                           Foreground="#FF4862F1" />
             </TextBlock>
             <DockPanel LastChildFill="False"
-                       Margin="0 30 0 0">
+                       Margin="20 30 20 0">
                 <TextBlock Text="Логин*"
                            FontSize="18"
                            Margin="5"
@@ -37,7 +37,7 @@
                             FontSize="14"
                             x:Name="Login"
                             Text="{Binding Login}"
-                            Width="300"
+                            Width="280"
                             hc:InfoElement.Placeholder="Логин"
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
@@ -46,7 +46,8 @@
                         BorderBrush="Transparent"
                         VerticalAlignment="Center" />
             </DockPanel>
-            <DockPanel LastChildFill="False">
+            <DockPanel LastChildFill="False"
+                       Margin="20 0 20 0">
                 <TextBlock Text="Пароль*"
                            FontSize="18"
                            Margin="5"
@@ -54,7 +55,7 @@
                            DockPanel.Dock="Left" />
                 <hc:PasswordBox Margin="5"
                                 FontSize="14"
-                                Width="160"
+                                Width="145"
                                 x:Name="Password"
                                 ShowEyeButton="True"
                                 hc:InfoElement.Placeholder="Пароль"
@@ -62,14 +63,15 @@
                                 HorizontalContentAlignment="Left" />
                 <hc:PasswordBox Margin="5"
                                 FontSize="14"
-                                Width="160"
+                                Width="145"
                                 x:Name="PasswordRepeat"
                                 ShowEyeButton="True"
                                 hc:InfoElement.Placeholder="Повтор пароля"
                                 VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Left" />
             </DockPanel>
-            <DockPanel LastChildFill="False">
+            <DockPanel LastChildFill="False"
+                       Margin="20 0 20 0">
                 <TextBlock Text="Эл. почта*"
                            FontSize="18"
                            Margin="5"
@@ -79,7 +81,7 @@
                             FontSize="14"
                             x:Name="Email"
                             Text="{Binding Email}"
-                            Width="270"
+                            Width="250"
                             hc:InfoElement.Placeholder="Электронная почта"
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
@@ -89,7 +91,7 @@
                         VerticalAlignment="Center" />
             </DockPanel>
             <DockPanel LastChildFill="True"
-                       Margin="0 30 0 0">
+                       Margin="20 30 20 0">
                 <TextBlock Text="Имя"
                            FontSize="18"
                            Margin="5"
@@ -103,7 +105,8 @@
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
             </DockPanel>
-            <DockPanel LastChildFill="True">
+            <DockPanel LastChildFill="True"
+                       Margin="20 0 20 0">
                 <TextBlock Text="Фамилия"
                            FontSize="18"
                            Margin="5"
@@ -117,7 +120,8 @@
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
             </DockPanel>
-            <DockPanel LastChildFill="False">
+            <DockPanel LastChildFill="False"
+                       Margin="20 0 20 0">
                 <TextBlock Text="Страна проживания"
                            FontSize="18"
                            Margin="5"
@@ -132,7 +136,8 @@
                              VerticalContentAlignment="Center"
                              HorizontalContentAlignment="Left" />
             </DockPanel>
-            <DockPanel LastChildFill="False">
+            <DockPanel LastChildFill="False"
+                       Margin="20 0 20 0">
                 <TextBlock Text="Дата рождения"
                            FontSize="18"
                            Margin="5"

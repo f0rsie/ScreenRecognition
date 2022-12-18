@@ -15,14 +15,21 @@
     </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="433*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="365*" />
         </Grid.ColumnDefinitions>
+        <Border BorderThickness="0.5"
+                Padding="0"
+                HorizontalAlignment="Left"
+                BorderBrush="#FF4C4949"
+                Grid.Column="2"
+                Width="1" />
         <hc:ScrollViewer Grid.Column="0"
                          VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto">
+                         HorizontalScrollBarVisibility="Auto"
+                         x:Name="historyScollView">
             <StackPanel Orientation="Vertical"
-                        Grid.Column="0"
                         x:Name="translateHistory">
                 <TextBlock Text="История переводов"
                            HorizontalAlignment="Center"
@@ -35,7 +42,8 @@
                                 <Border BorderBrush="#FF4C4949"
                                         BorderThickness="1"
                                         Padding="5"
-                                        Margin="5">
+                                        Margin="5"
+                                        Width="{Binding ElementName=historyScollView, Path=ActualWidth}">
                                     <DockPanel>
                                         <Image DockPanel.Dock="Right"
                                                Height="{Binding ElementName=historyItem, Path=ActualHeight}"
@@ -52,13 +60,8 @@
                                         <Run Text="{Binding SelectedOcr.Name}"
                                                 FontWeight="Bold" />
                                             </TextBlock>
-                                            <TextBlock>
-                                        <Run Text="Текст:" />
-                                        <Run Text="{Binding RecognizedText}"
-                                                FontWeight="Bold" />
-                                            </TextBlock>
-                                            <TextBlock>
-                                        <Run Text="Точность:" />
+                                            <TextBlock TextWrapping="Wrap">
+                                        <Run Text="Точность распознавания:" />
                                         <Run Text="{Binding RecognizedTextAccuracy}"
                                                 FontWeight="Bold" />
                                             </TextBlock>
@@ -72,12 +75,17 @@
                                         <Run Text="{Binding OutputLanguage.Name}"
                                                 FontWeight="Bold" />
                                             </TextBlock>
-                                            <TextBlock>
+                                            <TextBlock TextWrapping="Wrap">
                                         <Run Text="Выбранный переводчик:" />
                                         <Run Text="{Binding SelectedTranslator.Name}"
                                                 FontWeight="Bold" />
                                             </TextBlock>
-                                            <TextBlock>
+                                            <TextBlock TextWrapping="Wrap">
+                                        <Run Text="Текст:" />
+                                        <Run Text="{Binding RecognizedText}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock TextWrapping="Wrap">
                                         <Run Text="Перевод:" />
                                         <Run Text="{Binding Translate}"
                                                 FontWeight="Bold" />
@@ -92,7 +100,7 @@
             </StackPanel>
         </hc:ScrollViewer>
         <StackPanel Orientation="Vertical"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     x:Name="translateTextFromPhoto">
             <TextBlock Text="Получить текст и перевод с картинки"
                        HorizontalAlignment="Center"

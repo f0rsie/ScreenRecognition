@@ -61,10 +61,31 @@
                     <Run Text="В сети"
                          FontWeight="Bold"/>
                 </TextBlock>
+                <Border CornerRadius="5"
+                        Grid.ColumnSpan="2"
+                        Padding="10"
+                        Margin="0 0 20 0"
+                        Grid.Column="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        BorderBrush="Black"
+                        BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Text="Логин: "
+                                   Visibility="{Binding LoginPanelVisibility}"/>
+                        <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
+                                Style="{StaticResource ButtonCustom}"
+                                VerticalAlignment="Center"
+                                Click="SignButton_Click" />
+                    </StackPanel>
+                </Border>
                 <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                         Style="{StaticResource ButtonCustom}"
                         VerticalAlignment="Center"
-                        Click="SignButton_Click" />
+                        Click="SignButton_Click" 
+                        Visibility="Collapsed"/>
             </StackPanel>
         </DockPanel>
         <Frame Grid.Row="1"
