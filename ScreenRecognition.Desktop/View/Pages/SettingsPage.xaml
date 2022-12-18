@@ -318,6 +318,24 @@
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Результат"
+                               HorizontalAlignment="Center"
+                               FontSize="20" />
+                    <DockPanel LastChildFill="False">
+                    <TextBlock DockPanel.Dock="Left"
+                               Text="Введите Hex код цвета"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Left"
+                                Margin="5"
+                                hc:InfoElement.Placeholder="Hex код"
+                                x:Name="resultColor"
+                                Width="300"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
                     <TextBlock Text="Привязка клавиш"
                                HorizontalAlignment="Center"
                                FontSize="20" />

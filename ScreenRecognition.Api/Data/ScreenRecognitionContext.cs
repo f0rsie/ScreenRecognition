@@ -40,7 +40,7 @@ public partial class ScreenRecognitionContext : DbContext
     {
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC2722B37303");
+            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC273CB1B3E9");
 
             entity.ToTable("Country");
 
@@ -50,7 +50,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<History>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Id }).HasName("PK__History__74A9826E7F67A9FA");
+            entity.HasKey(e => new { e.UserId, e.Id }).HasName("PK__History__74A9826E30EFCAB8");
 
             entity.ToTable("History");
 
@@ -85,7 +85,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Language>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Language__3214EC274955F1CE");
+            entity.HasKey(e => e.Id).HasName("PK__Language__3214EC274B98F199");
 
             entity.ToTable("Language");
 
@@ -99,7 +99,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Ocr>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OCR__3214EC2778358734");
+            entity.HasKey(e => e.Id).HasName("PK__OCR__3214EC273844F7CB");
 
             entity.ToTable("OCR");
 
@@ -109,7 +109,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC278B1AE569");
+            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC27E518F9DC");
 
             entity.ToTable("Role");
 
@@ -119,12 +119,13 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Setting>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Name }).HasName("PK__Settings__70BF94E37BBAA28C");
+            entity.HasKey(e => new { e.UserId, e.Name }).HasName("PK__Settings__70BF94E3D3075C3D");
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.InputLanguageId).HasColumnName("InputLanguageID");
             entity.Property(e => e.OutputLanguageId).HasColumnName("OutputLanguageID");
+            entity.Property(e => e.ResultColor).HasMaxLength(50);
             entity.Property(e => e.SelectedOcrid).HasColumnName("SelectedOCRID");
             entity.Property(e => e.SelectedTranslatorId).HasColumnName("SelectedTranslatorID");
 
@@ -152,7 +153,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Translator>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Translat__3214EC271913DD53");
+            entity.HasKey(e => e.Id).HasName("PK__Translat__3214EC27219999B2");
 
             entity.ToTable("Translator");
 
@@ -162,7 +163,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC27FEFFDAC2");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC27F2161301");
 
             entity.ToTable("User");
 

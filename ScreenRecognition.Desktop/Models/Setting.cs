@@ -19,6 +19,8 @@ public partial class Setting
 
     public int? OutputLanguageId { get; set; }
 
+    public string? ResultColor { get; set; }
+
     public virtual Language? InputLanguage { get; set; }
 
     public virtual Language? OutputLanguage { get; set; }

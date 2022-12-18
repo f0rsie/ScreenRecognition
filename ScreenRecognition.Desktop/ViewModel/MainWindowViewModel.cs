@@ -172,7 +172,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
                 var resultWindow = new MessageResultWindow(Result, f.Width, f.Height);
                 resultWindow.Left = _startX;
-                resultWindow.Top = _startY + 20;
+                resultWindow.Top = _startY + 30;
 
                 resultWindow.Show();
             }

@@ -32,7 +32,7 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
         {
             result.Text = message;
 
-            resultWindow.Width = width;
+            resultWindow.Width = 800;
             resultWindow.Height = height;
             result.FontSize = 14;
         }

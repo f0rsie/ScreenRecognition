@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MessageResultWindow"
         Height="450"
-        Width="800"
+        Width="1200"
         x:Name="resultWindow"
         Background="#00000000"
         ResizeMode="NoResize"
@@ -17,14 +17,14 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterOwner"
         MouseDoubleClick="resultWindow_MouseDoubleClick">
-    <Grid>
-        <TextBlock x:Name="result" 
-                   TextWrapping="Wrap"
-                   TextAlignment="Center"
-                   FontWeight="Bold"
-                   FontStyle="Normal"
-                   Foreground="Black"
-                   Width="auto"
-                   Height="auto"/>
-    </Grid>
+    <TextBlock x:Name="result"
+               TextWrapping="NoWrap"
+               TextAlignment="Left"
+               VerticalAlignment="Top"
+               HorizontalAlignment="Left"
+               FontWeight="Heavy"
+               FontStyle="Normal"
+               Foreground="LightBlue"
+               Width="auto"
+               Height="auto" />
 </Window>
