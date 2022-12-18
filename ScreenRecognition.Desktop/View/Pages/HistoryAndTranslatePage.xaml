@@ -29,7 +29,65 @@
                            FontSize="20" />
                 <DockPanel LastChildFill="True">
                     <ListView Margin="5"
-                              ItemsSource="{Binding}"/>
+                              ItemsSource="{Binding HistoryList}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#FF4C4949"
+                                        BorderThickness="1"
+                                        Padding="5"
+                                        Margin="5">
+                                    <DockPanel>
+                                        <Image DockPanel.Dock="Right"
+                                               Height="{Binding ElementName=historyItem, Path=ActualHeight}"
+                                               Width="150"
+                                               Source="/Resources/Icons/icon.ico" />
+                                        <Border DockPanel.Dock="Right"
+                                                BorderThickness="0.5"
+                                                Margin="5 -5 0 -5"
+                                                BorderBrush="#FF4C4949" />
+                                        <StackPanel Orientation="Vertical"
+                                                    x:Name="historyItem">
+                                            <TextBlock>
+                                        <Run Text="Выбранный OCR:" />
+                                        <Run Text="{Binding SelectedOcr.Name}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock>
+                                        <Run Text="Текст:" />
+                                        <Run Text="{Binding RecognizedText}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock>
+                                        <Run Text="Точность:" />
+                                        <Run Text="{Binding RecognizedTextAccuracy}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock>
+                                        <Run Text="Язык распознавание:" />
+                                        <Run Text="{Binding InputLanguage.Name}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock>
+                                        <Run Text="Выходной язык:" />
+                                        <Run Text="{Binding OutputLanguage.Name}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock>
+                                        <Run Text="Выбранный переводчик:" />
+                                        <Run Text="{Binding SelectedTranslator.Name}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                            <TextBlock>
+                                        <Run Text="Перевод:" />
+                                        <Run Text="{Binding Translate}"
+                                                FontWeight="Bold" />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </DockPanel>
             </StackPanel>
         </hc:ScrollViewer>
@@ -55,14 +113,23 @@
                                   Filter="All files|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif" />
                 <Image DockPanel.Dock="Top"
                        Source="{Binding ElementName=image, Path=Uri}"
-                       Margin="5"/>
+                       Margin="5" />
                 <TextBlock x:Name="translateResult"
-                           Text="Тестовое изображение"
                            Margin="5"
                            DockPanel.Dock="Left"
                            VerticalAlignment="Bottom"
-                           FontSize="16" />
+                           FontSize="16">
+                    <Run Text="Текст:" />
+                    <Run Text=""
+                         FontWeight="Bold" />
+                    <LineBreak />
+                    <Run Text="Перевод:" />
+                    <Run Text=""
+                         FontWeight="Bold" />
+                </TextBlock>
             </DockPanel>
+            <Button Content="Получить"
+                    Margin="5" />
         </StackPanel>
     </Grid>
 </Page>

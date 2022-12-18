@@ -88,7 +88,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             _controller = new UniversalController("http://localhost:5046/api/");
 
-            //CurrentPage = new View.Pages.HistoryAndTranslatePage();
+            CurrentPage = new View.Pages.SettingsPage();
         }
 
         public void SignWindow()
@@ -114,15 +114,18 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public void NavigateToPage(object sender)
         {
-            if (ConnectedUserSingleton.ConnectionStatus == false)
+            var pageName = (sender as Button)?.Name;
+
+            if (ConnectedUserSingleton.ConnectionStatus == false && pageName != "Settings")
             {
                 SignWindow();
                 return;
             }
 
-            var pageName = (sender as Button)?.Name;
+            var page = ProgramElementFinder.FindByName<Page?>($"{pageName}Page");
+            CurrentPage = page;
 
-            CurrentPage = ProgramElementFinder.FindByName<Page?>($"{pageName}Page");
+            GC.Collect();
         }
 
         private async void TakeScreenshot()

@@ -18,6 +18,14 @@
         ResizeMode="NoResize">
     <Grid>
         <StackPanel Orientation="Vertical">
+            <TextBlock FontWeight="Bold"
+                       FontSize="40"
+                       Foreground="#FF4C4949"
+                       Margin="5"
+                       TextAlignment="Center">
+                <Run Text="Screen" /><Run Text="Recognition"
+                                          Foreground="#FF4862F1" />
+            </TextBlock>
             <DockPanel LastChildFill="False"
                        Margin="0 30 0 0">
                 <TextBlock Text="Логин*"
@@ -36,7 +44,7 @@
                 <Button hc:IconElement.Geometry="{StaticResource EyeOpenGeometry}"
                         DockPanel.Dock="Right"
                         BorderBrush="Transparent"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center" />
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <TextBlock Text="Пароль*"
@@ -61,8 +69,7 @@
                                 VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Left" />
             </DockPanel>
-            <DockPanel LastChildFill="False"
-                       Margin="0 30 0 0">
+            <DockPanel LastChildFill="False">
                 <TextBlock Text="Эл. почта*"
                            FontSize="18"
                            Margin="5"
@@ -79,7 +86,7 @@
                 <Button hc:IconElement.Geometry="{StaticResource EyeOpenGeometry}"
                         DockPanel.Dock="Right"
                         BorderBrush="Transparent"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center" />
             </DockPanel>
             <DockPanel LastChildFill="True"
                        Margin="0 30 0 0">
@@ -140,8 +147,8 @@
                                VerticalContentAlignment="Center" />
             </DockPanel>
             <Button x:Name="SignUp"
-                    Margin="5 50 5 5"
-                    Content="Зарегистрироваться"
+                    Margin="5 20 5 5"
+                    Content="Создать аккаунт"
                     BorderBrush="#FF4862F1" />
         </StackPanel>
     </Grid>

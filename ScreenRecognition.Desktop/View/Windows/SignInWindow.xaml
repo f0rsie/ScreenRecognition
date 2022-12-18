@@ -11,9 +11,9 @@
         Title="SR: Авторизация"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="320"
-        MinHeight="320"
-        MaxHeight="320"
+        Height="340"
+        MinHeight="340"
+        MaxHeight="340"
         Width="250"
         MinWidth="250"
         MaxWidth="250"
@@ -23,6 +23,14 @@
     </Window.DataContext>
     <Grid>
         <StackPanel VerticalAlignment="Center">
+            <TextBlock FontWeight="Bold"
+                       FontSize="25"
+                       Foreground="#FF4C4949"
+                       Margin="5"
+                       TextAlignment="Center">
+                <Run Text="Screen" /><Run Text="Recognition"
+                                          Foreground="#FF4862F1" />
+            </TextBlock>
             <DockPanel LastChildFill="False">
                 <DockPanel LastChildFill="True"
                            DockPanel.Dock="Top">
@@ -56,6 +64,10 @@
                 </DockPanel>
                 <DockPanel LastChildFill="False"
                            DockPanel.Dock="Top">
+                    <CheckBox Margin="5"
+                              Content="Запомнить"
+                              Padding="3"
+                              VerticalContentAlignment="Center"/>
                     <Button Content="Забыли пароль?"
                             Margin="5"
                             DockPanel.Dock="Right"

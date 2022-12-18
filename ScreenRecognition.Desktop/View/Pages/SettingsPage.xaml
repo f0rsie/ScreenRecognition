@@ -18,9 +18,25 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical"
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    x:Name="DisconnectedPanel"
+                    Visibility="{Binding DisconnectedPanelVisibility}">
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="20"
+                       Margin="5"
+                       TextWrapping="Wrap"
+                       Foreground="DarkRed">
+                <Run Text="Настройки профиля недоступны." />
+                <LineBreak />
+                <Run Text="Для получения полного доступа к программе, Вам необходимо войти в аккаунт."/>
+            </TextBlock>
+        </StackPanel>
         <hc:ScrollViewer Grid.Column="0"
                          VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Auto">
+                         HorizontalScrollBarVisibility="Auto"
+                         Visibility="{Binding ProfilePanelVisibility}">
             <StackPanel Orientation="Vertical"
                         Grid.Column="0"
                         x:Name="profilePanel">
@@ -161,23 +177,31 @@
                                HorizontalAlignment="Center"
                                FontSize="20" />
                     <DockPanel LastChildFill="False">
+                        <hc:ComboBox DockPanel.Dock="Right"
+                                     Width="auto"
+                                     Margin="5"
+                                     hc:InfoElement.Placeholder="Профили"
+                                     x:Name="settingsProfileList"
+                                     HorizontalContentAlignment="Center"
+                                     VerticalContentAlignment="Center" />
                         <Button DockPanel.Dock="Left"
                                 Width="auto"
+                                Content="Загрузить профиль"
                                 Margin="5"
                                 HorizontalContentAlignment="Right"
                                 VerticalContentAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <hc:TextBox DockPanel.Dock="Right"
+                                    Width="auto"
+                                    Margin="5"
+                                    hc:InfoElement.Placeholder="Название профиля"
+                                    x:Name="settingsProfileName"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Center" />
                         <Button DockPanel.Dock="Left"
                                 Width="auto"
-                                Margin="5"
-                                HorizontalContentAlignment="Right"
-                                VerticalContentAlignment="Center" />
-                        <Button DockPanel.Dock="Left"
-                                Width="auto"
-                                Margin="5"
-                                HorizontalContentAlignment="Right"
-                                VerticalContentAlignment="Center" />
-                        <Button DockPanel.Dock="Left"
-                                Width="auto"
+                                Content="Сохранить профиль"
                                 Margin="5"
                                 HorizontalContentAlignment="Right"
                                 VerticalContentAlignment="Center" />
@@ -228,17 +252,23 @@
                                          VerticalContentAlignment="Center" />
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Bottom"
-                                   LastChildFill="True">
+                                   LastChildFill="False">
                             <TextBlock DockPanel.Dock="Left"
                                        Text="Введите Api Key (если есть)"
                                        VerticalAlignment="Center"
                                        Margin="5" />
-                            <hc:TextBox DockPanel.Dock="Right"
+                            <hc:TextBox DockPanel.Dock="Left"
                                         Margin="5"
                                         hc:InfoElement.Placeholder="Api Key"
                                         x:Name="apiKey"
+                                        Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center" />
+                            <Button DockPanel.Dock="Right"
+                                    Margin="5"
+                                    BorderBrush="Transparent"
+                                    Background="Transparent"
+                                    hc:IconElement.Geometry="{StaticResource EyeOpenGeometry}" />
                         </DockPanel>
                     </DockPanel>
                 </StackPanel>
@@ -340,6 +370,28 @@
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center" />
                     </DockPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Профиль"
+                                   HorizontalAlignment="Center"
+                                   FontSize="20" />
+                        <DockPanel LastChildFill="False">
+                            <TextBlock DockPanel.Dock="Left"
+                                       Text="Название профиля"
+                                       VerticalAlignment="Center"
+                                       Margin="5" />
+                            <hc:TextBox DockPanel.Dock="Left"
+                                        Margin="5"
+                                        hc:InfoElement.Placeholder="Название профиля"
+                                        x:Name="profileName"
+                                        Width="250"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Center" />
+                            <Button Content="Сохранить"
+                                    Margin="5"
+                                    DockPanel.Dock="Right"
+                                    BorderBrush="#FF4862F1" />
+                        </DockPanel>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </hc:ScrollViewer>

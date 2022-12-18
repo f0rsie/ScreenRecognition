@@ -8,7 +8,7 @@
         xmlns:Models="clr-namespace:ScreenRecognition.Desktop.Models"
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
-        Title="Screen Recognition"
+        Title="ScreenRecognition"
         WindowStartupLocation="CenterScreen"
         Height="550"
         MinHeight="450"
@@ -27,6 +27,16 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <DockPanel LastChildFill="False">
+            <TextBlock FontWeight="Bold"
+                       FontSize="20"
+                       VerticalAlignment="Center"
+                       Foreground="#FF4C4949"
+                       Margin="5"
+                       DockPanel.Dock="Left"
+                       TextAlignment="Center">
+                <Run Text="Screen" /><Run Text="Recognition"
+                                          Foreground="#FF4862F1" />
+            </TextBlock>
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Left"
                         Margin="5">
@@ -42,6 +52,15 @@
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Right"
                         Margin="5">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           TextAlignment="Center"
+                           Margin="0 0 50 0"
+                           Foreground="Green">
+                    <Run Text="Статус сервера:" />
+                    <Run Text="В сети"
+                         FontWeight="Bold"/>
+                </TextBlock>
                 <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                         Style="{StaticResource ButtonCustom}"
                         VerticalAlignment="Center"

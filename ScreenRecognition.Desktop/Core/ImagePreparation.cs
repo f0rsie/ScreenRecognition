@@ -51,5 +51,18 @@ namespace ScreenRecognition.Desktop.Core
 
             return System.Drawing.Image.FromStream(ms);
         }
+
+        public ImageSource ByteToImage(byte[] imageData)
+        {
+            BitmapImage biImg = new BitmapImage();
+            MemoryStream ms = new MemoryStream(imageData);
+            biImg.BeginInit();
+            biImg.StreamSource = ms;
+            biImg.EndInit();
+
+            ImageSource imgSrc = biImg as ImageSource;
+
+            return imgSrc;
+        }
     }
 }
