@@ -35,7 +35,12 @@ namespace ScreenRecognition.Api.Core.Services
 
             var result = imageAnalyzerService.GetTextFromImage(_image);
 
-            return result.TextResult;
+            if(result.TextResult != null)
+            {
+                return result.TextResult;
+            }
+
+            return "Не распознано";
         }
     }
 }
