@@ -11,12 +11,12 @@
         Title="SR: Авторизация"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Height="400"
-        MinHeight="400"
-        MaxHeight="400"
-        Width="320"
-        MinWidth="320"
-        MaxWidth="320"
+        Height="430"
+        MinHeight="430"
+        MaxHeight="430"
+        Width="330"
+        MinWidth="330"
+        MaxWidth="330"
         IsEnabled="{Binding EnabledWindowStatus}">
     <Window.DataContext>
         <ViewModel:SignInWindowViewModel />
@@ -26,7 +26,7 @@
             <TextBlock FontWeight="Bold"
                        FontSize="25"
                        Foreground="#FF4C4949"
-                       Margin="5"
+                       Margin="5 5 5 15"
                        TextAlignment="Center">
                 <Run Text="Screen" /><Run Text="Recognition"
                                           Foreground="#FF4862F1" />

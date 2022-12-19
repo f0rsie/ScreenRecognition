@@ -42,13 +42,13 @@
                                 <Border BorderBrush="#FF4C4949"
                                         BorderThickness="1"
                                         Padding="5"
-                                        Margin="5"
-                                        Width="{Binding ElementName=historyScollView, Path=ActualWidth}">
-                                    <DockPanel>
+                                        Margin="5">
+                                    <DockPanel LastChildFill="False"
+                                               Width="460">
                                         <Image DockPanel.Dock="Right"
                                                Height="{Binding ElementName=historyItem, Path=ActualHeight}"
                                                Width="150"
-                                               Source="/Resources/Icons/icon.ico" />
+                                               Source="/Resources/Images/testHelloWorldImage.png" />
                                         <Border DockPanel.Dock="Right"
                                                 BorderThickness="0.5"
                                                 Margin="5 -5 0 -5"
@@ -99,45 +99,50 @@
                 </DockPanel>
             </StackPanel>
         </hc:ScrollViewer>
-        <StackPanel Orientation="Vertical"
-                    Grid.Column="2"
-                    x:Name="translateTextFromPhoto">
-            <TextBlock Text="Получить текст и перевод с картинки"
-                       HorizontalAlignment="Center"
-                       FontSize="20" />
-            <DockPanel LastChildFill="False">
-                <hc:ImageSelector x:Name="image"
-                                  Margin="5"
-                                  Width="50"
-                                  Height="50"
-                                  DockPanel.Dock="Left"
-                                  HorizontalAlignment="Stretch"
-                                  VerticalAlignment="Stretch"
-                                  hc:BorderElement.CornerRadius="50"
-                                  StrokeDashArray="10,5"
-                                  VerticalContentAlignment="Center"
-                                  HorizontalContentAlignment="Center"
-                                  DefaultExt="PNG Files (*.png)|*.png"
-                                  Filter="All files|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif" />
-                <Image DockPanel.Dock="Top"
-                       Source="{Binding ElementName=image, Path=Uri}"
-                       Margin="5" />
-                <TextBlock x:Name="translateResult"
-                           Margin="5"
-                           DockPanel.Dock="Left"
-                           VerticalAlignment="Bottom"
-                           FontSize="16">
+        <hc:ScrollViewer Grid.Column="2"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="2"
+                        x:Name="translateTextFromPhoto">
+                <TextBlock Text="Получить текст и перевод с картинки"
+                           HorizontalAlignment="Center"
+                           FontSize="20" />
+                <DockPanel LastChildFill="False">
+                    <hc:ImageSelector x:Name="image"
+                                      Margin="5"
+                                      Width="50"
+                                      Height="50"
+                                      DockPanel.Dock="Left"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      hc:BorderElement.CornerRadius="50"
+                                      StrokeDashArray="10,5"
+                                      VerticalContentAlignment="Center"
+                                      HorizontalContentAlignment="Center"
+                                      DefaultExt="PNG Files (*.png)|*.png"
+                                      Filter="All files|*.*|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif" />
+                    <Image DockPanel.Dock="Top"
+                           Source="{Binding ElementName=image, Path=Uri}"
+                           Margin="5" 
+                           Width="150"/>
+                    <TextBlock x:Name="translateResult"
+                               Margin="5"
+                               DockPanel.Dock="Left"
+                               VerticalAlignment="Bottom"
+                               FontSize="16">
                     <Run Text="Текст:" />
-                    <Run Text=""
+                    <Run Text="Hello World"
                          FontWeight="Bold" />
                     <LineBreak />
                     <Run Text="Перевод:" />
-                    <Run Text=""
+                    <Run Text="Привет Мир"
                          FontWeight="Bold" />
-                </TextBlock>
-            </DockPanel>
-            <Button Content="Получить"
-                    Margin="5" />
-        </StackPanel>
+                    </TextBlock>
+                </DockPanel>
+                <Button Content="Получить"
+                        Margin="5" />
+            </StackPanel>
+        </hc:ScrollViewer>
     </Grid>
 </Page>

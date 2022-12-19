@@ -59,7 +59,7 @@
                            Foreground="Green">
                     <Run Text="Статус сервера:" />
                     <Run Text="В сети"
-                         FontWeight="Bold"/>
+                         FontWeight="Bold" />
                 </TextBlock>
                 <Border CornerRadius="5"
                         Grid.ColumnSpan="2"
@@ -68,24 +68,25 @@
                         Grid.Column="0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        BorderBrush="Black"
+                        BorderBrush="#FF4C4949"
                         BorderThickness="1">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    Text="Логин: "
-                                   Visibility="{Binding LoginPanelVisibility}"/>
+                                   Visibility="{Binding LoginPanelVisibility}" />
                         <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                                 Style="{StaticResource ButtonCustom}"
                                 VerticalAlignment="Center"
                                 Click="SignButton_Click" />
                     </StackPanel>
                 </Border>
-                <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
-                        Style="{StaticResource ButtonCustom}"
+                <Button Content="Выход"
                         VerticalAlignment="Center"
-                        Click="SignButton_Click" 
-                        Visibility="Collapsed"/>
+                        BorderBrush="#FF4C4949"
+                        Click="SignButton_Click"
+                        Visibility="{Binding LoginPanelVisibility}"
+                        Margin="-15 0 5 0"/>
             </StackPanel>
         </DockPanel>
         <Frame Grid.Row="1"

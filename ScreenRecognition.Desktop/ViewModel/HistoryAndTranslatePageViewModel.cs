@@ -56,14 +56,14 @@ namespace ScreenRecognition.Desktop.ViewModel
                         Id = 0,
                         Name = "Tesseract",
                     },
-                    RecognizedText = "Hello",
+                    RecognizedText = "Hello World",
                     RecognizedTextAccuracy = 0.999198,
                     SelectedTranslator = new Translator
                     {
                         Id = 0,
                         Name = "MyMemory",
                     },
-                    Translate = "ПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПриветПривет",
+                    Translate = "Привет Мир",
                     User = new User
                     {
                         Id = 0,

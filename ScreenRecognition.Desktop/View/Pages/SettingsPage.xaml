@@ -277,7 +277,7 @@
                                     Margin="5"
                                     BorderBrush="Transparent"
                                     Background="Transparent"
-                                    hc:IconElement.Geometry="{StaticResource EyeOpenGeometry}" />
+                                    hc:IconElement.Geometry="{DynamicResource CheckedGeometry}" />
                         </DockPanel>
                     </DockPanel>
                 </StackPanel>

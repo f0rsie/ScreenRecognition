@@ -12,9 +12,9 @@
         Height="530"
         MinHeight="530"
         MaxHeight="530"
-        Width="450"
-        MinWidth="450"
-        MaxWidth="450"
+        Width="470"
+        MinWidth="470"
+        MaxWidth="470"
         ResizeMode="NoResize">
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -41,10 +41,10 @@
                             hc:InfoElement.Placeholder="Логин"
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
-                <Button hc:IconElement.Geometry="{StaticResource EyeOpenGeometry}"
-                        DockPanel.Dock="Right"
+                <Button DockPanel.Dock="Right"
                         BorderBrush="Transparent"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        hc:IconElement.Geometry="{DynamicResource CheckedGeometry}"/>
             </DockPanel>
             <DockPanel LastChildFill="False"
                        Margin="20 0 20 0">
@@ -85,7 +85,7 @@
                             hc:InfoElement.Placeholder="Электронная почта"
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
-                <Button hc:IconElement.Geometry="{StaticResource EyeOpenGeometry}"
+                <Button hc:IconElement.Geometry="{DynamicResource CheckedGeometry}"
                         DockPanel.Dock="Right"
                         BorderBrush="Transparent"
                         VerticalAlignment="Center" />
