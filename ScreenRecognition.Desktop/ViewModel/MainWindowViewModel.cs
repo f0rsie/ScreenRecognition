@@ -29,6 +29,7 @@ using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
 using ScreenRecognition.Desktop.Models;
 using GlobalHotKeys;
 using ScreenRecognition.ImagePreparation.Services;
+using ScreenRecognition.Modules.Modules;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -67,6 +68,9 @@ namespace ScreenRecognition.Desktop.ViewModel
         private string _apiKey = "b70fae420f93dbe21880";
         private string _inputLanguage = "rus_eng";
         private string _outputLanguage = "eng";
+
+        private string _translatorName = "MyMemoryTextTranslator";
+        private string _ocrName = "TesseractOcrService";
 
         private readonly UniversalController _controller;
 
@@ -143,7 +147,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                 return;
             }
 
-            var page = ProgramElementFinder.FindByName<Page?>($"{pageName}Page");
+            var page = ProgramElementFinder.FindByName<Page?>($"{pageName}Page", Assembly.GetExecutingAssembly().FullName);
             CurrentPage = page;
 
             GC.Collect();
@@ -184,7 +188,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             try
             {
-                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
+                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={_translatorName}&ocrName={_ocrName}&translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
 
                 Result = result;
 

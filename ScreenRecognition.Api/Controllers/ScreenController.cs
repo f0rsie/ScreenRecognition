@@ -5,6 +5,7 @@ using System.Net.Mime;
 using ScreenRecognition.Api.Core;
 using ScreenRecognition.Api.Core.Services;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace ScreenRecognition.Api.Controllers
 {
@@ -19,13 +20,15 @@ namespace ScreenRecognition.Api.Controllers
     {
         [Route("Translate")]
         [HttpPost]
-        public async Task<string?> TextTranslate(string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
+        public async Task<string> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
         {
-            var asyncTask = await Task.Run(async() =>
+            var asyncTask = await Task.Run(async () =>
             {
-                var textTranslator = new TextTranslationService(translationApiKey, image, inputLanguage, outputLanguage);
+                var textOps = new TextOperations();
 
-                string? result = await textTranslator.GetTranslate();
+                var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
+
+                string result = await textOps.GetTranslate(translatorName, inputText, inputLanguage, outputLanguage, translationApiKey);
 
                 return result;
             });

@@ -4,6 +4,6 @@ namespace ScreenRecognition.Api.Core.Services.OCRs
 {
     public interface IOcrService
     {
-        OcrResultModel GetText(byte[] image);
+        OcrResultModel GetText(byte[] image, string inputLanguages);
     }
 }

@@ -12,25 +12,18 @@ namespace ScreenRecognition.Api.Core.Services
 {
     public class TesseractOcrService : IOcrService
     {
-        private string _languages;
-
-        public TesseractOcrService(string inputLanguages)
+        public OcrResultModel GetText(byte[] image, string inputLanguages)
         {
-            _languages = inputLanguages;
-        }
-
-        public OcrResultModel GetText(byte[] image)
-        {
-            if(_languages == null)
+            if(inputLanguages == null)
             {
-                _languages = "rus+eng";
+                inputLanguages = "rus+eng";
             }
             else
             {
-                _languages = _languages.Replace("_", "+");
+                inputLanguages = inputLanguages.Replace("_", "+");
             }
 
-            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", _languages, EngineMode.LstmOnly);
+            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", inputLanguages, EngineMode.LstmOnly);
 
             var img = Pix.LoadFromMemory(image);
             var res = ocrEngine.Process(img);

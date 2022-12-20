@@ -9,17 +9,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{A256
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{494BCD15-907D-4CFD-B14C-1944F34CBA82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.ImagePreparation", "ScreenRecognition.ImagePreparation\ScreenRecognition.ImagePreparation.csproj", "{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenRecognition.ImagePreparation", "ScreenRecognition.ImagePreparation\ScreenRecognition.ImagePreparation.csproj", "{693BCF43-79FD-46F7-89B2-022BEDF4B7C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.Api", "ScreenRecognition.Api\ScreenRecognition.Api.csproj", "{0E4C97F8-8332-4EA0-A494-944B053E8E2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenRecognition.Api", "ScreenRecognition.Api\ScreenRecognition.Api.csproj", "{0E4C97F8-8332-4EA0-A494-944B053E8E2E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {693BCF43-79FD-46F7-89B2-022BEDF4B7C5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.Desktop", "ScreenRecognition.Desktop\ScreenRecognition.Desktop.csproj", "{837BFA1D-FD3A-4074-9C2E-699DBA578917}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenRecognition.Desktop", "ScreenRecognition.Desktop\ScreenRecognition.Desktop.csproj", "{837BFA1D-FD3A-4074-9C2E-699DBA578917}"
 	ProjectSection(ProjectDependencies) = postProject
 		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {693BCF43-79FD-46F7-89B2-022BEDF4B7C5}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScreenRecognition.Modules", "ScreenRecognition.Modules\ScreenRecognition.Modules.csproj", "{070745A5-5863-4D83-BA63-E5990C2ED126}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{837BFA1D-FD3A-4074-9C2E-699DBA578917}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070745A5-5863-4D83-BA63-E5990C2ED126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070745A5-5863-4D83-BA63-E5990C2ED126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070745A5-5863-4D83-BA63-E5990C2ED126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070745A5-5863-4D83-BA63-E5990C2ED126}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {494BCD15-907D-4CFD-B14C-1944F34CBA82}
 		{0E4C97F8-8332-4EA0-A494-944B053E8E2E} = {56A53565-2BFE-4092-9BF9-AF0D276CA412}
 		{837BFA1D-FD3A-4074-9C2E-699DBA578917} = {A2561410-9E0B-444A-B2DB-C57091713BAD}
+		{070745A5-5863-4D83-BA63-E5990C2ED126} = {494BCD15-907D-4CFD-B14C-1944F34CBA82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0B55DBB-25D2-41B3-9CB8-F743BCED43A1}

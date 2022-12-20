@@ -30,6 +30,9 @@
     <Reference Include="ScreenRecognition.ImagePreparation">
       <HintPath>..\ScreenRecognition.ImagePreparation\bin\Debug\net6.0\ScreenRecognition.ImagePreparation.dll</HintPath>
     </Reference>
+    <Reference Include="ScreenRecognition.Modules">
+      <HintPath>..\ScreenRecognition.Modules\bin\Debug\net6.0\ScreenRecognition.Modules.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
