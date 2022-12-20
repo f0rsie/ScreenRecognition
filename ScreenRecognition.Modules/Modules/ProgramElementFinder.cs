@@ -20,15 +20,15 @@ namespace ScreenRecognition.Modules.Modules
                 if (name == null || assemblyName == null)
                     return result;
 
-                var element = Assembly.Load(assemblyName);
+                var assemblyElement = Assembly.Load(assemblyName);
 
-                var g = element.GetExportedTypes()
+                var typeElement = assemblyElement.GetExportedTypes()
                     .FirstOrDefault(type => type.Name == name);
 
-                if (g == null)
+                if (typeElement == null)
                     return result;
 
-                result = (T?)Activator.CreateInstance(assemblyName, g.FullName)?.Unwrap();
+                result = (T?)Activator.CreateInstance(assemblyName, typeElement.FullName)?.Unwrap();
 
             }
             catch { }
