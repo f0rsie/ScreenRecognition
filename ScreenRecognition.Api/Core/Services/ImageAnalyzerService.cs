@@ -33,6 +33,9 @@ namespace ScreenRecognition.Api.Core.Services
 
                 currentThreadNumber++;
             }
+            _threads.Add(new Thread(PreparedImageMethod));
+            _threads[currentThreadNumber].Start(null);
+            currentThreadNumber++;
 
             while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0)
             {
@@ -65,7 +68,10 @@ namespace ScreenRecognition.Api.Core.Services
                 byte[]? preparedImage = new byte[0];
                 OcrResultModel textResult;
 
-                preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, int.Parse(floodValue.ToString()));
+                if (floodValue != null)
+                    preparedImage = imagePreparationService.GetPreparedImage(ImagePreparationService.ByteToBitmap(_image), Color.Black, Color.White, int.Parse(floodValue.ToString()));
+                else
+                    preparedImage = _image;
 
                 if ((textResult = tesseractOcrService.GetText(preparedImage)).TextResult?.Replace("\n\n", "\n").Replace("\n", " \n ").Replace("\n", " ").Replace(" ", "").Length >= 2)
                 {
