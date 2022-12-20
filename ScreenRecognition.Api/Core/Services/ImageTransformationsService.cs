@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace ScreenRecognition.Api.Core.Services
 {
-    public class ImageTrainingService
+    public class ImageTransformationsService
     {
         private ImagePreparationService _imagePreparationService;
 
@@ -14,7 +14,7 @@ namespace ScreenRecognition.Api.Core.Services
 
         private byte[] _inputImage;
 
-        public ImageTrainingService()
+        public ImageTransformationsService()
         {
             _threads = new List<Thread>();
             _results = new List<byte[]>();

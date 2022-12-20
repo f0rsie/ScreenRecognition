@@ -83,7 +83,7 @@ namespace ScreenRecognition.Api.Core.Services
 
         private List<byte[]> ImagePrepare(byte[] image)
         {
-            var imageAnalyzerService = new ImageTrainingService();
+            var imageAnalyzerService = new ImageTransformationsService();
 
             var result = imageAnalyzerService.PreparedImages(image);
 
