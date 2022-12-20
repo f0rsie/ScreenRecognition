@@ -11,17 +11,27 @@ namespace ScreenRecognition.Modules.Modules
     // Assembly.GetExecutingAssembly().FullName
     public class ProgramElementFinder
     {
-        public static T? FindByName<T>(string? name, string? assemblyName)
+        public static T? FindByName<T>(string name, string assemblyName)
         {
-            if (name == null || assemblyName == null)
-                return default(T);
+            T? result = default(T);
 
-            var element = Assembly.Load(assemblyName);
+            try
+            {
+                if (name == null || assemblyName == null)
+                    return result;
 
-            var g = element.GetExportedTypes()
-                .FirstOrDefault(type => type.Name == name);
+                var element = Assembly.Load(assemblyName);
 
-            var result = (T?)Activator.CreateInstance(assemblyName, g.FullName)?.Unwrap();
+                var g = element.GetExportedTypes()
+                    .FirstOrDefault(type => type.Name == name);
+
+                if (g == null)
+                    return result;
+
+                result = (T?)Activator.CreateInstance(assemblyName, g.FullName)?.Unwrap();
+
+            }
+            catch { }
 
             return result;
         }

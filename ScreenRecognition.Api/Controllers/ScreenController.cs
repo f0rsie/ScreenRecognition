@@ -6,6 +6,7 @@ using ScreenRecognition.Api.Core;
 using ScreenRecognition.Api.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using ScreenRecognition.Api.Core.Services.Translators;
 
 namespace ScreenRecognition.Api.Controllers
 {
@@ -38,13 +39,23 @@ namespace ScreenRecognition.Api.Controllers
 
         [Route("ApiKeyValidation")]
         [HttpGet]
-        public bool ApiKeyValidation(string apiKey)
+        public bool ApiKeyValidation(string translatorName, string apiKey)
         {
-            var api = new Core.Services.Translators.MyMemoryTextTranslator();
-            
-            var result = api.ApiKeyValidation(apiKey);
+            var asyncTask = Task.Run(() =>
+            {
+                bool result = false;
 
-            return result;
+                var translator = TextOperations.FindElement<ITextTranslatorService?>(translatorName);
+
+                if (translator == null)
+                    return result;
+
+                result = translator.ApiKeyValidation(apiKey);
+
+                return result;
+            });
+
+            return asyncTask.Result;
         }
     }
 }

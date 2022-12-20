@@ -10,7 +10,7 @@ using Tesseract;
 
 namespace ScreenRecognition.Api.Core.Services
 {
-    public class TesseractOcrService : IOcrService
+    public class TesseractOcr : IOcrService
     {
         public OcrResultModel GetText(byte[] image, string inputLanguages)
         {

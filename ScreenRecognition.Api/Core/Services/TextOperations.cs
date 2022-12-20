@@ -90,9 +90,14 @@ namespace ScreenRecognition.Api.Core.Services
             return result;
         }
 
-        private T? FindElement<T>(string name)
+        public static T? FindElement<T>(string name)
         {
-            var result = (T?)ProgramElementFinder.FindByName<object>(name, Assembly.GetExecutingAssembly().FullName);
+            T? result = default(T);
+            try
+            {
+                result = (T?)ProgramElementFinder.FindByName<object>(name, Assembly.GetExecutingAssembly().FullName);
+            }
+            catch { }
 
             return result;
         }
