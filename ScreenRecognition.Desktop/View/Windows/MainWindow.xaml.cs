@@ -29,14 +29,6 @@ namespace ScreenRecognition.Desktop.View.Windows
             InitializeComponent();
         }
 
-        private void Window_Closing(object sender, EventArgs e)
-        {
-            if (App.Current.MainWindow == this)
-            {
-                RegisterGlobalHotkey.Dispose();
-            }
-        }
-
         private void NavigateButtons_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as MainWindowViewModel)?.NavigateToPage(sender);

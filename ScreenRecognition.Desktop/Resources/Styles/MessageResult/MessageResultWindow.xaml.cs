@@ -32,9 +32,8 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
         {
             result.Text = message;
 
-            resultWindow.Width = 800;
-            resultWindow.Height = height;
-            result.FontSize = 14;
+            resultWindow.Width = width;
+            //resultWindow.Height = height;
         }
 
         private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)

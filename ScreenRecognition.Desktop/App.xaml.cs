@@ -19,5 +19,10 @@ namespace ScreenRecognition.Desktop
         {
 
         }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            RegisterGlobalHotkey.Dispose();
+        }
     }
 }

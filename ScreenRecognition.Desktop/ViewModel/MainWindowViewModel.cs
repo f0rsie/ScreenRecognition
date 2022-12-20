@@ -65,8 +65,8 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         private string? _result;
         private string _apiKey = "b70fae420f93dbe21880";
-        private string _inputLanguage = "eng_rus";
-        private string _outputLanguage = "rus";
+        private string _inputLanguage = "rus_eng";
+        private string _outputLanguage = "eng";
 
         private readonly UniversalController _controller;
 

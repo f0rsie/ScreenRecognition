@@ -7,8 +7,8 @@
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
         mc:Ignorable="d"
         Title="MessageResultWindow"
-        Height="450"
-        Width="1200"
+        Height="auto"
+        Width="auto"
         x:Name="resultWindow"
         Background="#00000000"
         ResizeMode="NoResize"
@@ -18,13 +18,14 @@
         WindowStartupLocation="CenterOwner"
         MouseDoubleClick="resultWindow_MouseDoubleClick">
     <TextBlock x:Name="result"
-               TextWrapping="NoWrap"
+               TextWrapping="Wrap"
                TextAlignment="Left"
                VerticalAlignment="Top"
                HorizontalAlignment="Left"
                FontWeight="Heavy"
                FontStyle="Normal"
+               FontSize="14"
                Foreground="LightBlue"
                Width="auto"
-               Height="auto" />
+               Height="auto"/>
 </Window>

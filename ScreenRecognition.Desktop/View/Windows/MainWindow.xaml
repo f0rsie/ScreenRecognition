@@ -13,8 +13,7 @@
         Height="550"
         MinHeight="450"
         Width="1000"
-        MinWidth="800"
-        Closing="Window_Closing">
+        MinWidth="800">
     <Window.DataContext>
         <ViewModel:MainWindowViewModel />
     </Window.DataContext>
