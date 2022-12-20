@@ -70,7 +70,7 @@ namespace ScreenRecognition.Desktop.ViewModel
         private string _outputLanguage = "eng";
 
         private string _translatorName = "MyMemoryTextTranslator";
-        private string _ocrName = "TesseractOcrService";
+        private string _ocrName = "TesseractOcr";
 
         private readonly UniversalController _controller;
 
