@@ -25,15 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="ScreenRecognition.ImagePreparation">
-      <HintPath>..\ScreenRecognition.ImagePreparation\bin\Debug\net6.0\ScreenRecognition.ImagePreparation.dll</HintPath>
-    </Reference>
-    <Reference Include="ScreenRecognition.Modules">
-      <HintPath>..\ScreenRecognition.Modules\bin\Debug\net6.0\ScreenRecognition.Modules.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Resources\Tessdata\eng.traineddata">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -44,6 +35,11 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScreenRecognition.ImagePreparation\ScreenRecognition.ImagePreparation.csproj" />
+    <ProjectReference Include="..\ScreenRecognition.Modules\ScreenRecognition.Modules.csproj" />
   </ItemGroup>
 
 </Project>
