@@ -11,7 +11,7 @@ namespace ScreenRecognition.Desktop.Models
     {
         private T _shield;
 
-        public T Shield
+        public T? Shield
         {
             get => _shield;
             set
@@ -19,6 +19,16 @@ namespace ScreenRecognition.Desktop.Models
                 _shield = value;
                 OnPropertyChanged(nameof(Shield));
             }
+        }
+
+        public PropShieldModel()
+        {
+
+        }
+
+        public PropShieldModel(T s) : this()
+        {
+            Shield = s;
         }
     }
 }

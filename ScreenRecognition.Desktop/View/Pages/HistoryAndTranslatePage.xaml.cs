@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ScreenRecognition.Desktop.Models;
+using ScreenRecognition.Desktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,12 @@ namespace ScreenRecognition.Desktop.View.Pages
         public HistoryAndTranslatePage()
         {
             InitializeComponent();
+        }
+
+        private void GetTranslateButton_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as TestHistoryAndTranslatePageViewModel).Output.Shield.Image = selectedImage.Source;
+            (DataContext as TestHistoryAndTranslatePageViewModel).GetTranslate();
         }
     }
 }

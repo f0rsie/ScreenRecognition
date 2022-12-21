@@ -1,0 +1,39 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ScreenRecognition.Desktop.Properties" GeneratedClassName="ProgramSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="OcrLanguages" Type="System.String" Scope="User">
+      <Value Profile="(Default)">eng_rus</Value>
+    </Setting>
+    <Setting Name="TranslatorLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">rus_eng</Value>
+    </Setting>
+    <Setting Name="OcrName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TesseractOcr</Value>
+    </Setting>
+    <Setting Name="TranslatorName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MyMemoryTextTranslator</Value>
+    </Setting>
+    <Setting Name="TranslatorApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">nothing</Value>
+    </Setting>
+    <Setting Name="ResultColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LightBlue</Value>
+    </Setting>
+    <Setting Name="MinimizeToTray" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AutoStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="HotkeyEnabledStatus" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="HotkeyModifier" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Control</Value>
+    </Setting>
+    <Setting Name="HotkeyKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">KEY_Q</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

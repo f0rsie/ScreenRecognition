@@ -8,105 +8,68 @@ using System.Windows;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
-    public class SettingsPageViewModel : BaseViewModel
+    public class SettingsPageViewModel
     {
-        #region NotAuthPanelVisibility
-        private Visibility _profilePanelVisibility;
-        private Visibility _disconnectedPanelVisibility;
-
-        public Visibility DisconnectedPanelVisibility
-        {
-            get=> _disconnectedPanelVisibility;
-            set
-            {
-                _disconnectedPanelVisibility = value;
-                OnPropertyChanged(nameof(DisconnectedPanelVisibility));
-            }
-        }
-        public Visibility ProfilePanelVisibility
-        {
-            get => _profilePanelVisibility;
-            set
-            {
-                _profilePanelVisibility = value;
-                OnPropertyChanged(nameof(ProfilePanelVisibility));
-            }
-        }
-        #endregion
         #region Shields and Properties
-        private List<Language> _languageList;
-        private Language _selectedInputLanguage;
-        private Language _selectedOutputLanguage;
+        #region Shared
+        public PropShieldModel<Visibility> DisconnectedPanelVisibility { get; set; } = new();
+        public PropShieldModel<Visibility> ProfilePanelVisibility { get; set; } = new();
 
-        public List<Language> LanguageList
-        {
-            get=> _languageList;
-            set
-            {
-                _languageList = value;
-                OnPropertyChanged(nameof(LanguageList));
-            }
-        }
-        public Language SelectedInputLanguage
-        {
-            get => _selectedInputLanguage;
-            set
-            {
-                _selectedInputLanguage = value;
-                OnPropertyChanged(nameof(SelectedInputLanguage));
-            }
-        }
-        public Language SelectedOutputLanguage
-        {
-            get => _selectedOutputLanguage;
-            set
-            {
-                _selectedOutputLanguage = value;
-                OnPropertyChanged(nameof(SelectedOutputLanguage));
-            }
-        }
+        #endregion
+        #region Program Settings
+        public PropShieldModel<List<Language>> LanguageList { get; set; } = new(new List<Language>());
+        public PropShieldModel<Language> OcrLanguage { get; set; } = new(new Language());
+        public PropShieldModel<Language> TranslatorLanguage { get; set; } = new(new Language());
 
-        private List<Translator> _translatorList;
-        private Translator _selectedTranslator;
+        public PropShieldModel<List<Translator>> TranslatorList { get; set; } = new(new List<Translator>());
+        public PropShieldModel<Translator> SelectedTranslator { get; set; } = new(new Translator());
 
-        public List<Translator> TranslatorList
-        {
-            get => _translatorList;
-            set
-            {
-                _translatorList = value;
-                OnPropertyChanged(nameof(TranslatorList));
-            }
-        }
-        public Translator SelectedTranslator
-        {
-            get => _selectedTranslator;
-            set
-            {
-                _selectedTranslator = value;
-                OnPropertyChanged(nameof(SelectedTranslator));
-            }
-        }
+        public PropShieldModel<List<Ocr>> OcrList { get; set; } = new();
+        public PropShieldModel<Ocr> SelectedOcr { get; set; } = new();
 
-       
+        public PropShieldModel<string> ResultColor { get; set; } = new();
+        public PropShieldModel<string> TranslatorApiKey { get; set; } = new();
+        public PropShieldModel<string> CurrentProfileName { get; set; } = new();
+
+        public PropShieldModel<bool> StartupWithSystem { get; set; } = new();
+        public PropShieldModel<bool> MinimizeToTray { get; set; } = new();
+        public PropShieldModel<bool> T9Enable { get; set; } = new();
+
+        public PropShieldModel<List<GlobalHotKeys.Native.Types.VirtualKeyCode>> HotkeyKeyList { get; set; } = new();
+        public PropShieldModel<GlobalHotKeys.Native.Types.VirtualKeyCode> SelectedHotkeyKey { get; set; } = new();
+
+        public PropShieldModel<List<GlobalHotKeys.Native.Types.Modifiers>> HotkeyModifiersList { get; set; } = new();
+        public PropShieldModel<GlobalHotKeys.Native.Types.Modifiers> SelectedHotkeyModifier { get; set; } = new();
+        #endregion
+        #region Profile Settings
+        public PropShieldModel<User> User { get; set; } = new();
+
+        public PropShieldModel<List<Country>> CountryList { get; set; } = new();
+
+        public PropShieldModel<List<Setting>> SettingsList { get; set; } = new();
+        public PropShieldModel<Setting> SelectedSetting { get; set; } = new();
+        #endregion
         #endregion
 
         public SettingsPageViewModel()
         {
             AuthChecker();
+
+            HotkeyModifiersList.Shield = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
+            HotkeyKeyList.Shield = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
         }
 
         private void AuthChecker()
         {
-            if(ConnectedUserSingleton.ConnectionStatus == true)
+            if (ConnectedUserSingleton.ConnectionStatus == true)
             {
-                ProfilePanelVisibility = Visibility.Visible;
-                DisconnectedPanelVisibility = Visibility.Collapsed;
+                ProfilePanelVisibility.Shield = Visibility.Visible;
+                DisconnectedPanelVisibility.Shield = Visibility.Collapsed;
             }
             else
             {
-                ProfilePanelVisibility = Visibility.Collapsed;
-                DisconnectedPanelVisibility = Visibility.Visible;
+                ProfilePanelVisibility.Shield = Visibility.Collapsed;
+                DisconnectedPanelVisibility.Shield = Visibility.Visible;
             }
         }
     }

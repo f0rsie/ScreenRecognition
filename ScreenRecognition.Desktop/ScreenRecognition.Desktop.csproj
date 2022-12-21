@@ -35,4 +35,19 @@
     <Resource Include="Resources\Images\testHelloWorldImage.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Properties\ProgramSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProgramSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\ProgramSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ProgramSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
 </Project>

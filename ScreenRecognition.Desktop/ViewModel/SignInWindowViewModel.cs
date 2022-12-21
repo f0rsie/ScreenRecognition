@@ -63,7 +63,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             _user = await _controller.Get<string, User?>($"User/Auth?login={Login}&password={Password}");
 
-            if (_user != null)
+            if (_user != null && !string.IsNullOrEmpty(Password))
             {
                 ConnectedUserSingleton.Login = Login;
                 ConnectedUserSingleton.Password = Password;
