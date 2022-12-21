@@ -10,6 +10,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class SettingsPageViewModel : BaseViewModel
     {
+        #region NotAuthPanelVisibility
         private Visibility _profilePanelVisibility;
         private Visibility _disconnectedPanelVisibility;
 
@@ -31,6 +32,64 @@ namespace ScreenRecognition.Desktop.ViewModel
                 OnPropertyChanged(nameof(ProfilePanelVisibility));
             }
         }
+        #endregion
+        #region Shields and Properties
+        private List<Language> _languageList;
+        private Language _selectedInputLanguage;
+        private Language _selectedOutputLanguage;
+
+        public List<Language> LanguageList
+        {
+            get=> _languageList;
+            set
+            {
+                _languageList = value;
+                OnPropertyChanged(nameof(LanguageList));
+            }
+        }
+        public Language SelectedInputLanguage
+        {
+            get => _selectedInputLanguage;
+            set
+            {
+                _selectedInputLanguage = value;
+                OnPropertyChanged(nameof(SelectedInputLanguage));
+            }
+        }
+        public Language SelectedOutputLanguage
+        {
+            get => _selectedOutputLanguage;
+            set
+            {
+                _selectedOutputLanguage = value;
+                OnPropertyChanged(nameof(SelectedOutputLanguage));
+            }
+        }
+
+        private List<Translator> _translatorList;
+        private Translator _selectedTranslator;
+
+        public List<Translator> TranslatorList
+        {
+            get => _translatorList;
+            set
+            {
+                _translatorList = value;
+                OnPropertyChanged(nameof(TranslatorList));
+            }
+        }
+        public Translator SelectedTranslator
+        {
+            get => _selectedTranslator;
+            set
+            {
+                _selectedTranslator = value;
+                OnPropertyChanged(nameof(SelectedTranslator));
+            }
+        }
+
+       
+        #endregion
 
         public SettingsPageViewModel()
         {
