@@ -13,14 +13,14 @@ namespace ScreenRecognition.Api.Core.Services
         private IOcrService? _ocrService;
 
         private List<Thread> _threads;
-        private List<OcrResultModel> _results;
+        private static List<OcrResultModel> s_results;
 
         private string? _inputLanguages;
 
         public TextOperations()
         {
             _threads = new List<Thread>();
-            _results = new List<OcrResultModel>();
+            s_results = new List<OcrResultModel>();
         }
 
         public async Task<string> GetTranslate(string translatorName, string inputText, string inputLanguages, string outputLanguage, string? translationApiKey = null)
@@ -50,20 +50,12 @@ namespace ScreenRecognition.Api.Core.Services
 
             GetOcrResult(preparedImages);
 
-            var result = _results?.OrderBy(e => e.Confidence).ToArray()[_results.Count - 1].TextResult;
+            var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1].TextResult;
 
             if (!String.IsNullOrEmpty(result))
                 return result;
 
             return "Не распознано";
-        }
-
-        private void OcrOperationsmethod(object? image)
-        {
-            var result = _ocrService?.GetText(image as byte[], _inputLanguages);
-
-            if (!String.IsNullOrEmpty(result?.TextResult))
-                _results.Add(result);
         }
 
         private void GetOcrResult(List<byte[]> images)
@@ -72,20 +64,32 @@ namespace ScreenRecognition.Api.Core.Services
 
             foreach (var item in images)
             {
-                _threads.Add(new Thread(OcrOperationsmethod));
+                _threads.Add(new Thread(OcrOperationsMethod));
                 _threads[threadsCount].Start(item);
 
                 threadsCount++;
             }
 
-            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0) { }
+            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0) 
+            { 
+
+            }
+            threadsCount = 0;
+        }
+
+        private void OcrOperationsMethod(object? image)
+        {
+            var result = _ocrService?.GetText(image as byte[], _inputLanguages);
+
+            if (!String.IsNullOrEmpty(result?.TextResult))
+                s_results.Add(result);
         }
 
         private List<byte[]> ImagePrepare(byte[] image)
         {
             var imageAnalyzerService = new ImageTransformationsService();
 
-            var result = imageAnalyzerService.PreparedImages(image);
+            var result = imageAnalyzerService.PreparedImagesV2(image);
 
             return result;
         }

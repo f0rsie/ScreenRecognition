@@ -14,7 +14,7 @@ namespace ScreenRecognition.Api.Core.Services
     {
         public OcrResultModel GetText(byte[] image, string inputLanguages)
         {
-            if(inputLanguages == null)
+            if (inputLanguages == null)
             {
                 inputLanguages = "rus+eng";
             }
@@ -25,15 +25,21 @@ namespace ScreenRecognition.Api.Core.Services
 
             var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", inputLanguages, EngineMode.LstmOnly);
 
-            var img = Pix.LoadFromMemory(image);
-            var res = ocrEngine.Process(img);
-            var confidence = res.GetMeanConfidence();
+            OcrResultModel result = new OcrResultModel();
 
-            OcrResultModel result = new OcrResultModel
+            try
             {
-                TextResult = res.GetText().Replace("\n", ""),
-                Confidence = confidence
-            };
+                var img = Pix.LoadFromMemory(image);
+                var res = ocrEngine.Process(img);
+                var confidence = res.GetMeanConfidence();
+
+                result = new OcrResultModel
+                {
+                    TextResult = res.GetText().Replace("\n", ""),
+                    Confidence = confidence
+                };
+            }
+            catch { }
 
             return result;
         }

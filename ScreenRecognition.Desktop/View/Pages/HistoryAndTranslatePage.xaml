@@ -131,14 +131,13 @@
                                Margin="5"
                                DockPanel.Dock="Left"
                                VerticalAlignment="Bottom"
-                               FontSize="16"
-                               Text="{Binding Output.Shield.OutputText}">
+                               FontSize="16">
                     <Run Text="Текст:" />
                     <Run Text="Hello World"
                          FontWeight="Bold" />
                     <LineBreak />
                     <Run Text="Перевод:" />
-                    <Run Text="Привет Мир"
+                    <Run Text="{Binding Output.Shield.OutputText}"
                          FontWeight="Bold" />
                     </TextBlock>
                 </DockPanel>

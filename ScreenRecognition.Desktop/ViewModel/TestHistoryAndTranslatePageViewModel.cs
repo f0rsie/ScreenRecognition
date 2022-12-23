@@ -22,19 +22,20 @@ namespace ScreenRecognition.Desktop.ViewModel
         #region Translate history
         #endregion
         #region Translate photo
-        public PropShieldModel<PhotoTranslateOutputModel> Output { get; set; } = new(new PhotoTranslateOutputModel());
+        public PropShieldModel<PhotoTranslateOutputModel> Output { get; set; } = new();
         #endregion
         #endregion
 
         public TestHistoryAndTranslatePageViewModel()
         {
             _controller = new UniversalController("http://localhost:5046/api/");
-            Output.Shield = new PhotoTranslateOutputModel();
+
+            Output.Property = new();
         }
 
         public async void GetTranslate()
         {
-            var img = ImageSourceToList(Output.Shield.Image);
+            var img = ImageSourceToList(Output.Property.Image);
 
             var asyncTask = await Task.Run(async() =>
             {
@@ -45,7 +46,10 @@ namespace ScreenRecognition.Desktop.ViewModel
                 return result;
             });
 
-            Output.Shield.OutputText = asyncTask;
+            var result = asyncTask;
+
+            Output.Property.OutputText = result;
+            //Output.Reload();
         }
 
         public List<byte> ImageSourceToList(ImageSource imageSource)

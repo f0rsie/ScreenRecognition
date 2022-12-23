@@ -23,7 +23,7 @@
                     Grid.Column="0"
                     VerticalAlignment="Center"
                     x:Name="DisconnectedPanel"
-                    Visibility="{Binding DisconnectedPanelVisibility.Shield}"
+                    Visibility="{Binding DisconnectedPanelVisibility.Property}"
                     Grid.ColumnSpan="2">
             <TextBlock HorizontalAlignment="Center"
                        FontSize="20"
@@ -44,7 +44,7 @@
         <hc:ScrollViewer Grid.Column="0"
                          VerticalScrollBarVisibility="Auto"
                          HorizontalScrollBarVisibility="Auto"
-                         Visibility="{Binding ProfilePanelVisibility.Shield}"
+                         Visibility="{Binding ProfilePanelVisibility.Property}"
                          Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical"
                         Grid.Column="0"
@@ -68,8 +68,8 @@
                                     x:Name="userFirstname"
                                     hc:InfoElement.Placeholder="Имя"
                                     HorizontalContentAlignment="Left"
-                                    VerticalContentAlignment="Center" 
-                                    Text="{Binding User.Shield.FirstName}"/>
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding User.Property.FirstName}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -83,7 +83,7 @@
                                     hc:InfoElement.Placeholder="Фамилия"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Shield.LastName}" />
+                                    Text="{Binding User.Property.LastName}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -97,7 +97,7 @@
                                        x:Name="userBirthday"
                                        HorizontalContentAlignment="Left"
                                        VerticalContentAlignment="Center"
-                                       SelectedDate="{Binding User.Shield.Birthday}"/>
+                                       SelectedDate="{Binding User.Property.Birthday}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -111,9 +111,9 @@
                                      hc:InfoElement.Placeholder="Страна"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding CountryList.Shield}"
+                                     ItemsSource="{Binding CountryList.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding User.Shield.Country}"/>
+                                     SelectedItem="{Binding User.Property.Country}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -132,8 +132,8 @@
                                     Margin="5"
                                     x:Name="userRole"
                                     HorizontalContentAlignment="Left"
-                                    VerticalContentAlignment="Center" 
-                                    Text="{Binding User.Shield.Role.Name}"/>
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding User.Property.Role.Name}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -147,7 +147,7 @@
                                     x:Name="userLogin"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Shield.Login}" />
+                                    Text="{Binding User.Property.Login}" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -188,7 +188,7 @@
                                     x:Name="userEmail"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Shield.Email}" />
+                                    Text="{Binding User.Property.Email}" />
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -202,10 +202,10 @@
                                      hc:InfoElement.Placeholder="Профили"
                                      x:Name="settingsProfileList"
                                      HorizontalContentAlignment="Center"
-                                     VerticalContentAlignment="Center" 
-                                     ItemsSource="{Binding SettingsList.Shield}"
+                                     VerticalContentAlignment="Center"
+                                     ItemsSource="{Binding SettingsList.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding SelectedSetting.Shield}"/>
+                                     SelectedItem="{Binding SelectedSetting.Property}"/>
                         <Button DockPanel.Dock="Left"
                                 Width="auto"
                                 Content="Загрузить профиль"
@@ -257,9 +257,9 @@
                                      x:Name="outputLanguage"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding LanguageList.Shield}"
+                                     ItemsSource="{Binding LanguageList.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding TranslatorLanguage}" />
+                                     SelectedItem="{Binding TranslatorLanguage.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <DockPanel DockPanel.Dock="Top"
@@ -275,9 +275,9 @@
                                          x:Name="translator"
                                          HorizontalContentAlignment="Center"
                                          VerticalContentAlignment="Center"
-                                         ItemsSource="{Binding TranslatorList.Shield}"
+                                         ItemsSource="{Binding TranslatorList.Property}"
                                          DisplayMemberPath="Name"
-                                         SelectedItem="{Binding SelectedTranslator.Shield}" />
+                                         SelectedItem="{Binding SelectedTranslator.Property}" />
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Bottom"
                                    LastChildFill="False">
@@ -292,7 +292,7 @@
                                         Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
-                                        Text="{Binding TranslatorApiKey.Shield}"/>
+                                        Text="{Binding TranslatorApiKey.Property}"/>
                             <Button DockPanel.Dock="Right"
                                     Margin="5"
                                     BorderBrush="Transparent"
@@ -317,9 +317,9 @@
                                      hc:InfoElement.Placeholder="Язык"
                                      HorizontalContentAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding LanguageList.Shield}"
+                                     ItemsSource="{Binding LanguageList.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding OcrLanguage.Shield}" />
+                                     SelectedItem="{Binding OcrLanguage.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -333,9 +333,9 @@
                                      hc:InfoElement.Placeholder="OCR"
                                      HorizontalContentAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding OcrList.Shield}"
+                                     ItemsSource="{Binding OcrList.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding OcrLanguage.Shield}" />
+                                     SelectedItem="{Binding OcrLanguage.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False"
                                IsEnabled="False"
@@ -368,7 +368,7 @@
                                     Width="300"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding ResultColor.Shield}"/>
+                                    Text="{Binding ResultColor.Property}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -387,8 +387,8 @@
                                      hc:InfoElement.Placeholder="Клавиша"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding HotkeyKeyList.Shield}"
-                                     SelectedItem="{Binding SelectedHotkeyKey.Shield}"/>
+                                     ItemsSource="{Binding HotkeyKeyList.Property}"
+                                     SelectedItem="{Binding SelectedHotkeyKey.Property}"/>
                         <hc:ComboBox DockPanel.Dock="Right"
                                      Width="auto"
                                      x:Name="hotkeyModifier"
@@ -396,8 +396,8 @@
                                      hc:InfoElement.Placeholder="Модификатор"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding HotkeyModifiersList.Shield}"
-                                     SelectedItem="{Binding SelectedHotkeyModifier.Shield}"/>
+                                     ItemsSource="{Binding HotkeyModifiersList.Property}"
+                                     SelectedItem="{Binding SelectedHotkeyModifier.Property}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -415,7 +415,7 @@
                                   x:Name="autostartWithSystem"
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center"
-                                  IsChecked="{Binding StartupWithSystem.Shield}"/>
+                                  IsChecked="{Binding StartupWithSystem.Property}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -428,7 +428,7 @@
                                   x:Name="toTrayIcon"
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center"
-                                  IsChecked="{Binding MinimizeToTray.Shield}"/>
+                                  IsChecked="{Binding MinimizeToTray.Property}"/>
                     </DockPanel>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Профиль"
@@ -446,7 +446,7 @@
                                         Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
-                                        Text="{Binding CurrentProfileName.Shield}"/>
+                                        Text="{Binding CurrentProfileName.Property}"/>
                             <Button Content="Сохранить"
                                     Margin="5"
                                     DockPanel.Dock="Right"

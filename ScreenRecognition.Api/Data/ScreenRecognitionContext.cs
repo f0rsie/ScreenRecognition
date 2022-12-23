@@ -33,7 +33,7 @@ public partial class ScreenRecognitionContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-N48BNIV\\SQLEXPRESS;Database=ScreenRecognition;Trusted_Connection=True;User=sa;Password=05062003;TrustServerCertificate=True")
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-BB20U5H;Database=ScreenRecognition;Trusted_Connection=True;User=fff;Password=05062003;TrustServerCertificate=True")
         .UseLazyLoadingProxies();
     // DESKTOP-N48BNIV\SQLEXPRESS - College
     // DESKTOP-BB20U5H - Master

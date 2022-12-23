@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace ScreenRecognition.Desktop.Models
 {
@@ -11,24 +12,14 @@ namespace ScreenRecognition.Desktop.Models
     {
         private T _shield;
 
-        public T? Shield
+        public T Property
         {
             get => _shield;
             set
             {
                 _shield = value;
-                OnPropertyChanged(nameof(Shield));
+                OnPropertyChanged(nameof(Property));
             }
-        }
-
-        public PropShieldModel()
-        {
-
-        }
-
-        public PropShieldModel(T s) : this()
-        {
-            Shield = s;
         }
     }
 }

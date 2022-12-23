@@ -14,7 +14,10 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? prop = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            }
         }
     }
 }

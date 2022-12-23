@@ -17,12 +17,12 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         #endregion
         #region Program Settings
-        public PropShieldModel<List<Language>> LanguageList { get; set; } = new(new List<Language>());
-        public PropShieldModel<Language> OcrLanguage { get; set; } = new(new Language());
-        public PropShieldModel<Language> TranslatorLanguage { get; set; } = new(new Language());
+        public PropShieldModel<List<Language>> LanguageList { get; set; } = new();
+        public PropShieldModel<Language> OcrLanguage { get; set; } = new();
+        public PropShieldModel<Language> TranslatorLanguage { get; set; } = new();
 
-        public PropShieldModel<List<Translator>> TranslatorList { get; set; } = new(new List<Translator>());
-        public PropShieldModel<Translator> SelectedTranslator { get; set; } = new(new Translator());
+        public PropShieldModel<List<Translator>> TranslatorList { get; set; } = new();
+        public PropShieldModel<Translator> SelectedTranslator { get; set; } = new();
 
         public PropShieldModel<List<Ocr>> OcrList { get; set; } = new();
         public PropShieldModel<Ocr> SelectedOcr { get; set; } = new();
@@ -55,21 +55,21 @@ namespace ScreenRecognition.Desktop.ViewModel
         {
             AuthChecker();
 
-            HotkeyModifiersList.Shield = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
-            HotkeyKeyList.Shield = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
+            HotkeyModifiersList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
+            HotkeyKeyList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
         }
 
         private void AuthChecker()
         {
             if (ConnectedUserSingleton.ConnectionStatus == true)
             {
-                ProfilePanelVisibility.Shield = Visibility.Visible;
-                DisconnectedPanelVisibility.Shield = Visibility.Collapsed;
+                ProfilePanelVisibility.Property = Visibility.Visible;
+                DisconnectedPanelVisibility.Property = Visibility.Collapsed;
             }
             else
             {
-                ProfilePanelVisibility.Shield = Visibility.Collapsed;
-                DisconnectedPanelVisibility.Shield = Visibility.Visible;
+                ProfilePanelVisibility.Property = Visibility.Collapsed;
+                DisconnectedPanelVisibility.Property = Visibility.Visible;
             }
         }
     }
