@@ -113,7 +113,7 @@ namespace ScreenRecognition.ImagePreparation.Services
 
             if (backgroundMoreThanText && textPixels < backgroundPixels)
             {
-                return TestFloodFillImageInvertColor(bmp, backgroundColor, textColor, kernel);
+                return TestFloodFillImageInvertColorV2(bmp, textColor, backgroundColor, kernel, floodValue, backgroundMoreThanText);
             }
 
             return result;
