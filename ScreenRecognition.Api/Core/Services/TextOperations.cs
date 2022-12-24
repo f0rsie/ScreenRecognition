@@ -70,11 +70,11 @@ namespace ScreenRecognition.Api.Core.Services
                 threadsCount++;
             }
 
-            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0) 
-            { 
-
+            while (true) 
+            {
+                if (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() == 0)
+                    break;
             }
-            threadsCount = 0;
         }
 
         private void OcrOperationsMethod(object? image)

@@ -7,7 +7,9 @@
         public int Number { get; set; }
         public bool BackgroundMoreThanText { get; set; } = false;
 
-        public ImageSeparationThreadModel(int floodValue, byte[] imagePart, int number, bool backgroundMoreThanText)
+        public ImageSeparationThreadModel() { }
+
+        public ImageSeparationThreadModel(int floodValue, byte[] imagePart, int number, bool backgroundMoreThanText) : this()
         {
             FloodValue = floodValue;
             ImagePart = imagePart;

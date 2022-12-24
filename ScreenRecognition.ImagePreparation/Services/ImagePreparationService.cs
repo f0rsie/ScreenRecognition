@@ -44,7 +44,7 @@ namespace ScreenRecognition.ImagePreparation.Services
 
             var result = TestFloodFillImageInvertColorV2(bmp, textColor, backgroundColor, kernel, floodValue, backgroundMoreThanText);
 
-            //result.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{floodValue}_{random}.png", ImageFormat.Png);
+            //result.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedorigImage{floodValue}_{random}.png", ImageFormat.Png);
             return result;
         }
 
@@ -290,7 +290,7 @@ namespace ScreenRecognition.ImagePreparation.Services
         }
 
         // Вызывает всё, что нужно
-        public byte[] GetPreparedImage(Bitmap image, Color textColor, Color backgroundColor, bool backgroundMoreThanText, int floodValue = 100)
+        public byte[] GetPreparedImage(Bitmap image, Color textColor, Color backgroundColor, bool backgroundMoreThanText, int floodValue)
         {
 
             //var blackWhiteBitmap = FloodFillImage(image, floodValue, textColor, backgroundColor);
@@ -299,6 +299,7 @@ namespace ScreenRecognition.ImagePreparation.Services
             //invertedBlackWhiteBitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{floodValue}.png", ImageFormat.Png);
 
             var tt = TestFloodFillImage(image, textColor, backgroundColor, floodValue, backgroundMoreThanText);
+            //tt.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{floodValue}_{new Random().Next()}.png", ImageFormat.Png);
             var result = BitmapToByte(tt);
 
             return result;

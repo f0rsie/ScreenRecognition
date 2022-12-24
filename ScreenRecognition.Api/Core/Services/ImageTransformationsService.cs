@@ -5,7 +5,9 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace ScreenRecognition.Api.Core.Services
 {
@@ -21,8 +23,7 @@ namespace ScreenRecognition.Api.Core.Services
 
         private int _countParts = 0;
 
-        // Первый Int - Номер картинки, второй Int - FloodValue, третий массив - Картинка
-        private static List<(int, int, byte[])> _resultsNew;
+        private List<ImageSeparationThreadModel> _newResults;
 
         private byte[] _inputImage;
 
@@ -31,7 +32,7 @@ namespace ScreenRecognition.Api.Core.Services
             _threads = new List<Thread>();
             _results = new List<byte[]>();
 
-            _resultsNew = new();
+            _newResults = new List<ImageSeparationThreadModel>();
 
             _imagePreparationService = new ImagePreparationService();
         }
@@ -39,6 +40,10 @@ namespace ScreenRecognition.Api.Core.Services
         // Новая работа с изображением
         public List<byte[]> PreparedImagesV2(byte[] inputImage)
         {
+            _results = new();
+            _threads = new();
+            _newResults = new();
+
             _inputImage = inputImage;
             var bmp = ImagePreparationService.ByteToBitmap(inputImage);
 
@@ -48,11 +53,11 @@ namespace ScreenRecognition.Api.Core.Services
 
             int currentThreadsNumber = 0;
 
-            for (int floodValue = 80; floodValue <= 260; floodValue += 30)
+            for (int i = 0; i < imageParts.Count; i++)
             {
-                for (int i = 1; i <= imageParts.Count; i++)
+                for (int floodValue = 80; floodValue <= 260; floodValue += 30)
                 {
-                    var model = new ImageSeparationThreadModel(floodValue, imageParts[i - 1].ToArray(), i - 1, false);
+                    var model = new ImageSeparationThreadModel(floodValue, imageParts[i], i, false);
                     models.Add(model);
                     _threads.Add(new Thread(PrepareV2));
                     _threads[currentThreadsNumber].Start(model);
@@ -61,9 +66,10 @@ namespace ScreenRecognition.Api.Core.Services
                 }
             }
 
-            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0)
+            while (true)
             {
-
+                if (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() == 0)
+                    break;
             }
 
             var result = WholeImage();
@@ -142,54 +148,49 @@ namespace ScreenRecognition.Api.Core.Services
             return result;
         }
 
+        // Склейка всех частей изображений в целое
         private List<byte[]> WholeImage()
         {
+            int i = 0;
+            var res = new List<List<Bitmap>>();
             var result = new List<Bitmap>();
-            for (int floodValue = 80; floodValue <= 260; floodValue += 30)
+            for (int floodValue = 80; floodValue < 260; floodValue += 30)
             {
-                var r = _resultsNew.Where(e => e.Item2 == floodValue).ToList();
+                var r = _newResults.Where(e => e.FloodValue == floodValue).OrderBy(e => e.Number).ToList();
 
-                List<byte> currentValue = new();
                 List<Bitmap> currentBitmap = new();
-                r.Sort();
+
                 foreach (var value in r)
                 {
-                    currentValue.AddRange(value.Item3);
-                    currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.Item3));
+                    currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.ImagePart));
                 }
 
                 result.AddRange(currentBitmap);
+                res.Add(currentBitmap);
+                result = new List<Bitmap>();
             }
 
-            var preResult = result;
-
-            for (int i = 0; i <= 100; i += 10)
+            foreach (var item in res)
             {
                 Bitmap? resElement = null;
-                if (preResult.Count > 10)
+
+                if (item.Count >= 10)
                 {
-                    resElement = Draw(preResult.GetRange(0, 10), result[0].Width, result[0].Height);
-                    preResult.RemoveRange(0, 10);
-
-                    resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i / 10}.png", ImageFormat.Png);
-
-                    _results.Add(ImagePreparationService.BitmapToByte(resElement));
+                    resElement = Draw(item.GetRange(0, 10), item[0].Width, item[0].Height);
                 }
                 else
                 {
-                    resElement = Draw(preResult.GetRange(0, preResult.Count), result[0].Width, result[0].Height);
-                    preResult.RemoveRange(0, preResult.Count);
-
-                    resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i / 10}.png", ImageFormat.Png);
-
-                    _results.Add(ImagePreparationService.BitmapToByte(resElement));
-                    break;
+                    resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
                 }
+
+                resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
+                _results.Add(ImagePreparationService.BitmapToByte(resElement));
             }
 
             return _results;
         }
 
+        // Склейка нескольких изоюражений в одно
         public Bitmap? Draw(List<Bitmap> images, int Width, int Height)
         {
             try
@@ -225,7 +226,15 @@ namespace ScreenRecognition.Api.Core.Services
             var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
             var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, sepModel.BackgroundMoreThanText, int.Parse(sepModel.FloodValue.ToString()));
 
-            _resultsNew.Add((sepModel.Number, sepModel.FloodValue, image));
+            ImageSeparationThreadModel result = new ImageSeparationThreadModel
+            {
+                BackgroundMoreThanText = sepModel.BackgroundMoreThanText,
+                FloodValue = sepModel.FloodValue,
+                ImagePart = image,
+                Number = sepModel.Number,
+            };
+
+            _newResults.Add(result);
         }
 
         private void Prepare(object? floodValue)
