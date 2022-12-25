@@ -89,7 +89,7 @@ namespace ScreenRecognition.Api.Core.Services
         {
             var imageAnalyzerService = new ImageTransformationsService();
 
-            var result = imageAnalyzerService.PreparedImagesV2(image);
+            var result = imageAnalyzerService.PreparedImagesV3(image);
 
             return result;
         }

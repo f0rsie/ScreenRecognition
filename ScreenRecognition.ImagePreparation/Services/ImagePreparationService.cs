@@ -33,19 +33,52 @@ namespace ScreenRecognition.ImagePreparation.Services
         {
             var random = new Random().Next();
 
-            //bmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/origImage{floodValue}_{random}.png", ImageFormat.Png);
-
-            Color color = new Color();
-
             var kernel = new double[,]
                  {{0.1, 0.1, 0.1},
                   {0.1, 0.1, 0.1},
                   {0.1, 0.1, 0.1}};
 
-            var result = TestFloodFillImageInvertColorV2(bmp, textColor, backgroundColor, kernel, floodValue, backgroundMoreThanText);
+            var res = TestFloodFillImageAuto(bmp, kernel);
+            var result = TestFloodFillImageInvertColorV2(bmp, textColor, backgroundColor, kernel, res.R, backgroundMoreThanText);
 
-            //result.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedorigImage{floodValue}_{random}.png", ImageFormat.Png);
+            //bmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/origImage{res.G}_{random}.png", ImageFormat.Png);
+            //result.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedOrigImage{res.G}_{random}.png", ImageFormat.Png);
             return result;
+        }
+
+        private Color TestFloodFillImageAuto(Bitmap bmp, double[,] kernel)
+        {
+            List<Color> pixelColor = new();
+            int a = 0, r = 0, g = 0, b = 0;
+
+            var dilated = (Bitmap)bmp.Clone();
+
+            using (var wr0 = new ImageWrapper(bmp, true))
+            using (var wr1 = new ImageWrapper(dilated, true))
+            {
+                foreach (var p in wr0)
+                {
+                    pixelColor.Add(wr1[p]);
+                }
+
+                foreach (var item in pixelColor)
+                {
+                    a += item.A;
+                    r += item.R;
+                    g += item.G;
+                    b += item.B;
+                }
+
+                a /= pixelColor.Count;
+                r /= pixelColor.Count;
+                g /= pixelColor.Count;
+                b /= pixelColor.Count;
+            }
+            Color colorResult = Color.FromArgb(a, r, g, b);
+
+            int floodValue = ((b + g + b) / 3);
+
+            return colorResult;
         }
 
         public Color GetBackgroundColor(Bitmap bmp, int floodValue)
@@ -95,8 +128,8 @@ namespace ScreenRecognition.ImagePreparation.Services
             using (var wr0 = new ImageWrapper(bmp, true))
             using (var wr1 = new ImageWrapper(dilated, true))
                 foreach (var p in wr0)
-                    if (wr1[p].G > 0)
-                        if ((wr1[p] = wr0[p]).G > floodValue)
+                    if (wr1[p].R > 0)
+                        if ((wr1[p] = wr0[p]).R > floodValue)
                         {
                             textPixels++;
 
@@ -183,7 +216,7 @@ namespace ScreenRecognition.ImagePreparation.Services
                             wr0[p] = backgroundColor;
                         }
 
-            if(textPixels < backgroundPixels)
+            if (textPixels < backgroundPixels)
             {
                 return TestFloodFillImageInvertColor(bmp, backgroundColor, textColor, kernel);
             }

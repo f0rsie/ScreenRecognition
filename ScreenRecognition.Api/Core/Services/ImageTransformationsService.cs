@@ -37,6 +37,50 @@ namespace ScreenRecognition.Api.Core.Services
             _imagePreparationService = new ImagePreparationService();
         }
 
+        // Новая работа с изображением V3
+        public List<byte[]> PreparedImagesV3(byte[] inputImage)
+        {
+            _results = new();
+            _threads = new();
+            _newResults = new();
+
+            _inputImage = inputImage;
+            var bmp = ImagePreparationService.ByteToBitmap(inputImage);
+            bmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/defaultImage.png", ImageFormat.Png);
+
+            List<ImageSeparationThreadModel> models = new();
+
+            int countParts = countParts = inputImage.Length / 200000;
+            if (countParts <= 0)
+                countParts = 1;
+            else if (inputImage.Length / 200000.0 > countParts)
+                countParts++;
+
+            var imageParts = ImageSeparation(bmp, countParts);
+
+            int currentThreadsNumber = 0;
+
+            for (int i = 0; i < imageParts.Count; i++)
+            {
+                var model = new ImageSeparationThreadModel(0, imageParts[i], i, false);
+                models.Add(model);
+                _threads.Add(new Thread(PrepareV2));
+                _threads[currentThreadsNumber].Start(model);
+
+                currentThreadsNumber++;
+            }
+
+            while (true)
+            {
+                if (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() == 0)
+                    break;
+            }
+
+            var result = WholeImageV2(countParts);
+
+            return result;
+        }
+
         // Новая работа с изображением
         public List<byte[]> PreparedImagesV2(byte[] inputImage)
         {
@@ -146,6 +190,44 @@ namespace ScreenRecognition.Api.Core.Services
             }
 
             return result;
+        }
+
+        private List<byte[]> WholeImageV2(int countParts)
+        {
+            int i = 0;
+            var res = new List<List<Bitmap>>();
+            var result = new List<Bitmap>();
+            var r = _newResults.OrderBy(e => e.Number).ToList();
+
+            List<Bitmap> currentBitmap = new();
+
+            foreach (var value in r)
+            {
+                currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.ImagePart));
+            }
+
+            result.AddRange(currentBitmap);
+            res.Add(currentBitmap);
+            result = new List<Bitmap>();
+
+            foreach (var item in res)
+            {
+                Bitmap? resElement = null;
+
+                if (item.Count >= countParts)
+                {
+                    resElement = Draw(item.GetRange(0, countParts), item[0].Width, item[0].Height);
+                }
+                else
+                {
+                    resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
+                }
+
+                resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
+                _results.Add(ImagePreparationService.BitmapToByte(resElement));
+            }
+
+            return _results;
         }
 
         // Склейка всех частей изображений в целое
