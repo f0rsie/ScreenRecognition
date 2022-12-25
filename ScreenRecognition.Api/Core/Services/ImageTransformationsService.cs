@@ -56,6 +56,8 @@ namespace ScreenRecognition.Api.Core.Services
             else if (inputImage.Length / 200000.0 > countParts)
                 countParts++;
 
+            // Из-за этого все и просиходит долго, вернее на нём дольше всего застревает обработка фоток
+            // Переделать: реализовать эту функцию через ImageWrapper, как в Services
             var imageParts = ImageSeparation(bmp, countParts);
 
             int currentThreadsNumber = 0;
