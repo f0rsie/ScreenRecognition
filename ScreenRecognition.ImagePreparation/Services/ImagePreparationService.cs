@@ -38,11 +38,55 @@ namespace ScreenRecognition.ImagePreparation.Services
                   {0.1, 0.1, 0.1},
                   {0.1, 0.1, 0.1}};
 
-            var res = TestFloodFillImageAuto(bmp, kernel);
-            var result = TestFloodFillImageInvertColorV2(bmp, textColor, backgroundColor, kernel, res.R, backgroundMoreThanText);
+            var result = NewTestFloodFillImageAuto(bmp, textColor, backgroundColor);
+
+            //var res = TestFloodFillImageAuto(bmp, kernel);
+            //var result = TestFloodFillImageInvertColorV2(gg, textColor, backgroundColor, kernel, res.R, backgroundMoreThanText);
 
             //bmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/origImage{res.G}_{random}.png", ImageFormat.Png);
-            //result.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedOrigImage{res.G}_{random}.png", ImageFormat.Png);
+            //result.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedOrigImage{floodValue}_{random}.png", ImageFormat.Png);
+            return result;
+        }
+
+        private Bitmap NewTestFloodFillImageAuto(Bitmap bmp, Color firstPixelColor, Color secondPixelColor)
+        {
+            int firstPixelType = 0;
+            int secondPixelType = 0;
+
+            (int, int) startPixel = (new Random().Next(0, bmp.Width), new Random().Next(0, bmp.Height));
+
+            var result = (Bitmap)bmp.Clone();
+
+            using (var wr0 = new ImageWrapper(bmp, true))
+            using (var wr1 = new ImageWrapper(result, true))
+            {
+                foreach (var p in wr0)
+                {
+                    if (IsColorsSimilar(wr1[startPixel.Item1, startPixel.Item2], wr1[p]))
+                    {
+                        wr1[p] = firstPixelColor;
+
+                        firstPixelType++;
+                    }
+                    else
+                    {
+                        wr1[p] = secondPixelColor;
+
+                        secondPixelType++;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        // Проверка двух пикселей на похожесть
+        // Переделать: необходимо менять colorDifference в зависимости от размера изображения; чем меньше изображение - тем меньше должно быть это числл, а чем оно больше - тем больше это число
+        private bool IsColorsSimilar(Color firstColor, Color secondColor)
+        {
+            int colorDifference = (int)(255 / 2);
+            bool result = Math.Abs(firstColor.R - secondColor.R) < colorDifference && Math.Abs(firstColor.G - secondColor.G) < colorDifference && Math.Abs(firstColor.B - secondColor.B) < colorDifference;
+
             return result;
         }
 

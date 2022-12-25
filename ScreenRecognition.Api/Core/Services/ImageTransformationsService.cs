@@ -184,7 +184,7 @@ namespace ScreenRecognition.Api.Core.Services
 
                 var element = ImagePreparationService.BitmapToByte(bitmap);
 
-                bitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
+                //bitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
 
                 result.Add(element);
             }
