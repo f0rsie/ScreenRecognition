@@ -85,7 +85,7 @@ namespace ScreenRecognition.ImagePreparation.Services
         {
             var sampleStream = new MemoryStream();
             bitmap.Save(sampleStream, ImageFormat.Bmp);
-
+            
             return sampleStream.ToArray();
         }
 

@@ -50,7 +50,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             List<ImageSeparationThreadModel> models = new();
 
-            int countParts = countParts = inputImage.Length / 200000;
+            int countParts = inputImage.Length / 200000;
             if (countParts <= 0)
                 countParts = 1;
             else if (inputImage.Length / 200000.0 > countParts)
@@ -149,21 +149,21 @@ namespace ScreenRecognition.Api.Core.Services
         }
 
         // Склейка нескольких изоюражений в одно
-        public Bitmap? Draw(List<Bitmap> images, int Width, int Height)
+        public Bitmap? Draw(List<Bitmap> images, int width, int height)
         {
             try
             {
                 int num = 0;
-                int ListLength = images.Count * Width;
+                int ListLength = images.Count * width;
 
-                Bitmap bitmap = new Bitmap(ListLength, Height);
+                Bitmap bitmap = new Bitmap(ListLength, height);
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     g.InterpolationMode = InterpolationMode.NearestNeighbor;
                     foreach (var img in images)
                     {
                         Image tmp = img;
-                        g.DrawImageUnscaled(tmp, Width * num, 0);
+                        g.DrawImageUnscaled(tmp, width * num, 0);
                         num++;
                     }
                 }
