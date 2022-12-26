@@ -37,8 +37,8 @@ namespace ScreenRecognition.Api.Core.Services
             _imagePreparationService = new ImagePreparationService();
         }
 
-        // Новая работа с изображением V3
-        public List<byte[]> PreparedImagesV3(byte[] inputImage)
+        // Работа с изображением
+        public List<byte[]> PreparedImages(byte[] inputImage)
         {
             _results = new();
             _threads = new();
@@ -56,17 +56,15 @@ namespace ScreenRecognition.Api.Core.Services
             else if (inputImage.Length / 200000.0 > countParts)
                 countParts++;
 
-            // Из-за этого все и просиходит долго, вернее на нём дольше всего застревает обработка фоток
-            // Переделать: реализовать эту функцию через ImageWrapper, как в Services
             var imageParts = ImageSeparation(bmp, countParts);
 
             int currentThreadsNumber = 0;
 
             for (int i = 0; i < imageParts.Count; i++)
             {
-                var model = new ImageSeparationThreadModel(0, imageParts[i], i, false);
+                var model = new ImageSeparationThreadModel(imageParts[i], i);
                 models.Add(model);
-                _threads.Add(new Thread(PrepareV2));
+                _threads.Add(new Thread(Prepare));
                 _threads[currentThreadsNumber].Start(model);
 
                 currentThreadsNumber++;
@@ -78,73 +76,12 @@ namespace ScreenRecognition.Api.Core.Services
                     break;
             }
 
-            var result = WholeImageV2(countParts);
+            var result = WholeImage(countParts);
 
             return result;
         }
 
-        // Новая работа с изображением
-        public List<byte[]> PreparedImagesV2(byte[] inputImage)
-        {
-            _results = new();
-            _threads = new();
-            _newResults = new();
-
-            _inputImage = inputImage;
-            var bmp = ImagePreparationService.ByteToBitmap(inputImage);
-
-            List<ImageSeparationThreadModel> models = new List<ImageSeparationThreadModel>();
-
-            var imageParts = ImageSeparation(bmp, 10);
-
-            int currentThreadsNumber = 0;
-
-            for (int i = 0; i < imageParts.Count; i++)
-            {
-                for (int floodValue = 80; floodValue <= 260; floodValue += 30)
-                {
-                    var model = new ImageSeparationThreadModel(floodValue, imageParts[i], i, false);
-                    models.Add(model);
-                    _threads.Add(new Thread(PrepareV2));
-                    _threads[currentThreadsNumber].Start(model);
-
-                    currentThreadsNumber++;
-                }
-            }
-
-            while (true)
-            {
-                if (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() == 0)
-                    break;
-            }
-
-            var result = WholeImage();
-
-            return result;
-        }
-
-        public List<byte[]> PreparedImages(byte[] inputImage)
-        {
-            _inputImage = inputImage;
-
-            int currentThreadNumber = 0;
-
-            for (int i = 80; i <= 250; i += 10)
-            {
-                _threads.Add(new Thread(Prepare));
-                _threads[currentThreadNumber].Start(i);
-
-                currentThreadNumber++;
-            }
-            _threads.Add(new Thread(Prepare));
-            _threads[currentThreadNumber].Start(null);
-
-            while (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() > 0) { }
-
-            return _results;
-        }
-
-        // Деление массива байтов изображения на части
+        // ImageSeparation через ImageWrapper
         private List<byte[]> ImageSeparation(Bitmap bmp, int countParts)
         {
             List<byte[]> result = new List<byte[]>();
@@ -155,38 +92,17 @@ namespace ScreenRecognition.Api.Core.Services
             int currentHeight = bmp.Height;
 
             int lastWidth = 0;
-            int lastHeight = 0;
-
             for (int count = 0; count < countParts; count++)
             {
-                Bitmap bitmap = new Bitmap(currentWidth - lastWidth, currentHeight);
-
-                try
-                {
-
-                    for (int i = lastWidth; i < currentWidth; i++)
-                    {
-                        for (int j = 0; j < currentHeight; j++)
-                        {
-                            Color p = Color.FromArgb(bmp.GetPixel(i, j).ToArgb());
-
-                            bitmap.SetPixel(i - lastWidth, j, p);
-                        }
-                    }
-                }
-                catch
-                {
-
-                }
+                var resultBitmap = bmp.Clone(new Rectangle(lastWidth, 0, currentWidth - lastWidth, currentHeight), bmp.PixelFormat);
 
                 lastWidth = currentWidth;
-                lastHeight = currentHeight;
 
                 currentWidth += bmp.Width / _countParts;
 
-                var element = ImagePreparationService.BitmapToByte(bitmap);
+                var element = ImagePreparationService.BitmapToByte(resultBitmap);
 
-                //bitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
+                //resultBitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
 
                 result.Add(element);
             }
@@ -194,7 +110,7 @@ namespace ScreenRecognition.Api.Core.Services
             return result;
         }
 
-        private List<byte[]> WholeImageV2(int countParts)
+        private List<byte[]> WholeImage(int countParts)
         {
             int i = 0;
             var res = new List<List<Bitmap>>();
@@ -219,48 +135,6 @@ namespace ScreenRecognition.Api.Core.Services
                 if (item.Count >= countParts)
                 {
                     resElement = Draw(item.GetRange(0, countParts), item[0].Width, item[0].Height);
-                }
-                else
-                {
-                    resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
-                }
-
-                resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
-                _results.Add(ImagePreparationService.BitmapToByte(resElement));
-            }
-
-            return _results;
-        }
-
-        // Склейка всех частей изображений в целое
-        private List<byte[]> WholeImage()
-        {
-            int i = 0;
-            var res = new List<List<Bitmap>>();
-            var result = new List<Bitmap>();
-            for (int floodValue = 80; floodValue < 260; floodValue += 30)
-            {
-                var r = _newResults.Where(e => e.FloodValue == floodValue).OrderBy(e => e.Number).ToList();
-
-                List<Bitmap> currentBitmap = new();
-
-                foreach (var value in r)
-                {
-                    currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.ImagePart));
-                }
-
-                result.AddRange(currentBitmap);
-                res.Add(currentBitmap);
-                result = new List<Bitmap>();
-            }
-
-            foreach (var item in res)
-            {
-                Bitmap? resElement = null;
-
-                if (item.Count >= 10)
-                {
-                    resElement = Draw(item.GetRange(0, 10), item[0].Width, item[0].Height);
                 }
                 else
                 {
@@ -302,38 +176,21 @@ namespace ScreenRecognition.Api.Core.Services
             return null;
         }
 
-        // Новая работа с изображением
-        private void PrepareV2(object? model)
+        // Обработка одной части изображения
+        private void Prepare(object? model)
         {
             var sepModel = model as ImageSeparationThreadModel;
 
             var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
-            var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, sepModel.BackgroundMoreThanText, int.Parse(sepModel.FloodValue.ToString()));
+            var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black);
 
             ImageSeparationThreadModel result = new ImageSeparationThreadModel
             {
-                BackgroundMoreThanText = sepModel.BackgroundMoreThanText,
-                FloodValue = sepModel.FloodValue,
                 ImagePart = image,
                 Number = sepModel.Number,
             };
 
             _newResults.Add(result);
-        }
-
-        private void Prepare(object? floodValue)
-        {
-            if (floodValue == null)
-            {
-                _results.Add(_inputImage);
-
-                return;
-            }
-
-            var bmp = ImagePreparationService.ByteToBitmap(_inputImage);
-            var image = _imagePreparationService.GetPreparedImage(bmp, Color.Black, Color.White, true, int.Parse(floodValue.ToString()));
-
-            _results.Add(image);
         }
     }
 }
