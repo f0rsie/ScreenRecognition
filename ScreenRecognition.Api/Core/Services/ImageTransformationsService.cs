@@ -67,7 +67,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             for (int i = 0; i < imageParts.Count; i++)
             {
-                var model = new ImageSeparationThreadModel(imageParts[i], i);
+                var model = new ImageSeparationThreadModel(imageParts[i], i, "default");
                 models.Add(model);
                 _threads.Add(new Thread(Prepare));
                 _threads[currentThreadsNumber].Start(model);
@@ -193,6 +193,7 @@ namespace ScreenRecognition.Api.Core.Services
             {
                 ImagePart = image,
                 Number = sepModel.Number,
+                Type = "default",
             };
 
             _newResults.Add(result);
