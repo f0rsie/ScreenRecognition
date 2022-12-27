@@ -6,19 +6,17 @@ namespace ScreenRecognition.ImagePreparation.Services
     public class ImagePreparationService
     {
         // Конвертер из цветного в чёрно-белое
-        private Bitmap FloodFillImage(Bitmap bmp, Color firstColor, Color secondColor)
+        private Bitmap FloodFillImage(Bitmap bmp, Color firstColor, Color secondColor, Color startPixelColor, int imageSize)
         {
-            var result = ImageColorSetter(bmp, firstColor, secondColor);
+            var result = ImageColorSetter(bmp, firstColor, secondColor, startPixelColor, imageSize);
 
             return result;
         }
 
-        private Bitmap ImageColorSetter(Bitmap bmp, Color firstPixelColor, Color secondPixelColor)
+        private Bitmap ImageColorSetter(Bitmap bmp, Color firstPixelColor, Color secondPixelColor, Color startPixelColor, int imageSize)
         {
             int firstPixelType = 0;
             int secondPixelType = 0;
-
-            (int, int) startPixel = (new Random().Next(0, bmp.Width), new Random().Next(0, bmp.Height));
 
             var result = (Bitmap)bmp.Clone();
 
@@ -27,7 +25,7 @@ namespace ScreenRecognition.ImagePreparation.Services
             {
                 foreach (var p in wr0)
                 {
-                    if (IsColorsSimilar(wr1[startPixel.Item1, startPixel.Item2], wr1[p]))
+                    if (IsColorsSimilar(startPixelColor, wr1[p], imageSize))
                     {
                         wr1[p] = firstPixelColor;
 
@@ -47,9 +45,17 @@ namespace ScreenRecognition.ImagePreparation.Services
 
         // Проверка двух пикселей на похожесть
         // Переделать: необходимо менять colorDifference в зависимости от размера изображения; чем меньше изображение - тем меньше должно быть это числл, а чем оно больше - тем больше это число
-        private bool IsColorsSimilar(Color firstColor, Color secondColor)
+        // UDP: передалано, но работает не совсем так, как расчитывал. Необходима дальнейшная переработка
+        private bool IsColorsSimilar(Color firstColor, Color secondColor, int imageSize)
         {
-            int colorDifference = (int)(255 / 2);
+            int ratio = 2;
+
+            if (imageSize <= 800000)
+                ratio = 6;
+            if (imageSize <= 400000)
+                ratio = 4;
+
+            int colorDifference = (int)(255 / ratio);
             bool result = Math.Abs(firstColor.R - secondColor.R) < colorDifference && Math.Abs(firstColor.G - secondColor.G) < colorDifference && Math.Abs(firstColor.B - secondColor.B) < colorDifference;
 
             return result;
@@ -85,7 +91,7 @@ namespace ScreenRecognition.ImagePreparation.Services
         {
             var sampleStream = new MemoryStream();
             bitmap.Save(sampleStream, ImageFormat.Bmp);
-            
+
             return sampleStream.ToArray();
         }
 
@@ -98,9 +104,9 @@ namespace ScreenRecognition.ImagePreparation.Services
         }
 
         // Вызывает всё, что нужно
-        public byte[] GetPreparedImage(Bitmap image, Color firstColor, Color secondColor)
+        public byte[] GetPreparedImage(Bitmap image, Color firstColor, Color secondColor, Color startPixelColor, int imageSize)
         {
-            var blackWhiteBitmap = FloodFillImage(image, firstColor, secondColor);
+            var blackWhiteBitmap = FloodFillImage(image, firstColor, secondColor, startPixelColor, imageSize);
             var result = BitmapToByte(blackWhiteBitmap);
 
             return result;

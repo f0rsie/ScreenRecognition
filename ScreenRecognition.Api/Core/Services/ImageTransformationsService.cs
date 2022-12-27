@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using ScreenRecognition.Api.Models;
+﻿using ScreenRecognition.Api.Models;
 using ScreenRecognition.ImagePreparation.Services;
 using System;
 using System.Drawing;
@@ -20,6 +19,9 @@ namespace ScreenRecognition.Api.Core.Services
 
         private List<Thread> _threads;
         private List<byte[]> _results;
+
+        private Color _startPixelColor;
+        private int _imageSize;
 
         private int _countParts = 0;
 
@@ -47,6 +49,9 @@ namespace ScreenRecognition.Api.Core.Services
             _inputImage = inputImage;
             var bmp = ImagePreparationService.ByteToBitmap(inputImage);
             bmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/defaultImage.png", ImageFormat.Png);
+
+            _startPixelColor = bmp.GetPixel(new Random().Next(0, bmp.Width), new Random().Next(0, bmp.Height));
+            _imageSize = bmp.Width * bmp.Height;
 
             List<ImageSeparationThreadModel> models = new();
 
@@ -182,7 +187,7 @@ namespace ScreenRecognition.Api.Core.Services
             var sepModel = model as ImageSeparationThreadModel;
 
             var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
-            var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black);
+            var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, _startPixelColor, _imageSize);
 
             ImageSeparationThreadModel result = new ImageSeparationThreadModel
             {
