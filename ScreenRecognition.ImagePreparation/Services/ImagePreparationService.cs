@@ -87,10 +87,12 @@ namespace ScreenRecognition.ImagePreparation.Services
         }
 
         // Конвертер Bitmap в Byte array
-        public static byte[] BitmapToByte(Bitmap bitmap)
+        public static byte[] BitmapToByte(Bitmap bitmap, ImageFormat? imageFormat = null)
         {
+            imageFormat ??= ImageFormat.Bmp;
+
             var sampleStream = new MemoryStream();
-            bitmap.Save(sampleStream, ImageFormat.Bmp);
+            bitmap.Save(sampleStream, imageFormat);
 
             return sampleStream.ToArray();
         }
