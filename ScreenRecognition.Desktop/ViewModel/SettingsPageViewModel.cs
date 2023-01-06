@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.Models;
+﻿using ScreenRecognition.Desktop.Controllers;
+using ScreenRecognition.Desktop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,14 +50,27 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<List<Setting>> SettingsList { get; set; } = new();
         public PropShieldModel<Setting> SelectedSetting { get; set; } = new();
         #endregion
+
+        private UniversalController _controller;
         #endregion
 
         public SettingsPageViewModel()
         {
+            _controller = new UniversalController();
             AuthChecker();
 
             HotkeyModifiersList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
             HotkeyKeyList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
+
+            OnStartup();
+        }
+
+        private async void OnStartup()
+        {
+            await Task.Run(async() =>
+            {
+                LanguageList.Property = await _controller.Get<List<Language>, List<Language>>("");
+            });
         }
 
         private void AuthChecker()

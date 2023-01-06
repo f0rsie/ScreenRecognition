@@ -11,7 +11,7 @@ namespace ScreenRecognition.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        DBOperations _dbOperations;
+        private DBOperations _dbOperations;
 
         public UserController()
         {

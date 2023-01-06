@@ -17,7 +17,7 @@ namespace ScreenRecognition.Desktop.Controllers
 {
     public class UniversalController
     {
-        private readonly string _webPath = "http://localhost:80/api/";
+        private static string _webPath = "http://localhost:80/api/";
 
         public UniversalController(string webPath = "")
         {
