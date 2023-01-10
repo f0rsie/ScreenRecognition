@@ -25,5 +25,10 @@ namespace ScreenRecognition.Desktop.View.Pages
         {
             InitializeComponent();
         }
+
+        private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SettingsPageViewModel).SaveSettings();
+        }
     }
 }

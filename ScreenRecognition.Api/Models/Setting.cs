@@ -29,5 +29,5 @@ public partial class Setting
 
     public virtual Translator? SelectedTranslator { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual User? User { get; set; } = null!;
 }

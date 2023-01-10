@@ -59,17 +59,44 @@ namespace ScreenRecognition.Desktop.ViewModel
             _controller = new UniversalController();
             AuthChecker();
 
-            HotkeyModifiersList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
-            HotkeyKeyList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
-
             OnStartup();
         }
 
         private async void OnStartup()
         {
-            await Task.Run(async() =>
+            HotkeyModifiersList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
+            HotkeyKeyList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
+
+            await Task.Run(async () =>
             {
-                LanguageList.Property = await _controller.Get<List<Language>, List<Language>>("");
+                LanguageList.Property = await _controller.Get<List<Language>, List<Language>>("Settings/Languages");
+                CountryList.Property = await _controller.Get<List<Country>, List<Country>>("Settings/Countries");
+                SettingsList.Property = await _controller.Get<List<Setting>, List<Setting>>("Settings/Settings");
+                OcrList.Property = await _controller.Get<List<Ocr>, List<Ocr>>("Settings/Ocrs");
+                TranslatorList.Property = await _controller.Get<List<Translator>, List<Translator>>("Settings/Translators");
+            });
+        }
+
+        public async void SaveSettings()
+        {
+            var settings = new Setting
+            {
+                InputLanguageId = OcrLanguage.Property.Id,
+                OutputLanguageId = TranslatorLanguage.Property.Id,
+                Name = CurrentProfileName.Property,
+                ResultColor = ResultColor.Property,
+                SelectedOcrid = SelectedOcr.Property.Id,
+                SelectedTranslatorId = SelectedTranslator.Property.Id,
+                TranslatorApiKey = TranslatorApiKey.Property,
+                UserId = ConnectedUserSingleton.User.Id,
+            };
+
+            if (string.IsNullOrEmpty(ConnectedUserSingleton.Password))
+                return;
+
+            await Task.Run(async () =>
+            {
+                await _controller.Post<Setting, Setting>("Settings/SaveProfile", settings);
             });
         }
 

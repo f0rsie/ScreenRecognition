@@ -35,14 +35,12 @@ public partial class ScreenRecognitionContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=DESKTOP-BB20U5H;Database=ScreenRecognition;Trusted_Connection=True;User=fff;Password=05062003;TrustServerCertificate=True")
         .UseLazyLoadingProxies();
-    // DESKTOP-N48BNIV\SQLEXPRESS - College
-    // DESKTOP-BB20U5H - Master
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Country>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC273CB1B3E9");
+            entity.HasKey(e => e.Id).HasName("PK__Country__3214EC273B5A1FEB");
 
             entity.ToTable("Country");
 
@@ -52,7 +50,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<History>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Id }).HasName("PK__History__74A9826E30EFCAB8");
+            entity.HasKey(e => new { e.UserId, e.Id }).HasName("PK__History__74A9826EB3CD60E4");
 
             entity.ToTable("History");
 
@@ -87,7 +85,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Language>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Language__3214EC274B98F199");
+            entity.HasKey(e => e.Id).HasName("PK__Language__3214EC274C9EB977");
 
             entity.ToTable("Language");
 
@@ -101,7 +99,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Ocr>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OCR__3214EC273844F7CB");
+            entity.HasKey(e => e.Id).HasName("PK__OCR__3214EC275A99AFE7");
 
             entity.ToTable("OCR");
 
@@ -111,7 +109,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC27E518F9DC");
+            entity.HasKey(e => e.Id).HasName("PK__Role__3214EC2713A8D91D");
 
             entity.ToTable("Role");
 
@@ -121,7 +119,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Setting>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.Name }).HasName("PK__Settings__70BF94E3D3075C3D");
+            entity.HasKey(e => new { e.UserId, e.Name }).HasName("PK__Settings__70BF94E31D947078");
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -155,7 +153,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<Translator>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Translat__3214EC27219999B2");
+            entity.HasKey(e => e.Id).HasName("PK__Translat__3214EC27901CA492");
 
             entity.ToTable("Translator");
 
@@ -165,7 +163,7 @@ public partial class ScreenRecognitionContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3214EC27F2161301");
+            entity.HasKey(e => e.Id).HasName("PK__User__3214EC27854CC5DE");
 
             entity.ToTable("User");
 
@@ -175,6 +173,7 @@ public partial class ScreenRecognitionContext : DbContext
             entity.Property(e => e.FirstName).HasMaxLength(50);
             entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.Login).HasMaxLength(50);
+            entity.Property(e => e.NickName).HasMaxLength(100);
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.RoleId).HasColumnName("RoleID");
 

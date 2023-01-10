@@ -12,6 +12,12 @@ namespace ScreenRecognition.Desktop.Models
 {
     public class ConnectedUserSingleton
     {
+        private User user
+        {
+            get => User;
+            set => User = value;
+        }
+
         private string? login
         {
             get => Login;
@@ -29,6 +35,8 @@ namespace ScreenRecognition.Desktop.Models
             set => ConnectionStatus = value;
         }
 
+        public static User User { get; set; }
+
         public static string? Login { get; set; } = "Авторизация";
         public static string? Password { get; set; } = null;
 
@@ -41,6 +49,8 @@ namespace ScreenRecognition.Desktop.Models
         {
             return new ConnectedUserSingleton
             {
+                user = user,
+
                 login = user.Login,
                 password = user.Password,
 

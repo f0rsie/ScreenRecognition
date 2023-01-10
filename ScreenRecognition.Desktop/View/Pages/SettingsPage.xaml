@@ -174,7 +174,7 @@
                                     x:Name="userNickname"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="NickName" />
+                                    Text="{Binding User.Property.NickName}" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -335,7 +335,7 @@
                                      VerticalContentAlignment="Center"
                                      ItemsSource="{Binding OcrList.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding OcrLanguage.Property}" />
+                                     SelectedItem="{Binding SelectedOcr.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False"
                                IsEnabled="False"
@@ -450,7 +450,8 @@
                             <Button Content="Сохранить"
                                     Margin="5"
                                     DockPanel.Dock="Right"
-                                    BorderBrush="#FF4862F1"/>
+                                    BorderBrush="#FF4862F1"
+                                    Click="SaveSettingsButton_Click"/>
                         </DockPanel>
                     </StackPanel>
                 </StackPanel>

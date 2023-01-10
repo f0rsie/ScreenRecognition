@@ -16,13 +16,62 @@ namespace ScreenRecognition.Api.Controllers
             _dbOperations = new DBOperations();
         }
 
-        [Route("GetAny")]
-        [HttpGet]
-        public async Task<object> GetAny(string name)
+        [Route("SaveProfile")]
+        [HttpPost]
+        public async Task SaveProfile(Setting settings)
         {
-            var resultTask = await Task.Run(async() =>
+            await _dbOperations.SaveSettings(settings);
+        }
+
+        [Route("Ocrs")]
+        [HttpGet]
+        public async Task<List<Ocr>> GetOcrs()
+        {
+            var resultTask = await Task.Run(async () =>
             {
-                var result = await _dbOperations.GetAny(name);
+                var result = await _dbOperations.GetOcrList();
+
+                return result;
+            });
+
+            return resultTask;
+        }
+
+        [Route("Translators")]
+        [HttpGet]
+        public async Task<List<Translator>> GetTranslators()
+        {
+            var resultTask = await Task.Run(async () =>
+            {
+                var result = await _dbOperations.GetTranslatorList();
+
+                return result;
+            });
+
+            return resultTask;
+        }
+
+        [Route("Settings")]
+        [HttpGet]
+        public async Task<List<Setting>> GetSettings()
+        {
+            var resultTask = await Task.Run(async () =>
+            {
+                var result = await _dbOperations.GetSettignsList();
+
+                return result;
+            });
+
+            return resultTask;
+        }
+
+        [Route("Countries")]
+        [HttpGet]
+        public async Task<List<Country>> GetCountries()
+        {
+            var resultTask = await Task.Run(async () =>
+            {
+                var result = await _dbOperations.GetCountryList();
 
                 return result;
             });
@@ -36,7 +85,7 @@ namespace ScreenRecognition.Api.Controllers
         {
             var resultTask = await Task.Run(async() =>
             {
-                var result = await _dbOperations.Getlanguages();
+                var result = await _dbOperations.GetLanguageList();
 
                 return result;
             });

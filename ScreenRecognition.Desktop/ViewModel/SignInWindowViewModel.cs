@@ -65,6 +65,8 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             if (_user != null && !string.IsNullOrEmpty(Password))
             {
+                ConnectedUserSingleton.User = _user;
+
                 ConnectedUserSingleton.Login = Login;
                 ConnectedUserSingleton.Password = Password;
                 ConnectedUserSingleton.ConnectionStatus = true;

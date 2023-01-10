@@ -16,33 +16,64 @@ namespace ScreenRecognition.Api.Core.Services
             _dbContext = new Data.ScreenRecognitionContext();
         }
 
-        public async Task<Models.User?> Authorization(string login, string password)
+        public async Task<User?> Authorization(string login, string password)
         {
             var result = await _dbContext.Users.FirstOrDefaultAsync(e => e.Login == login && e.Password == password);
 
             return result;
         }
 
-        public async Task<List<Models.Language>> Getlanguages()
+        public async Task<List<Language>> GetLanguageList()
         {
             var result = await _dbContext.Languages.ToListAsync();
 
             return result;
         }
 
-        // Не работает, переделать потом
-        public async Task<object> GetAny(string name)
+        public async Task<List<Country>> GetCountryList()
         {
-            var type = TextOperations.FindElement<object>(name.Remove(name.Length - 1, 1));
-            var gg = type.GetType();
-
-            var res = _dbContext.Model.FindEntityType(gg);
-            // var entity = _dbSetContext.Set(type.GetType());
-
-
-            var result = new object();
+            var result = await _dbContext.Countries.ToListAsync();
 
             return result;
+        }
+
+        public async Task<List<Ocr>> GetOcrList()
+        {
+            var result = await _dbContext.Ocrs.ToListAsync();
+
+            return result;
+        }
+
+        public async Task<List<Setting>> GetSettignsList()
+        {
+            var result = await _dbContext.Settings.ToListAsync();
+
+            return result;
+        }
+
+        public async Task<List<Translator>> GetTranslatorList()
+        {
+            var result = await _dbContext.Translators.ToListAsync();
+
+            return result;
+        }
+
+        public async Task SaveSettings(Setting settings)
+        {
+            var profile = await _dbContext.Settings.FirstOrDefaultAsync(e => e.Name == settings.Name && e.UserId == settings.UserId);
+
+            if (profile != null)
+                return;
+
+            try
+            {
+                await _dbContext.Settings.AddAsync(settings);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
