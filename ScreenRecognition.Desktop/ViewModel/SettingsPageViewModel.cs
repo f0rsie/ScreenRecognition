@@ -16,8 +16,12 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<Visibility> DisconnectedPanelVisibility { get; set; } = new();
         public PropShieldModel<Visibility> ProfilePanelVisibility { get; set; } = new();
 
+        private UniversalController _controller;
+
         #endregion
         #region Program Settings
+        public PropShieldModel<Setting> Settings { get; set; } = new();
+
         public PropShieldModel<List<Language>> LanguageList { get; set; } = new();
         public PropShieldModel<Language> OcrLanguage { get; set; } = new();
         public PropShieldModel<Language> TranslatorLanguage { get; set; } = new();
@@ -50,8 +54,6 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<List<Setting>> SettingsList { get; set; } = new();
         public PropShieldModel<Setting> SelectedSetting { get; set; } = new();
         #endregion
-
-        private UniversalController _controller;
         #endregion
 
         public SettingsPageViewModel()
@@ -67,6 +69,7 @@ namespace ScreenRecognition.Desktop.ViewModel
             HotkeyModifiersList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
             HotkeyKeyList.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
 
+            // Получение списка листов
             await Task.Run(async () =>
             {
                 LanguageList.Property = await _controller.Get<List<Language>, List<Language>>("Settings/Languages");
@@ -75,10 +78,48 @@ namespace ScreenRecognition.Desktop.ViewModel
                 OcrList.Property = await _controller.Get<List<Ocr>, List<Ocr>>("Settings/Ocrs");
                 TranslatorList.Property = await _controller.Get<List<Translator>, List<Translator>>("Settings/Translators");
             });
+
+            // Получение выбранных результатов
+            await Task.Run(async () =>
+            {
+                Settings.Property = await _controller.Get<Setting, Setting>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name=default");
+            });
+
+            ApplyDefaultSettings();
+        }
+
+        private void ApplyDefaultSettings()
+        {
+            SelectedOcr.Property = Settings.Property.SelectedOcr;
+            SelectedTranslator.Property = Settings.Property.SelectedTranslator;
+            TranslatorApiKey.Property = Settings.Property.TranslatorApiKey;
+            OcrLanguage.Property = Settings.Property.InputLanguage;
+            TranslatorLanguage.Property = Settings.Property.OutputLanguage;
+            ResultColor.Property = Settings.Property.ResultColor;
+
+            SelectedOcr = new(SelectedOcr);
+            SelectedTranslator = new(SelectedTranslator);
+            TranslatorApiKey = new(TranslatorApiKey);
+            OcrLanguage = new(OcrLanguage);
+            TranslatorLanguage = new(TranslatorLanguage);
+            ResultColor = new(ResultColor);
         }
 
         public async void SaveSettings()
         {
+            if (string.IsNullOrEmpty(ConnectedUserSingleton.Password))
+            {
+                HandyControl.Controls.MessageBox.Show("Вы не авторизованы!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                return;
+            }
+
+            // Переделать 90 строчку
+            if (OcrLanguage.Property == null || TranslatorLanguage.Property == null || CurrentProfileName.Property == null || ResultColor.Property == null || SelectedOcr.Property == null || SelectedOcr.Property == null || SelectedTranslator.Property == null || TranslatorApiKey.Property == null)
+            {
+                return;
+            }
+
             var settings = new Setting
             {
                 InputLanguageId = OcrLanguage.Property.Id,
@@ -90,9 +131,6 @@ namespace ScreenRecognition.Desktop.ViewModel
                 TranslatorApiKey = TranslatorApiKey.Property,
                 UserId = ConnectedUserSingleton.User.Id,
             };
-
-            if (string.IsNullOrEmpty(ConnectedUserSingleton.Password))
-                return;
 
             await Task.Run(async () =>
             {

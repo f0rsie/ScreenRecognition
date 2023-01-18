@@ -292,7 +292,7 @@
                                         Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
-                                        Text="{Binding TranslatorApiKey.Property}"/>
+                                        Text="{Binding TranslatorApiKey.Property}" />
                             <Button DockPanel.Dock="Right"
                                     Margin="5"
                                     BorderBrush="Transparent"

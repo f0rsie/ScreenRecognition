@@ -31,5 +31,19 @@ namespace ScreenRecognition.Api.Controllers
 
             return asyncTask;
         }
+
+        [Route("TranslationHistory")]
+        [HttpGet]
+        public async Task<List<History>?> TranslationHistory(int userId)
+        {
+            var asyncTask = await Task.Run(async() =>
+            {
+                var result = await _dbOperations.GetTranslationHistory(userId);
+
+                return result;
+            });
+
+            return asyncTask;
+        }
     }
 }

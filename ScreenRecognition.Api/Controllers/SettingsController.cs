@@ -92,5 +92,19 @@ namespace ScreenRecognition.Api.Controllers
 
             return resultTask;
         }
+
+        [Route("ProfileSettings")]
+        [HttpGet]
+        public async Task<Setting?> GetSettignsProfile(int userId, string name)
+        {
+            var resultTask = await Task.Run(async () =>
+            {
+                var result = await _dbOperations.GetAllSettings(userId, name);
+
+                return result;
+            });
+
+            return resultTask;
+        }
     }
 }

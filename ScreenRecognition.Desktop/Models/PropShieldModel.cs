@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.ViewModel;
+﻿using HandyControl.Controls;
+using ScreenRecognition.Desktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace ScreenRecognition.Desktop.Models
                 _shield = value;
                 OnPropertyChanged(nameof(Property));
             }
+        }
+
+        public PropShieldModel()
+        {
+
+        }
+
+        public PropShieldModel(PropShieldModel<T> old) : this()
+        {
+            Property = old.Property;
         }
     }
 }

@@ -23,6 +23,20 @@ namespace ScreenRecognition.Api.Core.Services
             return result;
         }
 
+        public async Task<Setting?> GetAllSettings(int userId, string profileName)
+        {
+            var result = await _dbContext.Settings.FirstOrDefaultAsync(e => e.UserId == userId && e.Name == profileName);
+
+            return result;
+        }
+
+        public async Task<List<History>> GetTranslationHistory(int userId)
+        {
+            var result = await _dbContext.Histories.Where(e => e.UserId == userId).ToListAsync();
+
+            return result;
+        }
+
         public async Task<List<Language>> GetLanguageList()
         {
             var result = await _dbContext.Languages.ToListAsync();

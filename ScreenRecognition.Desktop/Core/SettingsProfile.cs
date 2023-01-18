@@ -9,8 +9,8 @@ namespace ScreenRecognition.Desktop.Core
 {
     public class SettingsProfile
     {
-        Models.Setting _settings;
-        UniversalController _controller;
+        private Models.Setting _settings;
+        private UniversalController _controller;
 
         public SettingsProfile()
         {
