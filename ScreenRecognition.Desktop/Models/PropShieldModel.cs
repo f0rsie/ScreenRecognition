@@ -28,9 +28,9 @@ namespace ScreenRecognition.Desktop.Models
 
         }
 
-        public PropShieldModel(PropShieldModel<T> old) : this()
+        public PropShieldModel(T resource) : this()
         {
-            Property = old.Property;
+            Property = resource;
         }
     }
 }

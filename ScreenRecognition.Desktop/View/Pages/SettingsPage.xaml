@@ -23,7 +23,7 @@
                     Grid.Column="0"
                     VerticalAlignment="Center"
                     x:Name="DisconnectedPanel"
-                    Visibility="{Binding DisconnectedPanelVisibility.Property}"
+                    Visibility="{Binding DisconnectedPanelVisibilityCustom.Property}"
                     Grid.ColumnSpan="2">
             <TextBlock HorizontalAlignment="Center"
                        FontSize="20"
@@ -44,7 +44,7 @@
         <hc:ScrollViewer Grid.Column="0"
                          VerticalScrollBarVisibility="Auto"
                          HorizontalScrollBarVisibility="Auto"
-                         Visibility="{Binding ProfilePanelVisibility.Property}"
+                         Visibility="{Binding ProfilePanelVisibilityCustom.Property}"
                          Grid.ColumnSpan="2">
             <StackPanel Orientation="Vertical"
                         Grid.Column="0"
@@ -69,7 +69,7 @@
                                     hc:InfoElement.Placeholder="Имя"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Property.FirstName}"/>
+                                    Text="{Binding UserCustom.Property.FirstName}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -83,7 +83,7 @@
                                     hc:InfoElement.Placeholder="Фамилия"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Property.LastName}" />
+                                    Text="{Binding UserCustom.Property.LastName}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -97,7 +97,7 @@
                                        x:Name="userBirthday"
                                        HorizontalContentAlignment="Left"
                                        VerticalContentAlignment="Center"
-                                       SelectedDate="{Binding User.Property.Birthday}"/>
+                                       SelectedDate="{Binding UserCustom.Property.Birthday}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -111,9 +111,9 @@
                                      hc:InfoElement.Placeholder="Страна"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding CountryList.Property}"
+                                     ItemsSource="{Binding CountryListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding User.Property.Country}"/>
+                                     SelectedItem="{Binding UserCustom.Property.Country}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -133,7 +133,7 @@
                                     x:Name="userRole"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Property.Role.Name}"/>
+                                    Text="{Binding UserCustom.Property.Role.Name}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -147,7 +147,7 @@
                                     x:Name="userLogin"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Property.Login}" />
+                                    Text="{Binding UserCustom.Property.Login}" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -174,7 +174,7 @@
                                     x:Name="userNickname"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Property.NickName}" />
+                                    Text="{Binding UserCustom.Property.NickName}" />
                     </DockPanel>
                     <DockPanel LastChildFill="True">
                         <TextBlock DockPanel.Dock="Left"
@@ -188,7 +188,7 @@
                                     x:Name="userEmail"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding User.Property.Email}" />
+                                    Text="{Binding UserCustom.Property.Email}" />
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -203,9 +203,9 @@
                                      x:Name="settingsProfileList"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding SettingsList.Property}"
+                                     ItemsSource="{Binding SettingsListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding SelectedSetting.Property}"/>
+                                     SelectedItem="{Binding SelectedSettingCustom.Property}"/>
                         <Button DockPanel.Dock="Left"
                                 Width="auto"
                                 Content="Загрузить профиль"
@@ -257,9 +257,9 @@
                                      x:Name="outputLanguage"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding LanguageList.Property}"
+                                     ItemsSource="{Binding LanguageListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding TranslatorLanguage.Property}" />
+                                     SelectedItem="{Binding TranslatorLanguageCustom.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <DockPanel DockPanel.Dock="Top"
@@ -275,9 +275,9 @@
                                          x:Name="translator"
                                          HorizontalContentAlignment="Center"
                                          VerticalContentAlignment="Center"
-                                         ItemsSource="{Binding TranslatorList.Property}"
+                                         ItemsSource="{Binding TranslatorListCustom.Property}"
                                          DisplayMemberPath="Name"
-                                         SelectedItem="{Binding SelectedTranslator.Property}" />
+                                         SelectedItem="{Binding SelectedTranslatorCustom.Property}" />
                         </DockPanel>
                         <DockPanel DockPanel.Dock="Bottom"
                                    LastChildFill="False">
@@ -292,7 +292,7 @@
                                         Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
-                                        Text="{Binding TranslatorApiKey.Property}" />
+                                        Text="{Binding TranslatorApiKeyCustom.Property}" />
                             <Button DockPanel.Dock="Right"
                                     Margin="5"
                                     BorderBrush="Transparent"
@@ -317,9 +317,9 @@
                                      hc:InfoElement.Placeholder="Язык"
                                      HorizontalContentAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding LanguageList.Property}"
+                                     ItemsSource="{Binding LanguageListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding OcrLanguage.Property}" />
+                                     SelectedItem="{Binding OcrLanguageCustom.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -333,9 +333,9 @@
                                      hc:InfoElement.Placeholder="OCR"
                                      HorizontalContentAlignment="Left"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding OcrList.Property}"
+                                     ItemsSource="{Binding OcrListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding SelectedOcr.Property}" />
+                                     SelectedItem="{Binding SelectedOcrCustom.Property}" />
                     </DockPanel>
                     <DockPanel LastChildFill="False"
                                IsEnabled="False"
@@ -368,7 +368,7 @@
                                     Width="300"
                                     HorizontalContentAlignment="Left"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding ResultColor.Property}"/>
+                                    Text="{Binding ResultColorCustom.Property}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -387,8 +387,8 @@
                                      hc:InfoElement.Placeholder="Клавиша"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding HotkeyKeyList.Property}"
-                                     SelectedItem="{Binding SelectedHotkeyKey.Property}"/>
+                                     ItemsSource="{Binding HotkeyKeyListCustom.Property}"
+                                     SelectedItem="{Binding SelectedHotkeyKeyCustom.Property}"/>
                         <hc:ComboBox DockPanel.Dock="Right"
                                      Width="auto"
                                      x:Name="hotkeyModifier"
@@ -396,8 +396,8 @@
                                      hc:InfoElement.Placeholder="Модификатор"
                                      HorizontalContentAlignment="Center"
                                      VerticalContentAlignment="Center"
-                                     ItemsSource="{Binding HotkeyModifiersList.Property}"
-                                     SelectedItem="{Binding SelectedHotkeyModifier.Property}"/>
+                                     ItemsSource="{Binding HotkeyModifiersListCustom.Property}"
+                                     SelectedItem="{Binding SelectedHotkeyModifierCustom.Property}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -415,7 +415,7 @@
                                   x:Name="autostartWithSystem"
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center"
-                                  IsChecked="{Binding StartupWithSystem.Property}"/>
+                                  IsChecked="{Binding StartupWithSystemCustom.Property}"/>
                     </DockPanel>
                     <DockPanel LastChildFill="False">
                         <TextBlock DockPanel.Dock="Left"
@@ -428,7 +428,7 @@
                                   x:Name="toTrayIcon"
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center"
-                                  IsChecked="{Binding MinimizeToTray.Property}"/>
+                                  IsChecked="{Binding MinimizeToTrayCustom.Property}"/>
                     </DockPanel>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Профиль"
@@ -446,7 +446,7 @@
                                         Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
-                                        Text="{Binding CurrentProfileName.Property}"/>
+                                        Text="{Binding CurrentProfileNameCustom.Property}"/>
                             <Button Content="Сохранить"
                                     Margin="5"
                                     DockPanel.Dock="Right"
