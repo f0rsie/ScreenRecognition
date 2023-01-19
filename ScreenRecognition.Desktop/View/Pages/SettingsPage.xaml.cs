@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.ViewModel;
+﻿using ScreenRecognition.Desktop.Models;
+using ScreenRecognition.Desktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,13 @@ namespace ScreenRecognition.Desktop.View.Pages
         public SettingsPage()
         {
             InitializeComponent();
+
+            ProfilePasswordSetter();
+        }
+
+        private void ProfilePasswordSetter()
+        {
+            userPassword.Password = ConnectedUserSingleton.Password;
         }
 
         private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)

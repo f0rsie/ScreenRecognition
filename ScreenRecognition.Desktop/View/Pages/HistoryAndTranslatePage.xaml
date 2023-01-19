@@ -137,7 +137,7 @@
                          FontWeight="Bold" />
                     <LineBreak />
                     <Run Text="Перевод:" />
-                    <Run Text="{Binding Output.Shield.OutputText}"
+                    <Run Text="{Binding Output.Property.OutputText}"
                          FontWeight="Bold" />
                     </TextBlock>
                 </DockPanel>

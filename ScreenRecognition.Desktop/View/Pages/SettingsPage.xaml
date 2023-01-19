@@ -113,7 +113,7 @@
                                      VerticalContentAlignment="Center"
                                      ItemsSource="{Binding CountryListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding UserCustom.Property.Country}"/>
+                                     SelectedItem="{Binding SelectedCountryCustom.Property}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -158,6 +158,7 @@
                                         Width="auto"
                                         Margin="5"
                                         hc:InfoElement.Placeholder="Пароль"
+                                        hc:ShowEyeButton="True"
                                         x:Name="userPassword"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center" />
