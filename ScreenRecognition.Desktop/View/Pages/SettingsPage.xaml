@@ -206,7 +206,7 @@
                                      VerticalContentAlignment="Center"
                                      ItemsSource="{Binding SettingsListCustom.Property}"
                                      DisplayMemberPath="Name"
-                                     SelectedItem="{Binding SelectedSettingCustom.Property}"/>
+                                     SelectedItem="{Binding SelectedSettingCustom}"/>
                         <Button DockPanel.Dock="Left"
                                 Width="auto"
                                 Content="Загрузить профиль"
@@ -291,6 +291,7 @@
                                         hc:InfoElement.Placeholder="Api Key"
                                         x:Name="apiKey"
                                         Width="250"
+                                        Foreground="{Binding TranslatorApiKeyStatusCustom.Property.ValidationColor.Name}"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
                                         Text="{Binding TranslatorApiKeyCustom.Property}" />
@@ -298,6 +299,7 @@
                                     Margin="5"
                                     BorderBrush="Transparent"
                                     Background="Transparent"
+                                    Command="{Binding ValidateApiKeyCommand}"
                                     hc:IconElement.Geometry="{DynamicResource CheckedGeometry}" />
                         </DockPanel>
                     </DockPanel>

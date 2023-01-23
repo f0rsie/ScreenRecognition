@@ -1,12 +1,16 @@
-﻿using ScreenRecognition.Desktop.Controllers;
+﻿using ScreenRecognition.Command;
+using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Models;
+using ScreenRecognition.Desktop.View.Pages;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -43,6 +47,8 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<bool> MinimizeToTrayCustom { get; set; } = new();
         public PropShieldModel<bool> T9EnableCustom { get; set; } = new();
 
+        public PropShieldModel<TranslatorApiKeyOutputModel> TranslatorApiKeyStatusCustom { get; set; } = new();
+
         public PropShieldModel<List<GlobalHotKeys.Native.Types.VirtualKeyCode>> HotkeyKeyListCustom { get; set; } = new();
         public PropShieldModel<GlobalHotKeys.Native.Types.VirtualKeyCode> SelectedHotkeyKeyCustom { get; set; } = new();
 
@@ -56,15 +62,52 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<Country?> SelectedCountryCustom { get; set; } = new();
 
         public PropShieldModel<List<Setting?>> SettingsListCustom { get; set; } = new();
-        public PropShieldModel<Setting?> SelectedSettingCustom { get; set; } = new();
+        private Setting? _selectedSettingCustom;
+        public Setting? SelectedSettingCustom
+        {
+            get => _selectedSettingCustom;
+            set
+            {
+                if (value != null)
+                {
+                    _selectedSettingCustom = value;
+                    OnPropertyChanged(nameof(SelectedSettingCustom));
+
+                    SetSettings(_selectedSettingCustom.Name);
+                }
+            }
+        }
+        #endregion
+
+        #region Commands
+        public ICommand ValidateApiKeyCommand { get; private set; }
+        private async void ValidateApiKeyMethod(object obj)
+        {
+            if (!string.IsNullOrEmpty(TranslatorApiKeyCustom.Property) && SelectedTranslatorCustom.Property != null)
+            {
+                await Task.Run(async () =>
+                {
+                    string? apiKey = TranslatorApiKeyCustom.Property;
+
+                    bool apiKeyValidationResult = await _controller.Get<bool, bool>($"Screen/ApiKeyValidation?translatorName={SelectedTranslatorCustom.Property.Name}&apiKey={apiKey}");
+                    Color validationColor = Color.Red;
+
+                    if (apiKeyValidationResult == true)
+                        validationColor = Color.Green;
+
+                    TranslatorApiKeyStatusCustom.Property = new TranslatorApiKeyOutputModel(apiKey, apiKeyValidationResult, validationColor);
+                });
+            }
+        }
         #endregion
         #endregion
 
         public SettingsPageViewModel()
         {
             _controller = new UniversalController();
-            AuthChecker();
+            ValidateApiKeyCommand = new DelegateCommand(ValidateApiKeyMethod);
 
+            AuthChecker();
             OnStartup();
         }
 
@@ -74,47 +117,47 @@ namespace ScreenRecognition.Desktop.ViewModel
             HotkeyModifiersListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
             HotkeyKeyListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
 
-            // Получение списка листов
-            await Task.Run(async () =>
-            {
-                LanguageListCustom.Property = await _controller.Get<List<Language?>, List<Language?>>("Settings/Languages");
-                CountryListCustom.Property = await _controller.Get<List<Country?>, List<Country?>>("Settings/Countries");
-                SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>("Settings/Settings");
-                OcrListCustom.Property = await _controller.Get<List<Ocr?>, List<Ocr?>>("Settings/Ocrs");
-                TranslatorListCustom.Property = await _controller.Get<List<Translator?>, List<Translator?>>("Settings/Translators");
-            });
-
             if (ConnectedUserSingleton.ConnectionStatus == false)
                 return;
 
-            // Получение выбранных результатов
-            await Task.Run(async () =>
-            {
-                SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name=default");
-            });
+            // Получение списков
+            SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>("Settings/Settings");
+            LanguageListCustom.Property = await _controller.Get<List<Language?>, List<Language?>>("Settings/Languages");
+            CountryListCustom.Property = await _controller.Get<List<Country?>, List<Country?>>("Settings/Countries");
+            OcrListCustom.Property = await _controller.Get<List<Ocr?>, List<Ocr?>>("Settings/Ocrs");
+            TranslatorListCustom.Property = await _controller.Get<List<Translator?>, List<Translator?>>("Settings/Translators");
 
-            ApplyDefaultSettings();
-            await LoadUserInfo();
+            SetSettings();
         }
 
-        private async Task LoadUserInfo()
+        private async void SetSettings(string settingsName = "default")
+        {
+            // Получение настроек
+            SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name={settingsName}");
+
+            SetProgramSettings();
+            SetUserInfo();
+        }
+
+        private void SetUserInfo()
         {
             UserCustom.Property = ConnectedUserSingleton.User;
-            CountryListCustom.Property = await _controller.Get<List<Country?>, List<Country?>>($"Settings/Countries");
             SelectedCountryCustom.Property = CountryListCustom.Property.FirstOrDefault(e => e.Id == UserCustom.Property.CountryId);
-            SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>($"Settings/Settings");
-            SelectedSettingCustom.Property = SettingsListCustom.Property.FirstOrDefault(e => e.Name == CurrentProfileNameCustom.Property);
         }
 
-        private void ApplyDefaultSettings()
+        private void SetProgramSettings()
         {
-            SelectedOcrCustom.Property = OcrListCustom.Property.FirstOrDefault(e => e.Id == SettingsCustom.Property.SelectedOcrid);
-            SelectedTranslatorCustom.Property = TranslatorListCustom.Property.FirstOrDefault(e => e.Id == SettingsCustom.Property.SelectedTranslatorId);
-            TranslatorApiKeyCustom.Property = SettingsCustom.Property.TranslatorApiKey;
-            OcrLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SettingsCustom.Property.InputLanguageId);
-            TranslatorLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SettingsCustom.Property.OutputLanguageId);
-            ResultColorCustom.Property = SettingsCustom.Property.ResultColor;
-            CurrentProfileNameCustom.Property = SettingsCustom.Property.Name;
+            if (SelectedSettingCustom == null)
+                SelectedSettingCustom = SettingsListCustom.Property.FirstOrDefault(e => e.Name == SettingsCustom.Property.Name);
+
+            SelectedOcrCustom.Property = OcrListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.SelectedOcrid);
+            SelectedTranslatorCustom.Property = TranslatorListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.SelectedTranslatorId);
+            TranslatorApiKeyCustom.Property = SelectedSettingCustom.TranslatorApiKey;
+            TranslatorApiKeyStatusCustom.Property = new TranslatorApiKeyOutputModel(TranslatorApiKeyCustom.Property, null, null);
+            OcrLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.InputLanguageId);
+            TranslatorLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.OutputLanguageId);
+            ResultColorCustom.Property = SelectedSettingCustom.ResultColor;
+            CurrentProfileNameCustom.Property = SelectedSettingCustom.Name;
         }
 
         public async void SaveSettings()

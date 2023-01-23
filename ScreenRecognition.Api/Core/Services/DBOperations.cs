@@ -74,14 +74,18 @@ namespace ScreenRecognition.Api.Core.Services
 
         public async Task SaveSettings(Setting settings)
         {
-            var profile = await _dbContext.Settings.FirstOrDefaultAsync(e => e.Name == settings.Name && e.UserId == settings.UserId);
-
-            if (profile != null)
-                return;
-
             try
             {
-                await _dbContext.Settings.AddAsync(settings);
+                var currentProfileSettings = await _dbContext.Settings.FirstOrDefaultAsync(e => e.Name == settings.Name && e.UserId == settings.UserId);
+
+                if (currentProfileSettings == null)
+                    await _dbContext.Settings.AddAsync(settings);
+                else
+                {
+                    _dbContext.Settings.Remove(currentProfileSettings);
+                    await _dbContext.Settings.AddAsync(settings);
+                }
+
                 await _dbContext.SaveChangesAsync();
             }
             catch
