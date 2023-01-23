@@ -35,5 +35,8 @@
     <Setting Name="HotkeyKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">KEY_Q</Value>
     </Setting>
+    <Setting Name="T9EnableStatus" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

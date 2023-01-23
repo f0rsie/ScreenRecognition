@@ -117,6 +117,8 @@ namespace ScreenRecognition.Desktop.ViewModel
             HotkeyModifiersListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
             HotkeyKeyListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
 
+            LoadLocalSettings();
+
             if (ConnectedUserSingleton.ConnectionStatus == false)
                 return;
 
@@ -137,6 +139,15 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             SetProgramSettings();
             SetUserInfo();
+        }
+
+        private void LoadLocalSettings()
+        {
+            MinimizeToTrayCustom.Property = Properties.ProgramSettings.Default.MinimizeToTray;
+            StartupWithSystemCustom.Property = Properties.ProgramSettings.Default.AutoStartup;
+            T9EnableCustom.Property = Properties.ProgramSettings.Default.T9EnableStatus;
+            SelectedHotkeyKeyCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().FirstOrDefault(e=>e.ToString() == Properties.ProgramSettings.Default.HotkeyKey);
+            SelectedHotkeyModifierCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().FirstOrDefault(e => e.ToString() == Properties.ProgramSettings.Default.HotkeyModifier);
         }
 
         private void SetUserInfo()
