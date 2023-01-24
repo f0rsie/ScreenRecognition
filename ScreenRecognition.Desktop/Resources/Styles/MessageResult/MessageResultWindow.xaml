@@ -13,7 +13,7 @@
         Background="#00000000"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Topmost="False"
+        Topmost="True"
         AllowsTransparency="True"
         WindowStartupLocation="CenterOwner"
         MouseDoubleClick="resultWindow_MouseDoubleClick">

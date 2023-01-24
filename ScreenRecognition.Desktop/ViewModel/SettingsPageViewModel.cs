@@ -77,7 +77,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                     _selectedSettingCustom = value;
                     OnPropertyChanged(nameof(SelectedSettingCustom));
 
-                    SetSettings(_selectedSettingCustom.Name);
+                    //SetSettings(_selectedSettingCustom.Name);
                 }
             }
         }
@@ -137,7 +137,10 @@ namespace ScreenRecognition.Desktop.ViewModel
             OcrListCustom.Property = await _controller.Get<List<Ocr?>, List<Ocr?>>("Settings/Ocrs");
             TranslatorListCustom.Property = await _controller.Get<List<Translator?>, List<Translator?>>("Settings/Translators");
 
-            SetSettings();
+            // Получение настроек
+            SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name=default");
+
+            await SetSettings();
         }
 
         private void SaveLocalSettings()
@@ -158,14 +161,14 @@ namespace ScreenRecognition.Desktop.ViewModel
             Properties.ProgramSettings.Default.Save();
         }
 
-        private async void SetSettings(string settingsName = "default")
+        private async Task SetSettings(string settingsName = "default")
         {
             // Получение настроек
             SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name={settingsName}");
 
+            SaveLocalSettings();
             SetProgramSettings();
             SetUserInfo();
-            SaveLocalSettings();
         }
 
         private void LoadLocalSettings()
@@ -189,6 +192,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         private void SetProgramSettings()
         {
+            // Получение настроек из загруженного списка (по-другому вообще не работает)
             if (SelectedSettingCustom == null)
                 SelectedSettingCustom = SettingsListCustom.Property.FirstOrDefault(e => e.Name == SettingsCustom.Property.Name);
 
@@ -229,10 +233,13 @@ namespace ScreenRecognition.Desktop.ViewModel
                 UserId = ConnectedUserSingleton.User.Id,
             };
 
-            await Task.Run(async () =>
-            {
-                await _controller.Post<Setting?, Setting?>("Settings/SaveProfile", settings);
-            });
+            await _controller.Post<Setting?, Setting?>("Settings/SaveProfile", settings);
+
+            await SetSettings(SelectedSettingCustom.Name);
+
+            (App.Current.MainWindow.DataContext as MainWindowViewModel).RegisterHotkey();
+            //App.Current.MainWindow.DataContext = new MainWindowViewModel();
+            (App.Current.MainWindow.DataContext as MainWindowViewModel).CurrentPage = new SettingsPage();
         }
 
         private void AuthChecker()

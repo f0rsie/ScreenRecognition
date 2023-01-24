@@ -35,6 +35,8 @@ namespace ScreenRecognition.Desktop.ViewModel
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        public PropShieldModel<ServerStatus> ServerStatusCustom { get; set; } = new();
+
         private Visibility _loginPanelVisibility;
 
         public Visibility LoginPanelVisibility
@@ -57,7 +59,7 @@ namespace ScreenRecognition.Desktop.ViewModel
             }
         }
 
-        private readonly RegisterGlobalHotkey _registerGlobalHotkey;
+        private RegisterGlobalHotkey _registerGlobalHotkey;
 
         private Page? _currentPage;
 
@@ -96,13 +98,9 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public MainWindowViewModel()
         {
-            // А это регистрация кнопки для хоткея
-            if (RegisterGlobalHotkey.HotkeyEnabledStatus() == false)
-            {
-                _registerGlobalHotkey = new RegisterGlobalHotkey(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control, TakeScreenshot);
-            }
+            RegisterHotkey();
 
-            if(ConnectedUserSingleton.ConnectionStatus == false)
+            if (ConnectedUserSingleton.ConnectionStatus == false)
             {
                 LoginPanelVisibility = Visibility.Collapsed;
             }
@@ -113,7 +111,36 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             _controller = new UniversalController("http://localhost:5046/api/");
 
-            CurrentPage = new View.Pages.SettingsPage();
+            var page = new View.Pages.SettingsPage();
+            CurrentPage = page;
+
+            SeverStatusCheck();
+        }
+
+        public void RegisterHotkey()
+        {
+            // А это регистрация кнопки для хоткея
+            var hotkeyKey = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().FirstOrDefault(e => e.ToString() == Properties.ProgramSettings.Default.HotkeyKey);
+            var hotkeyModifier = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().FirstOrDefault(e => e.ToString() == Properties.ProgramSettings.Default.HotkeyModifier);
+
+            RegisterGlobalHotkey.Dispose();
+            _registerGlobalHotkey = new RegisterGlobalHotkey(hotkeyKey, hotkeyModifier, TakeScreenshot);
+        }
+
+        private async void SeverStatusCheck()
+        {
+            string statusText = "Не в сети";
+            var taskResult = await Task.Run(async() =>
+            {
+                var result = await _controller.Get<bool, bool>("Server/StatusCheck");
+
+                return result;
+            });
+
+            if (taskResult == true)
+                statusText = "В сети";
+
+            ServerStatusCustom.Property = new ServerStatus(statusText, taskResult);
         }
 
         public void SignWindow()

@@ -29,7 +29,6 @@ namespace ScreenRecognition.Modules.Modules
                     return result;
 
                 result = (T?)Activator.CreateInstance(assemblyName, typeElement.FullName)?.Unwrap();
-
             }
             catch { }
 

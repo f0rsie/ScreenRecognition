@@ -27,7 +27,7 @@ namespace ScreenRecognition.Desktop.Core
         {
             s_hotKeyManager = new HotKeyManager();
 
-            s_hotkey = s_hotKeyManager?.Register(GlobalHotKeys.Native.Types.VirtualKeyCode.KEY_Q, GlobalHotKeys.Native.Types.Modifiers.Control);
+            s_hotkey = s_hotKeyManager?.Register(key, modifiers);
 
             s_subscription = s_hotKeyManager?.HotKeyPressed
                 .ObserveOn(SynchronizationContext.Current)
@@ -44,8 +44,8 @@ namespace ScreenRecognition.Desktop.Core
 
         public static void Dispose()
         {
-            s_hotkey?.Dispose();
             s_subscription?.Dispose();
+            s_hotkey?.Dispose();
             s_hotKeyManager?.Dispose();
         }
     }
