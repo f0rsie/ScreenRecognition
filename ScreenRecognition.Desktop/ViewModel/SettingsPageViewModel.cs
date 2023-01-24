@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ScreenRecognition.Desktop.ViewModel
 {
@@ -39,7 +41,9 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<List<Ocr?>> OcrListCustom { get; set; } = new();
         public PropShieldModel<Ocr?> SelectedOcrCustom { get; set; } = new();
 
+        public PropShieldModel<List<string>> ResultColorListCustom { get; set; } = new();
         public PropShieldModel<string> ResultColorCustom { get; set; } = new();
+
         public PropShieldModel<string> TranslatorApiKeyCustom { get; set; } = new();
         public PropShieldModel<string> CurrentProfileNameCustom { get; set; } = new();
 
@@ -90,10 +94,10 @@ namespace ScreenRecognition.Desktop.ViewModel
                     string? apiKey = TranslatorApiKeyCustom.Property;
 
                     bool apiKeyValidationResult = await _controller.Get<bool, bool>($"Screen/ApiKeyValidation?translatorName={SelectedTranslatorCustom.Property.Name}&apiKey={apiKey}");
-                    Color validationColor = Color.Red;
+                    System.Drawing.Color validationColor = System.Drawing.Color.Red;
 
                     if (apiKeyValidationResult == true)
-                        validationColor = Color.Green;
+                        validationColor = System.Drawing.Color.Green;
 
                     TranslatorApiKeyStatusCustom.Property = new TranslatorApiKeyOutputModel(apiKey, apiKeyValidationResult, validationColor);
                 });
@@ -116,6 +120,10 @@ namespace ScreenRecognition.Desktop.ViewModel
             // Получение списка кнопок для хоткея
             HotkeyModifiersListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
             HotkeyKeyListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
+
+            // Получение списка цветов
+            ResultColorListCustom.Property = new List<string>();
+            typeof(Colors).GetProperties().ToList().ForEach(e => ResultColorListCustom.Property.Add(e.Name));
 
             LoadLocalSettings();
 
@@ -167,6 +175,10 @@ namespace ScreenRecognition.Desktop.ViewModel
             T9EnableCustom.Property = Properties.ProgramSettings.Default.T9EnableStatus;
             SelectedHotkeyKeyCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().FirstOrDefault(e=>e.ToString() == Properties.ProgramSettings.Default.HotkeyKey);
             SelectedHotkeyModifierCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().FirstOrDefault(e => e.ToString() == Properties.ProgramSettings.Default.HotkeyModifier);
+
+            ResultColorListCustom.Property = new List<string>();
+            typeof(Colors).GetProperties().ToList().ForEach(e => ResultColorListCustom.Property.Add(e.Name));
+            ResultColorCustom.Property = Properties.ProgramSettings.Default.ResultColor;
         }
 
         private void SetUserInfo()

@@ -190,9 +190,10 @@ namespace ScreenRecognition.Desktop.ViewModel
             {
                 var translatorName = Properties.ProgramSettings.Default.TranslatorName;
                 var ocrName = Properties.ProgramSettings.Default.OcrName;
-                var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey + "21";
+                var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey;
                 var inputLanguage = Properties.ProgramSettings.Default.OcrLanguages;
                 var outputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage;
+                var resultColor = Properties.ProgramSettings.Default.ResultColor;
 
                 var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}", str);
 
@@ -201,7 +202,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                 if (Result == null || Result == String.Empty)
                     return;
 
-                var resultWindow = new MessageResultWindow(Result, f.Width, f.Height);
+                var resultWindow = new MessageResultWindow(Result, resultColor, f.Width, f.Height);
                 resultWindow.Left = _startX;
                 resultWindow.Top = _startY + 30;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -28,9 +29,12 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
             InitializeComponent();
         }
 
-        public MessageResultWindow(string? message, double width = 400, double height = 200) : this()
+        public MessageResultWindow(string? message, string resultColor, double width = 400, double height = 200) : this()
         {
+            var selectedColor = ((SolidBrush)typeof(System.Drawing.Brushes).GetProperties().FirstOrDefault(e => e.Name.ToLower() == resultColor.ToLower()).GetValue(null, null)).Color;
+
             result.Text = message;
+            result.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B));
 
             resultWindow.Width = width;
             //resultWindow.Height = height;
