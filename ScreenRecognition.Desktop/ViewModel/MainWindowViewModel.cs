@@ -190,7 +190,7 @@ namespace ScreenRecognition.Desktop.ViewModel
             {
                 var translatorName = Properties.ProgramSettings.Default.TranslatorName;
                 var ocrName = Properties.ProgramSettings.Default.OcrName;
-                var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey;
+                var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey + "21";
                 var inputLanguage = Properties.ProgramSettings.Default.OcrLanguages;
                 var outputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage;
 

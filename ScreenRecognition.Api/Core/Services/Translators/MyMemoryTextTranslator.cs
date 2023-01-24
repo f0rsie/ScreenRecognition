@@ -33,7 +33,9 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
                 var result = JsonSerializer.Deserialize<Models.responseData>(stringTask);
 
-                res = result?.matches?[0].translation;
+                res = result?.matches?.OrderByDescending(e => e.match.Value).First().translation;
+
+                //res = result?.matches?[0].translation;
 
                 client.Dispose();
             }
