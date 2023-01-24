@@ -132,6 +132,24 @@ namespace ScreenRecognition.Desktop.ViewModel
             SetSettings();
         }
 
+        private void SaveLocalSettings()
+        {
+            Properties.ProgramSettings.Default.AutoStartup = StartupWithSystemCustom.Property;
+            Properties.ProgramSettings.Default.HotkeyKey = SelectedHotkeyKeyCustom.Property.ToString();
+            Properties.ProgramSettings.Default.HotkeyModifier = SelectedHotkeyModifierCustom.Property.ToString();
+            Properties.ProgramSettings.Default.MinimizeToTray = MinimizeToTrayCustom.Property;
+            Properties.ProgramSettings.Default.OcrLanguages = OcrLanguageCustom.Property?.Ocralias;
+            Properties.ProgramSettings.Default.OcrName = SelectedOcrCustom.Property?.Name;
+            Properties.ProgramSettings.Default.TranslatorName = SelectedTranslatorCustom.Property?.Name;
+            Properties.ProgramSettings.Default.TranslatorLanguage = TranslatorLanguageCustom.Property?.TranslatorAlias;
+            Properties.ProgramSettings.Default.TranslatorApiKey = TranslatorApiKeyCustom.Property;
+            Properties.ProgramSettings.Default.HotkeyEnabledStatus = true;
+            Properties.ProgramSettings.Default.ResultColor = ResultColorCustom.Property;
+            Properties.ProgramSettings.Default.T9EnableStatus = T9EnableCustom.Property;
+
+            Properties.ProgramSettings.Default.Save();
+        }
+
         private async void SetSettings(string settingsName = "default")
         {
             // Получение настроек
@@ -139,6 +157,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             SetProgramSettings();
             SetUserInfo();
+            SaveLocalSettings();
         }
 
         private void LoadLocalSettings()

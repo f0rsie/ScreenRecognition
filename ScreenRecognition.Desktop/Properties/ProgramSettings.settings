@@ -6,7 +6,7 @@
       <Value Profile="(Default)">eng_rus</Value>
     </Setting>
     <Setting Name="TranslatorLanguage" Type="System.String" Scope="User">
-      <Value Profile="(Default)">rus_eng</Value>
+      <Value Profile="(Default)">eng</Value>
     </Setting>
     <Setting Name="OcrName" Type="System.String" Scope="User">
       <Value Profile="(Default)">TesseractOcr</Value>

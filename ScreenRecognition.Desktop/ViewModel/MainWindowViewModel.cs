@@ -188,7 +188,13 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             try
             {
-                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={_translatorName}&ocrName={_ocrName}&translationApiKey={_apiKey}&inputLanguage={_inputLanguage}&outputLanguage={_outputLanguage}", str);
+                var translatorName = Properties.ProgramSettings.Default.TranslatorName;
+                var ocrName = Properties.ProgramSettings.Default.OcrName;
+                var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey;
+                var inputLanguage = Properties.ProgramSettings.Default.OcrLanguages;
+                var outputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage;
+
+                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}", str);
 
                 Result = result;
 

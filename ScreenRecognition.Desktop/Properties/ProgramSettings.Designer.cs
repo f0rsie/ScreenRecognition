@@ -37,7 +37,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("rus_eng")]
+        [global::System.Configuration.DefaultSettingValueAttribute("eng")]
         public string TranslatorLanguage {
             get {
                 return ((string)(this["TranslatorLanguage"]));

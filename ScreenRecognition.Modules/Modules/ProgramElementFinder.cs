@@ -23,7 +23,7 @@ namespace ScreenRecognition.Modules.Modules
                 var assemblyElement = Assembly.Load(assemblyName);
 
                 var typeElement = assemblyElement.GetExportedTypes()
-                    .FirstOrDefault(type => type.Name == name);
+                    .FirstOrDefault(type => type.Name.ToLower() == name.ToLower());
 
                 if (typeElement == null)
                     return result;
