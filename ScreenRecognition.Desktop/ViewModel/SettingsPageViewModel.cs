@@ -166,9 +166,9 @@ namespace ScreenRecognition.Desktop.ViewModel
             // Получение настроек
             SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name={settingsName}");
 
-            SaveLocalSettings();
             SetProgramSettings();
             SetUserInfo();
+            SaveLocalSettings();
         }
 
         private void LoadLocalSettings()

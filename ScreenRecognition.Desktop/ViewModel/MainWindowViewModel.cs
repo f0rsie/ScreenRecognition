@@ -221,8 +221,15 @@ namespace ScreenRecognition.Desktop.ViewModel
                 var inputLanguage = Properties.ProgramSettings.Default.OcrLanguages;
                 var outputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage;
                 var resultColor = Properties.ProgramSettings.Default.ResultColor;
+                var userLogin = ConnectedUserSingleton.Login;
+                var userPassword = ConnectedUserSingleton.Password;
 
-                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}", str);
+                if (userLogin == null || userLogin == "Авторизация")
+                    userLogin = "guest";
+                if (userPassword == null)
+                    userPassword = "guest";
+
+                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}", str);
 
                 Result = result;
 

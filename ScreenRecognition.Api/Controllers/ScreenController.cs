@@ -7,6 +7,7 @@ using ScreenRecognition.Api.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using ScreenRecognition.Api.Core.Services.Translators;
+using ScreenRecognition.Api.Models;
 
 namespace ScreenRecognition.Api.Controllers
 {
@@ -21,7 +22,28 @@ namespace ScreenRecognition.Api.Controllers
     {
         [Route("Translate")]
         [HttpPost]
-        public async Task<string> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
+        public async Task<string> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword)
+        {
+            var asyncTask = await Task.Run(async () =>
+            {
+                var dbOps = new DBOperations();
+                var textOps = new TextOperations();
+
+                var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
+
+                string result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
+
+                await dbOps.SaveHistory(translatorName, ocrName, image, inputLanguage, outputLanguage, userLogin, userPassword, inputText, result);
+
+                return result;
+            });
+
+            return asyncTask;
+        }
+
+        [Route("TranslateWithOrig")]
+        [HttpPost]
+        public async Task<string> TextTranslateWithOrig(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
         {
             var asyncTask = await Task.Run(async () =>
             {
@@ -29,9 +51,9 @@ namespace ScreenRecognition.Api.Controllers
 
                 var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
 
-                string result = await textOps.GetTranslate(translatorName, inputText, inputLanguage, outputLanguage, translationApiKey);
+                string result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
 
-                return result;
+                return $"{inputText.TextResult}:::{result}";
             });
 
             return asyncTask;

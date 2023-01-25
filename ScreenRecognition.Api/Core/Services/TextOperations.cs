@@ -38,24 +38,32 @@ namespace ScreenRecognition.Api.Core.Services
             return "Ошибка перевода";
         }
 
-        public string GetText(string ocrName, byte[] image, string inputLanguages)
+        public OcrResultModel GetText(string ocrName, byte[] image, string inputLanguages)
         {
             _ocrService = FindElement<IOcrService>(ocrName);
             _inputLanguages = inputLanguages;
 
             if (_ocrService == null)
-                return "OCR не найден";
+                return new OcrResultModel
+                {
+                    TextResult = "OCR не найден",
+                    Confidence = 0,
+                };
 
             var preparedImages = ImagePrepare(image);
 
             GetOcrResult(preparedImages);
 
-            var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1].TextResult;
+            var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1];
 
-            if (!String.IsNullOrEmpty(result))
+            if (!String.IsNullOrEmpty(result?.TextResult))
                 return result;
 
-            return "Не распознано";
+            return new OcrResultModel
+            {
+                TextResult = "Не распознано",
+                Confidence = 0,
+            };
         }
 
         private void GetOcrResult(List<byte[]> images)

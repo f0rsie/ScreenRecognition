@@ -20,7 +20,8 @@ namespace ScreenRecognition.Desktop.ViewModel
         private UniversalController _controller;
         #endregion
         #region Translation history
-        public PropShieldModel<List<History>> HistoryList { get; set; } = new();
+        public PropShieldModel<List<HistoryOutputModel>> HistoryList { get; set; } = new();
+        public PropShieldModel<List<History>> HistoryListOld { get; set; } = new();
         #endregion
         #region Translate photo
         public PropShieldModel<PhotoTranslateOutputModel> Output { get; set; } = new();
@@ -36,32 +37,39 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         private async void GetTranslationHistory()
         {
-            HistoryList.Property = new();
-
             await Task.Run(async () =>
             {
-                HistoryList.Property = await _controller.Get<List<History>, List<History>>($"User/TranslationHistory?userId={ConnectedUserSingleton.User.Id}");
+                HistoryListOld.Property = await _controller.Get<List<History>, List<History>>($"User/TranslationHistory?userId={ConnectedUserSingleton.User.Id}");
             });
+
+            HistoryList.Property = new();
+
+            foreach (var item in HistoryListOld.Property)
+            {
+                HistoryList.Property.Add(item);
+            }
         }
 
-        public async void GetTranslate()
+        public async void GetTranslate(ImageSource img)
         {
             Output.Property = new();
 
-            var img = ImageSourceToList(Output.Property.Image);
+            var byteImg = ImageSourceToList(img);
 
             var asyncTask = await Task.Run(async() =>
             {
                 var settings = new DefaultProgramSettings();
 
-                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={settings.TranslatorName}&ocrName={settings.OcrName}&translationApiKey={settings.TranslationApiKey}&inputLanguage={settings.OcrLanguage}&outputLanguage={settings.TranslatorLanguage}", img);
+                var result = await _controller.Post<List<byte>?, string>($"Screen/TranslateWithOrig?translatorName={settings.TranslatorName}&ocrName={settings.OcrName}&translationApiKey={settings.TranslationApiKey}&inputLanguage={settings.OcrLanguage}&outputLanguage={settings.TranslatorLanguage}", byteImg);
 
                 return result;
             });
 
-            var result = asyncTask;
+            var result = asyncTask.Split(":::");
 
-            Output.Property.OutputText = result;
+            Output.Property.InputText = result[0];
+            Output.Property.OutputText = result[1];
+            Output.Property = Output.Property;
         }
 
         public List<byte> ImageSourceToList(ImageSource imageSource)

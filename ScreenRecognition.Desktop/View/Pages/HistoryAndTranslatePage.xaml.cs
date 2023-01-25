@@ -29,8 +29,7 @@ namespace ScreenRecognition.Desktop.View.Pages
 
         private void GetTranslateButton_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as HistoryAndTranslatePageViewModel).Output.Property.Image = selectedImage.Source;
-            (DataContext as HistoryAndTranslatePageViewModel).GetTranslate();
+            (DataContext as HistoryAndTranslatePageViewModel).GetTranslate(selectedImage.Source);
         }
     }
 }

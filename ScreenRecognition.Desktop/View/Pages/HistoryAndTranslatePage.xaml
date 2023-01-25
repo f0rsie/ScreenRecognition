@@ -48,7 +48,7 @@
                                         <Image DockPanel.Dock="Right"
                                                Height="{Binding ElementName=historyItem, Path=ActualHeight}"
                                                Width="150"
-                                               Source="/Resources/Images/testHelloWorldImage.png" />
+                                               Source="{Binding Screenshot}" />
                                         <Border DockPanel.Dock="Right"
                                                 BorderThickness="0.5"
                                                 Margin="5 -5 0 -5"
@@ -133,7 +133,7 @@
                                VerticalAlignment="Bottom"
                                FontSize="16">
                     <Run Text="Текст:" />
-                    <Run Text="Hello World"
+                    <Run Text="{Binding Output.Property.InputText}"
                          FontWeight="Bold" />
                     <LineBreak />
                     <Run Text="Перевод:" />
