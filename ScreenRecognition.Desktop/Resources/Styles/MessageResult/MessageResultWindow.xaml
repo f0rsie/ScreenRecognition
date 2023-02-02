@@ -22,9 +22,9 @@
                TextAlignment="Left"
                VerticalAlignment="Top"
                HorizontalAlignment="Left"
-               FontWeight="Heavy"
+               FontWeight="Medium"
                FontStyle="Normal"
-               FontSize="14"
+               FontSize="16"
                Foreground="LightBlue"
                Width="auto"
                Height="auto"/>
