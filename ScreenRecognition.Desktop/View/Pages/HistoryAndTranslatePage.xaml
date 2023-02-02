@@ -150,7 +150,7 @@
                          FontWeight="Bold" />
                     </TextBlock>
                 </DockPanel>
-                <Button Content="Получить"
+                <Button Content="Загрузить"
                         Margin="5"
                         x:Name="GetTranslateButton"
                         Click="GetTranslateButton_Click"/>
