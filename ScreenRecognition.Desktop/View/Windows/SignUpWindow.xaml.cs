@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScreenRecognition.Desktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,18 @@ namespace ScreenRecognition.Desktop.View.Windows
         public SignUpWindow()
         {
             InitializeComponent();
+        }
+
+        private void SignUp_Click(object sender, RoutedEventArgs e)
+        {
+            if(Password.Password != PasswordRepeat.Password)
+            {
+                HandyControl.Controls.MessageBox.Show("Пароли не совпадают", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            (DataContext as SignUpWindowViewModel).Password.Property = Password.Password;
+            (DataContext as SignUpWindowViewModel).SignUp(this);
         }
     }
 }

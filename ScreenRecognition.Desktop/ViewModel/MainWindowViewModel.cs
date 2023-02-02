@@ -109,7 +109,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                 LoginPanelVisibility = Visibility.Visible;
             }
 
-            _controller = new UniversalController("http://localhost:5046/api/");
+            _controller = new UniversalController();
 
             var page = new View.Pages.SettingsPage();
             CurrentPage = page;
@@ -224,12 +224,16 @@ namespace ScreenRecognition.Desktop.ViewModel
                 var userLogin = ConnectedUserSingleton.Login;
                 var userPassword = ConnectedUserSingleton.Password;
 
-                if (userLogin == null || userLogin == "Авторизация")
+                if (string.IsNullOrEmpty(userLogin) || userLogin == "Авторизация")
                     userLogin = "guest";
-                if (userPassword == null)
+                if (string.IsNullOrEmpty(userPassword))
                     userPassword = "guest";
+                if (string.IsNullOrEmpty(apiKey))
+                    apiKey = "123";
 
-                var result = await _controller.Post<List<byte>?, string>($"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}", str);
+                string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}";
+
+                var result = await _controller.Post<List<byte>?, string>(query, str);
 
                 Result = result;
 

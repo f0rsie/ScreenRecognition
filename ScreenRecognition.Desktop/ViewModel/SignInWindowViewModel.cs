@@ -54,7 +54,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public SignInWindowViewModel()
         {
-            _controller = new UniversalController("http://localhost:5046/api/");
+            _controller = new UniversalController();
         }
 
         public async void SignIn()

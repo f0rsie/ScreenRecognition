@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Google.Api;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -39,6 +40,48 @@ namespace ScreenRecognition.Api.Core.Services
             try
             {
                 await _dbContext.Histories.AddAsync(history);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch { }
+        }
+
+        public async Task<Role?> GetRoleById(int roleId)
+        {
+            var result = await _dbContext.Roles.FirstOrDefaultAsync(e => e.Id == roleId);
+
+            return result;
+        }
+
+        public async Task<bool> LoginAvailability(string login)
+        {
+            var result = await _dbContext.Users.FirstOrDefaultAsync(e => e.Login == login);
+
+            if (result == null)
+                return true;
+
+            return false;
+        }
+
+        public async Task<bool> MailAvailability(string mail)
+        {
+            var result = await _dbContext.Users.FirstOrDefaultAsync(e => e.Email == mail);
+
+            if (result == null)
+                return true;
+
+            return false;
+        }
+
+        public async Task Registration(User user)
+        {
+            var existingUser = await _dbContext.Users.FirstOrDefaultAsync(e => e.Login == user.Login);
+
+            if (existingUser != null)
+                return;
+
+            try
+            {
+                await _dbContext.Users.AddAsync(user);
                 await _dbContext.SaveChangesAsync();
             }
             catch { }
@@ -86,9 +129,9 @@ namespace ScreenRecognition.Api.Core.Services
             return result;
         }
 
-        public async Task<List<Setting>> GetSettignsList()
+        public async Task<List<Setting>> GetSettignsList(int userId)
         {
-            var result = await _dbContext.Settings.ToListAsync();
+            var result = await _dbContext.Settings.Where(e => e.UserId == userId).ToListAsync();
 
             return result;
         }

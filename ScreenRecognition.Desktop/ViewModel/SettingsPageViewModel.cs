@@ -28,7 +28,7 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<Visibility> ProfilePanelVisibilityCustom { get; set; } = new();
         #endregion
         #region Program Settings custom
-        public PropShieldModel<Setting> SettingsCustom { get; set; } = new();
+        public PropShieldModel<Setting?> SettingsCustom { get; set; } = new();
 
         public PropShieldModel<List<Language?>> LanguageListCustom { get; set; } = new();
 
@@ -41,11 +41,11 @@ namespace ScreenRecognition.Desktop.ViewModel
         public PropShieldModel<List<Ocr?>> OcrListCustom { get; set; } = new();
         public PropShieldModel<Ocr?> SelectedOcrCustom { get; set; } = new();
 
-        public PropShieldModel<List<string>> ResultColorListCustom { get; set; } = new();
-        public PropShieldModel<string> ResultColorCustom { get; set; } = new();
+        public PropShieldModel<List<string?>> ResultColorListCustom { get; set; } = new();
+        public PropShieldModel<string?> ResultColorCustom { get; set; } = new();
 
-        public PropShieldModel<string> TranslatorApiKeyCustom { get; set; } = new();
-        public PropShieldModel<string> CurrentProfileNameCustom { get; set; } = new();
+        public PropShieldModel<string?> TranslatorApiKeyCustom { get; set; } = new();
+        public PropShieldModel<string?> CurrentProfileNameCustom { get; set; } = new();
 
         public PropShieldModel<bool> StartupWithSystemCustom { get; set; } = new();
         public PropShieldModel<bool> MinimizeToTrayCustom { get; set; } = new();
@@ -131,7 +131,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                 return;
 
             // Получение списков
-            SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>("Settings/Settings");
+            SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>($"Settings/Settings?userId={ConnectedUserSingleton.User.Id}");
             LanguageListCustom.Property = await _controller.Get<List<Language?>, List<Language?>>("Settings/Languages");
             CountryListCustom.Property = await _controller.Get<List<Country?>, List<Country?>>("Settings/Countries");
             OcrListCustom.Property = await _controller.Get<List<Ocr?>, List<Ocr?>>("Settings/Ocrs");
@@ -194,16 +194,16 @@ namespace ScreenRecognition.Desktop.ViewModel
         {
             // Получение настроек из загруженного списка (по-другому вообще не работает)
             if (SelectedSettingCustom == null)
-                SelectedSettingCustom = SettingsListCustom.Property.FirstOrDefault(e => e.Name == SettingsCustom.Property.Name);
+                SelectedSettingCustom = SettingsListCustom.Property.FirstOrDefault(e => e.Name == SettingsCustom.Property?.Name);
 
-            SelectedOcrCustom.Property = OcrListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.SelectedOcrid);
-            SelectedTranslatorCustom.Property = TranslatorListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.SelectedTranslatorId);
-            TranslatorApiKeyCustom.Property = SelectedSettingCustom.TranslatorApiKey;
+            SelectedOcrCustom.Property = OcrListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.SelectedOcrid);
+            SelectedTranslatorCustom.Property = TranslatorListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.SelectedTranslatorId);
+            TranslatorApiKeyCustom.Property = SelectedSettingCustom?.TranslatorApiKey;
             TranslatorApiKeyStatusCustom.Property = new TranslatorApiKeyOutputModel(TranslatorApiKeyCustom.Property, null, null);
-            OcrLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.InputLanguageId);
-            TranslatorLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom.OutputLanguageId);
-            ResultColorCustom.Property = SelectedSettingCustom.ResultColor;
-            CurrentProfileNameCustom.Property = SelectedSettingCustom.Name;
+            OcrLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.InputLanguageId);
+            TranslatorLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.OutputLanguageId);
+            ResultColorCustom.Property = SelectedSettingCustom?.ResultColor;
+            CurrentProfileNameCustom.Property = SelectedSettingCustom?.Name;
         }
 
         public async void SaveSettings()
@@ -216,8 +216,9 @@ namespace ScreenRecognition.Desktop.ViewModel
             }
 
             // Переделать некст строчку
-            if (OcrLanguageCustom.Property == null || TranslatorLanguageCustom.Property == null || CurrentProfileNameCustom.Property == null || ResultColorCustom.Property == null || SelectedOcrCustom.Property == null || SelectedOcrCustom.Property == null || SelectedTranslatorCustom.Property == null || TranslatorApiKeyCustom.Property == null)
+            if (OcrLanguageCustom.Property == null || TranslatorLanguageCustom.Property == null || CurrentProfileNameCustom.Property == null || ResultColorCustom.Property == null || SelectedOcrCustom.Property == null || SelectedOcrCustom.Property == null || SelectedTranslatorCustom.Property == null)
             {
+                HandyControl.Controls.MessageBox.Show("Заполнены не все поля!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -235,9 +236,11 @@ namespace ScreenRecognition.Desktop.ViewModel
 
             await _controller.Post<Setting?, Setting?>("Settings/SaveProfile", settings);
 
-            await SetSettings(SelectedSettingCustom.Name);
+            HandyControl.Controls.MessageBox.Show("Настройки успешно сохранены!", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
 
-            (App.Current.MainWindow.DataContext as MainWindowViewModel).RegisterHotkey();
+            await SetSettings(CurrentProfileNameCustom.Property);
+
+            (App.Current.MainWindow.DataContext as MainWindowViewModel)?.RegisterHotkey();
             //App.Current.MainWindow.DataContext = new MainWindowViewModel();
             (App.Current.MainWindow.DataContext as MainWindowViewModel).CurrentPage = new SettingsPage();
         }

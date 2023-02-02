@@ -32,6 +32,44 @@ namespace ScreenRecognition.Api.Controllers
             return asyncTask;
         }
 
+        [Route("LoginCheck")]
+        [HttpGet]
+        public async Task<bool> LoginCheck(string login)
+        {
+            var asyncTask = await Task.Run(async () =>
+            {
+                var result = await _dbOperations.LoginAvailability(login);
+
+                return result;
+            });
+
+            return asyncTask;
+        }
+
+        [Route("MailCheck")]
+        [HttpGet]
+        public async Task<bool> MailCheck(string mail)
+        {
+            var asyncTask = await Task.Run(async () =>
+            {
+                var result = await _dbOperations.MailAvailability(mail);
+
+                return result;
+            });
+
+            return asyncTask;
+        }
+
+        [Route("Registration")]
+        [HttpPost]
+        public async Task Registration(User user)
+        {
+            await Task.Run(async () =>
+            {
+                await _dbOperations.Registration(user);
+            });
+        }
+
         [Route("TranslationHistory")]
         [HttpGet]
         public async Task<List<History>?> TranslationHistory(int userId)

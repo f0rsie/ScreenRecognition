@@ -26,12 +26,16 @@ namespace ScreenRecognition.Api.Controllers
         {
             var asyncTask = await Task.Run(async () =>
             {
+                string result = "";
                 var dbOps = new DBOperations();
                 var textOps = new TextOperations();
 
                 var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
 
-                string result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
+                result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
+
+                if (result.Contains("JSON"))
+                    return "Ошибка распознавания";
 
                 await dbOps.SaveHistory(translatorName, ocrName, image, inputLanguage, outputLanguage, userLogin, userPassword, inputText, result);
 
@@ -47,11 +51,15 @@ namespace ScreenRecognition.Api.Controllers
         {
             var asyncTask = await Task.Run(async () =>
             {
+                string result = "";
                 var textOps = new TextOperations();
 
                 var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
 
-                string result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
+                result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
+
+                if (result.Contains("JSON"))
+                    return "Ошибка распознавания";
 
                 return $"{inputText.TextResult}:::{result}";
             });

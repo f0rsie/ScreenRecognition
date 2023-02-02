@@ -1,10 +1,11 @@
-﻿<Window x:Class="ScreenRecognition.Desktop.View.Windows.SignUpWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
+        xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+        x:Class="ScreenRecognition.Desktop.View.Windows.SignUpWindow"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         x:Name="RegistrationWindow"
@@ -16,16 +17,17 @@
         MinWidth="470"
         MaxWidth="470"
         ResizeMode="NoResize">
+    <Window.DataContext>
+        <ViewModel:SignUpWindowViewModel />
+    </Window.DataContext>
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock FontWeight="Bold"
                        FontSize="40"
                        Foreground="#FF4C4949"
                        Margin="5"
-                       TextAlignment="Center">
-                <Run Text="Screen" /><Run Text="Recognition"
-                                          Foreground="#FF4862F1" />
-            </TextBlock>
+                       TextAlignment="Center"><Run Text="Screen" /><Run Text="Recognition"
+                                                                        Foreground="#FF4862F1" /></TextBlock>
             <DockPanel LastChildFill="False"
                        Margin="20 30 20 0">
                 <TextBlock Text="Логин*"
@@ -36,7 +38,7 @@
                 <hc:TextBox Margin="5"
                             FontSize="14"
                             x:Name="Login"
-                            Text="{Binding Login}"
+                            Text="{Binding Login.Property}"
                             Width="280"
                             hc:InfoElement.Placeholder="Логин"
                             VerticalContentAlignment="Center"
@@ -44,7 +46,7 @@
                 <Button DockPanel.Dock="Right"
                         BorderBrush="Transparent"
                         VerticalAlignment="Center"
-                        hc:IconElement.Geometry="{DynamicResource CheckedGeometry}"/>
+                        hc:IconElement.Geometry="{DynamicResource CheckedGeometry}" />
             </DockPanel>
             <DockPanel LastChildFill="False"
                        Margin="20 0 20 0">
@@ -60,7 +62,7 @@
                                 ShowEyeButton="True"
                                 hc:InfoElement.Placeholder="Пароль"
                                 VerticalContentAlignment="Center"
-                                HorizontalContentAlignment="Left" />
+                                HorizontalContentAlignment="Left"/>
                 <hc:PasswordBox Margin="5"
                                 FontSize="14"
                                 Width="145"
@@ -80,7 +82,7 @@
                 <hc:TextBox Margin="5"
                             FontSize="14"
                             x:Name="Email"
-                            Text="{Binding Email}"
+                            Text="{Binding Mail.Property}"
                             Width="250"
                             hc:InfoElement.Placeholder="Электронная почта"
                             VerticalContentAlignment="Center"
@@ -100,7 +102,7 @@
                 <hc:TextBox Margin="5"
                             FontSize="14"
                             x:Name="FirstName"
-                            Text="{Binding FirstName}"
+                            Text="{Binding FirstName.Property}"
                             hc:InfoElement.Placeholder="Имя"
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
@@ -115,7 +117,7 @@
                 <hc:TextBox Margin="5"
                             FontSize="14"
                             x:Name="LastName"
-                            Text="{Binding FirstName}"
+                            Text="{Binding LastName.Property}"
                             hc:InfoElement.Placeholder="Фамилия"
                             VerticalContentAlignment="Center"
                             HorizontalContentAlignment="Left" />
@@ -131,7 +133,9 @@
                              FontSize="14"
                              DockPanel.Dock="Right"
                              x:Name="Country"
-                             ItemsSource="{Binding CountryList}"
+                             ItemsSource="{Binding CountryList.Property}"
+                             DisplayMemberPath="Name"
+                             SelectedItem="{Binding SelectedCountry.Property}"
                              hc:InfoElement.Placeholder="Страна"
                              VerticalContentAlignment="Center"
                              HorizontalContentAlignment="Left" />
@@ -147,6 +151,7 @@
                                Margin="5"
                                FontSize="14"
                                hc:InfoElement.Placeholder="Дата рождения"
+                               SelectedDate="{Binding BirthdayDate.Property}"
                                x:Name="Birthday"
                                HorizontalContentAlignment="Left"
                                VerticalContentAlignment="Center" />
@@ -154,7 +159,8 @@
             <Button x:Name="SignUp"
                     Margin="5 20 5 5"
                     Content="Создать аккаунт"
-                    BorderBrush="#FF4862F1" />
+                    BorderBrush="#FF4862F1"
+                    Click="SignUp_Click" />
         </StackPanel>
     </Grid>
 </Window>

@@ -27,5 +27,5 @@ public partial class User
 
     public virtual Country? Country { get; set; }
 
-    public virtual Role Role { get; set; } = null!;
+    public virtual Role? Role { get; set; }
 }

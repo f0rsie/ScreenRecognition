@@ -30,7 +30,7 @@ public partial class User
     [System.Text.Json.Serialization.JsonIgnore]
     public virtual ICollection<History> Histories { get; } = new List<History>();
 
-    public virtual Role Role { get; set; } = null!;
+    public virtual Role? Role { get; set; }
 
     [System.Text.Json.Serialization.JsonIgnore]
     public virtual ICollection<Setting> Settings { get; } = new List<Setting>();

@@ -30,7 +30,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         public HistoryAndTranslatePageViewModel()
         {
-            _controller = new UniversalController("http://localhost:5046/api/");
+            _controller = new UniversalController();
 
             GetTranslationHistory();
         }

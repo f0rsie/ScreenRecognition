@@ -53,11 +53,11 @@ namespace ScreenRecognition.Api.Controllers
 
         [Route("Settings")]
         [HttpGet]
-        public async Task<List<Setting>> GetSettings()
+        public async Task<List<Setting>> GetSettings(int userId)
         {
             var resultTask = await Task.Run(async () =>
             {
-                var result = await _dbOperations.GetSettignsList();
+                var result = await _dbOperations.GetSettignsList(userId);
 
                 return result;
             });
