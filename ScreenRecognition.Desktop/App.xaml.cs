@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.Core;
+﻿using HandyControl.Tools;
+using ScreenRecognition.Desktop.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +18,7 @@ namespace ScreenRecognition.Desktop
     {
         public App()
         {
-
+            ConfigHelper.Instance.SetLang("ru");
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
