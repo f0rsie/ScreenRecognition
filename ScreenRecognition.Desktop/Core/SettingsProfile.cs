@@ -15,7 +15,7 @@ namespace ScreenRecognition.Desktop.Core
         public SettingsProfile()
         {
             _settings = new Models.Setting();
-            _controller = new UniversalController("http://localhost:5046/api/");
+            _controller = new UniversalController();
         }
 
         private async Task SaveSettingsAsync()
