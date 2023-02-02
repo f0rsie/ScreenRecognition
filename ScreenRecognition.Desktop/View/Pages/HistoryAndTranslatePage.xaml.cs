@@ -31,5 +31,11 @@ namespace ScreenRecognition.Desktop.View.Pages
         {
             (DataContext as HistoryAndTranslatePageViewModel).GetTranslate(selectedImage.Source);
         }
+
+        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as HistoryAndTranslatePageViewModel).HistoryList.Property = new();
+            (DataContext as HistoryAndTranslatePageViewModel).ClearHistory();
+        }
     }
 }

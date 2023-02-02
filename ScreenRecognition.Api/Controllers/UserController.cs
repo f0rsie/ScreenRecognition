@@ -70,6 +70,26 @@ namespace ScreenRecognition.Api.Controllers
             });
         }
 
+        [Route("ChangeAccountInfo")]
+        [HttpPost]
+        public async Task ChangeAccountInfo(User? user)
+        {
+            await Task.Run(async () =>
+            {
+                await _dbOperations.ChangeAccountInfo(user);
+            });
+        }
+
+        [Route("ClearTranslateHistory")]
+        [HttpPost]
+        public async Task ClearTranslateHistory(User? user)
+        {
+            await Task.Run(async () =>
+            {
+                await _dbOperations.ClearTranslateHistory(user);
+            });
+        }
+
         [Route("TranslationHistory")]
         [HttpGet]
         public async Task<List<History>?> TranslationHistory(int userId)

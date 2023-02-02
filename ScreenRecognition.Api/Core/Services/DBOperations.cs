@@ -45,6 +45,46 @@ namespace ScreenRecognition.Api.Core.Services
             catch { }
         }
 
+        public async Task ChangeAccountInfo(User? user)
+        {
+            var existingUser = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == user.Id);
+
+            if (existingUser == null)
+                return;
+
+            existingUser.Login = user.Login;
+            existingUser.Password = user.Password;
+            existingUser.NickName = user.NickName;
+            existingUser.Email = user.Email;
+            existingUser.FirstName = user.FirstName;
+            existingUser.LastName = user.LastName;
+            existingUser.Birthday = user.Birthday;
+            existingUser.CountryId = user.CountryId;
+            existingUser.Country = null;
+
+            try
+            {
+                _dbContext.Users.Update(existingUser);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch { }
+        }
+
+        public async Task ClearTranslateHistory(User? user)
+        {
+            var userHistory = await _dbContext.Histories.Where(e => e.UserId == user.Id).ToListAsync();
+
+            if (userHistory.Count == 0)
+                return;
+
+            try
+            {
+                _dbContext.Histories.RemoveRange(userHistory);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch { }
+        }
+
         public async Task<Role?> GetRoleById(int roleId)
         {
             var result = await _dbContext.Roles.FirstOrDefaultAsync(e => e.Id == roleId);

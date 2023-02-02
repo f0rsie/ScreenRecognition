@@ -35,6 +35,11 @@ namespace ScreenRecognition.Desktop.ViewModel
             GetTranslationHistory();
         }
 
+        public async void ClearHistory()
+        {
+            await _controller.Post<User?, User?>($"User/ClearTranslateHistory", ConnectedUserSingleton.User);
+        }
+
         private async void GetTranslationHistory()
         {
             await Task.Run(async () =>

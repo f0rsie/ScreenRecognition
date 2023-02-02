@@ -31,9 +31,17 @@
                          x:Name="historyScollView">
             <StackPanel Orientation="Vertical"
                         x:Name="translateHistory">
-                <TextBlock Text="История переводов"
-                           HorizontalAlignment="Center"
-                           FontSize="20" />
+                <DockPanel LastChildFill="False">
+                    <Button Content="Очистить"
+                            Margin="5"
+                            DockPanel.Dock="Right"
+                            BorderBrush="#FF4862F1" 
+                            Click="ClearHistoryButton_Click"/>
+                    <TextBlock Text="История переводов"
+                               HorizontalAlignment="Center"
+                               FontSize="20" 
+                               DockPanel.Dock="Top"/>
+                </DockPanel>
                 <DockPanel LastChildFill="True">
                     <ListView Margin="5"
                               ItemsSource="{Binding HistoryList.Property}">

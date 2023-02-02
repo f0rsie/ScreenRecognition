@@ -1,7 +1,9 @@
 ﻿using ScreenRecognition.Command;
 using ScreenRecognition.Desktop.Controllers;
+using ScreenRecognition.Desktop.Core;
 using ScreenRecognition.Desktop.Models;
 using ScreenRecognition.Desktop.View.Pages;
+using ScreenRecognition.Desktop.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -206,12 +208,40 @@ namespace ScreenRecognition.Desktop.ViewModel
             CurrentProfileNameCustom.Property = SelectedSettingCustom?.Name;
         }
 
+        public async void SaveAccountInfo()
+        {
+            if (string.IsNullOrEmpty(UserCustom.Property?.Login))
+            {
+                HandyControl.Controls.MessageBox.Show("Логин не может быть пустым!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(string.IsNullOrEmpty(UserCustom.Property?.Password))
+            {
+                HandyControl.Controls.MessageBox.Show("Пароль не может быть пустым!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if(string.IsNullOrEmpty(UserCustom.Property?.Email))
+            {
+                HandyControl.Controls.MessageBox.Show("Почта не может быть пустой!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (string.IsNullOrEmpty(UserCustom.Property?.NickName))
+            {
+                HandyControl.Controls.MessageBox.Show("Никнейм не может быть пустой!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            await _controller.Post<User?, User?>("User/ChangeAccountInfo", UserCustom.Property);
+
+            ConnectedUserSingleton.Disconnect();
+            MainWindowManager.Set(new MainWindow());
+        }
+
         public async void SaveSettings()
         {
             if (string.IsNullOrEmpty(ConnectedUserSingleton.Password))
             {
                 HandyControl.Controls.MessageBox.Show("Вы не авторизованы!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 return;
             }
 

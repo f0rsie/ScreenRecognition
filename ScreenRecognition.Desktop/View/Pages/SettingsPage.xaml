@@ -191,6 +191,16 @@
                                     VerticalContentAlignment="Center"
                                     Text="{Binding UserCustom.Property.Email}" />
                     </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <Button DockPanel.Dock="Right"
+                                Width="auto"
+                                Content="Сохранить"
+                                BorderBrush="#FF4862F1"
+                                Margin="5"
+                                HorizontalContentAlignment="Right"
+                                VerticalContentAlignment="Center"
+                                Click="SaveAccountInfo_Click"/>
+                    </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Профили настроек"
@@ -207,27 +217,12 @@
                                      ItemsSource="{Binding SettingsListCustom.Property}"
                                      DisplayMemberPath="Name"
                                      SelectedItem="{Binding SelectedSettingCustom}" />
-                        <Button DockPanel.Dock="Left"
-                                Width="auto"
-                                Content="Загрузить профиль"
-                                Margin="5"
-                                HorizontalContentAlignment="Right"
-                                VerticalContentAlignment="Center" />
-                    </DockPanel>
-                    <DockPanel LastChildFill="False">
-                        <hc:TextBox DockPanel.Dock="Right"
-                                    Width="auto"
-                                    Margin="5"
-                                    hc:InfoElement.Placeholder="Название профиля"
-                                    x:Name="settingsProfileName"
-                                    HorizontalContentAlignment="Left"
-                                    VerticalContentAlignment="Center" />
-                        <Button DockPanel.Dock="Left"
-                                Width="auto"
-                                Content="Сохранить профиль"
-                                Margin="5"
-                                HorizontalContentAlignment="Right"
-                                VerticalContentAlignment="Center" />
+                        <TextBlock DockPanel.Dock="Left"
+                                   Width="auto"
+                                   Text="Выбор профиля"
+                                   Margin="5" 
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
                     </DockPanel>
                 </StackPanel>
             </StackPanel>
