@@ -220,8 +220,6 @@ namespace ScreenRecognition.Api.Core.Services
                     currentProfileSettings.SelectedOcr = null;
 
                     _dbContext.Settings.Update(currentProfileSettings);
-                    //_dbContext.Settings.Remove(currentProfileSettings);
-                    //await _dbContext.Settings.AddAsync(settings);
                 }
 
                 await _dbContext.SaveChangesAsync();
