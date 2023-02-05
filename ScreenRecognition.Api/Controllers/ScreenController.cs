@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using ScreenRecognition.Api.Core.Services.Translators;
 using ScreenRecognition.Api.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ScreenRecognition.Api.Controllers
 {
@@ -22,15 +23,15 @@ namespace ScreenRecognition.Api.Controllers
     {
         [Route("Translate")]
         [HttpPost]
-        public async Task<string> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword)
+        public async Task<string> TextTranslateV2(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword, bool returnsOriginal)
         {
-            var asyncTask = await Task.Run(async () =>
+            try
             {
-                string result = "";
+                string? result = "";
                 var dbOps = new DBOperations();
                 var textOps = new TextOperations();
 
-                var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
+                var inputText = await textOps.GetText(ocrName, image.ToArray(), inputLanguage);
 
                 result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
 
@@ -39,53 +40,31 @@ namespace ScreenRecognition.Api.Controllers
 
                 await dbOps.SaveHistory(translatorName, ocrName, image, inputLanguage, outputLanguage, userLogin, userPassword, inputText, result);
 
+                if (returnsOriginal)
+                    result = $"{inputText.TextResult}:::{result}";
+
                 return result;
-            });
-
-            return asyncTask;
-        }
-
-        [Route("TranslateWithOrig")]
-        [HttpPost]
-        public async Task<string> TextTranslateWithOrig(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage)
-        {
-            var asyncTask = await Task.Run(async () =>
+            }
+            catch
             {
-                string result = "";
-                var textOps = new TextOperations();
-
-                var inputText = textOps.GetText(ocrName, image.ToArray(), inputLanguage);
-
-                result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
-
-                if (result.Contains("JSON"))
-                    return "Ошибка распознавания";
-
-                return $"{inputText.TextResult}:::{result}";
-            });
-
-            return asyncTask;
+                return "Ошибка перевода";
+            }
         }
 
         [Route("ApiKeyValidation")]
         [HttpGet]
-        public bool ApiKeyValidation(string translatorName, string apiKey)
+        public async Task<bool> ApiKeyValidation(string translatorName, string apiKey)
         {
-            var asyncTask = Task.Run(() =>
-            {
-                bool result = false;
+            bool result = false;
 
-                var translator = TextOperations.FindElement<ITextTranslatorService?>(translatorName);
+            var translator = TextOperations.FindElement<ITextTranslatorService?>(translatorName);
 
-                if (translator == null)
-                    return result;
-
-                result = translator.ApiKeyValidation(apiKey);
-
+            if (translator == null)
                 return result;
-            });
 
-            return asyncTask.Result;
+            result = translator.ApiKeyValidation(apiKey);
+
+            return result;
         }
     }
 }

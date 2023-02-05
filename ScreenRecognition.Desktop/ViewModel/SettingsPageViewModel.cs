@@ -151,10 +151,10 @@ namespace ScreenRecognition.Desktop.ViewModel
             Properties.ProgramSettings.Default.HotkeyKey = SelectedHotkeyKeyCustom.Property.ToString();
             Properties.ProgramSettings.Default.HotkeyModifier = SelectedHotkeyModifierCustom.Property.ToString();
             Properties.ProgramSettings.Default.MinimizeToTray = MinimizeToTrayCustom.Property;
-            Properties.ProgramSettings.Default.OcrLanguages = OcrLanguageCustom.Property?.Ocralias;
+            Properties.ProgramSettings.Default.OcrLanguages = OcrLanguageCustom.Property?.Name;
             Properties.ProgramSettings.Default.OcrName = SelectedOcrCustom.Property?.Name;
             Properties.ProgramSettings.Default.TranslatorName = SelectedTranslatorCustom.Property?.Name;
-            Properties.ProgramSettings.Default.TranslatorLanguage = TranslatorLanguageCustom.Property?.TranslatorAlias;
+            Properties.ProgramSettings.Default.TranslatorLanguage = TranslatorLanguageCustom.Property?.Name;
             Properties.ProgramSettings.Default.TranslatorApiKey = TranslatorApiKeyCustom.Property;
             Properties.ProgramSettings.Default.HotkeyEnabledStatus = true;
             Properties.ProgramSettings.Default.ResultColor = ResultColorCustom.Property;

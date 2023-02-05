@@ -231,7 +231,7 @@ namespace ScreenRecognition.Desktop.ViewModel
                 if (string.IsNullOrEmpty(apiKey))
                     apiKey = "123";
 
-                string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}";
+                string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}&returnsOriginal=false";
 
                 var result = await _controller.Post<List<byte>?, string>(query, str);
 

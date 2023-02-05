@@ -11,12 +11,7 @@ namespace ScreenRecognition.Api.Controllers
         [HttpGet]
         public async Task<bool> StatusCheck()
         {
-            var taskResult = await Task.Run(() =>
-            {
-                return true;
-            });
-
-            return taskResult;
+            return true;
         }
     }
 }

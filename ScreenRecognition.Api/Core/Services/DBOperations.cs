@@ -17,6 +17,20 @@ namespace ScreenRecognition.Api.Core.Services
             _dbContext = new Data.ScreenRecognitionContext();
         }
 
+        public async Task<string?> GetOcrLanguageAlias(string language)
+        {
+            var result = (await _dbContext.Languages.FirstOrDefaultAsync(e => e.Name == language))?.Ocralias;
+
+            return result;
+        }
+
+        public async Task<string?> GetTranslatorLanguageAlias(string language)
+        {
+            var result = (await _dbContext.Languages.FirstOrDefaultAsync(e => e.Name == language))?.TranslatorAlias;
+
+            return result;
+        }
+
         public async Task SaveHistory(string translatorName, string ocrName, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword, OcrResultModel recognizedText, string translatedText)
         {
             if (userLogin == "guest" || userPassword == "guest")
@@ -26,14 +40,14 @@ namespace ScreenRecognition.Api.Core.Services
             var history = new History
             {
                 Id = (await _dbContext.Histories.Where(e => e.UserId == userId).CountAsync() + 1),
-                InputLanguageId = (await _dbContext.Languages.FirstOrDefaultAsync(e => e.Ocralias.ToLower() == inputLanguage.ToLower())).Id,
-                OutputLanguageId = (await _dbContext.Languages.FirstOrDefaultAsync(e => e.TranslatorAlias.ToLower() == outputLanguage.ToLower())).Id,
+                InputLanguageId = (await _dbContext.Languages.FirstOrDefaultAsync(e => e.Name.ToLower() == inputLanguage.ToLower()))?.Id,
+                OutputLanguageId = (await _dbContext.Languages.FirstOrDefaultAsync(e => e.Name.ToLower() == outputLanguage.ToLower()))?.Id,
                 RecognizedText = recognizedText.TextResult,
                 RecognizedTextAccuracy = recognizedText.Confidence,
                 Translate = translatedText,
                 Screenshot = image.ToArray(),
-                SelectedOcrid = (await _dbContext.Ocrs.FirstOrDefaultAsync(e => e.Name.ToLower() == ocrName.ToLower())).Id,
-                SelectedTranslatorId = (await _dbContext.Translators.FirstOrDefaultAsync(e => e.Name.ToLower() == translatorName.ToLower())).Id,
+                SelectedOcrid = (await _dbContext.Ocrs.FirstOrDefaultAsync(e => e.Name.ToLower() == ocrName.ToLower()))?.Id,
+                SelectedTranslatorId = (await _dbContext.Translators.FirstOrDefaultAsync(e => e.Name.ToLower() == translatorName.ToLower()))?.Id,
                 UserId = userId,
             };
 

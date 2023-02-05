@@ -15,49 +15,67 @@ namespace ScreenRecognition.Api.Core.Services
         private List<Thread> _threads;
         private static List<OcrResultModel> s_results;
 
+        private DBOperations _dBOperations;
+
         private string? _inputLanguages;
 
         public TextOperations()
         {
             _threads = new List<Thread>();
             s_results = new List<OcrResultModel>();
+
+            _dBOperations = new();
         }
 
-        public async Task<string> GetTranslate(string translatorName, string inputText, string inputLanguages, string outputLanguage, string? translationApiKey = null)
+        public async Task<string> GetTranslate(string translatorName, string inputText, string inputLanguage, string outputLanguage, string translationApiKey)
         {
-            _textTranslatorService = FindElement<ITextTranslatorService>(translatorName);
+            try
+            {
+                _textTranslatorService = FindElement<ITextTranslatorService>(translatorName);
 
-            if (_textTranslatorService == null)
-                return "Переводчик не найден";
+                if (_textTranslatorService == null)
+                    return "Переводчик не найден";
 
-            string result = await _textTranslatorService.Translate(inputText, inputLanguages, outputLanguage, translationApiKey);
+                var translatorInputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(inputLanguage);
+                var translatorOutputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(outputLanguage);
 
-            if (!String.IsNullOrEmpty(result))
-                return result;
+                var result = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
+
+                if (!String.IsNullOrEmpty(result))
+                    return result;
+            }
+            catch { }
 
             return "Ошибка перевода";
         }
 
-        public OcrResultModel GetText(string ocrName, byte[] image, string inputLanguages)
+        public async Task<OcrResultModel> GetText(string ocrName, byte[] image, string inputLanguage)
         {
-            _ocrService = FindElement<IOcrService>(ocrName);
-            _inputLanguages = inputLanguages;
+            try
+            {
+                _ocrService = FindElement<IOcrService>(ocrName);
 
-            if (_ocrService == null)
-                return new OcrResultModel
-                {
-                    TextResult = "OCR не найден",
-                    Confidence = 0,
-                };
+                var ocrLangAlias = await _dBOperations.GetOcrLanguageAlias(inputLanguage);
 
-            var preparedImages = ImagePrepare(image);
+                _inputLanguages = ocrLangAlias;
 
-            GetOcrResult(preparedImages);
+                if (_ocrService == null)
+                    return new OcrResultModel
+                    {
+                        TextResult = "OCR не найден",
+                        Confidence = 0,
+                    };
 
-            var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1];
+                var preparedImages = ImagePrepare(image);
 
-            if (!String.IsNullOrEmpty(result?.TextResult))
-                return result;
+                GetOcrResult(preparedImages);
+
+                var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1];
+
+                if (!String.IsNullOrEmpty(result?.TextResult))
+                    return result;
+            }
+            catch { }
 
             return new OcrResultModel
             {
@@ -78,7 +96,7 @@ namespace ScreenRecognition.Api.Core.Services
                 threadsCount++;
             }
 
-            while (true) 
+            while (true)
             {
                 if (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() == 0)
                     break;

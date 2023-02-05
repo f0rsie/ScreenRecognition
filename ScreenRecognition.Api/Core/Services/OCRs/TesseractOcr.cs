@@ -23,12 +23,12 @@ namespace ScreenRecognition.Api.Core.Services
                 inputLanguages = inputLanguages.Replace("_", "+");
             }
 
-            var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", inputLanguages, EngineMode.LstmOnly);
-
-            OcrResultModel result = new OcrResultModel();
+            var result = new OcrResultModel();
 
             try
             {
+                var ocrEngine = new TesseractEngine(@"./Resources/Tessdata", inputLanguages, EngineMode.LstmOnly);
+
                 var img = Pix.LoadFromMemory(image);
                 var res = ocrEngine.Process(img);
                 var confidence = res.GetMeanConfidence();

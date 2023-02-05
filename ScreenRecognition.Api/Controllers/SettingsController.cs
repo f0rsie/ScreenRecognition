@@ -27,84 +27,54 @@ namespace ScreenRecognition.Api.Controllers
         [HttpGet]
         public async Task<List<Ocr>> GetOcrs()
         {
-            var resultTask = await Task.Run(async () =>
-            {
-                var result = await _dbOperations.GetOcrList();
+            var result = await _dbOperations.GetOcrList();
 
-                return result;
-            });
-
-            return resultTask;
+            return result;
         }
 
         [Route("Translators")]
         [HttpGet]
         public async Task<List<Translator>> GetTranslators()
         {
-            var resultTask = await Task.Run(async () =>
-            {
-                var result = await _dbOperations.GetTranslatorList();
+            var result = await _dbOperations.GetTranslatorList();
 
-                return result;
-            });
-
-            return resultTask;
+            return result;
         }
 
         [Route("Settings")]
         [HttpGet]
         public async Task<List<Setting>> GetSettings(int userId)
         {
-            var resultTask = await Task.Run(async () =>
-            {
-                var result = await _dbOperations.GetSettignsList(userId);
+            var result = await _dbOperations.GetSettignsList(userId);
 
-                return result;
-            });
-
-            return resultTask;
+            return result;
         }
 
         [Route("Countries")]
         [HttpGet]
         public async Task<List<Country>> GetCountries()
         {
-            var resultTask = await Task.Run(async () =>
-            {
-                var result = await _dbOperations.GetCountryList();
+            var result = await _dbOperations.GetCountryList();
 
-                return result;
-            });
-
-            return resultTask;
+            return result;
         }
 
         [Route("Languages")]
         [HttpGet]
         public async Task<List<Language>> GetLanguages()
         {
-            var resultTask = await Task.Run(async() =>
-            {
-                var result = await _dbOperations.GetLanguageList();
+            var result = await _dbOperations.GetLanguageList();
 
-                return result;
-            });
-
-            return resultTask;
+            return result;
         }
 
         [Route("ProfileSettings")]
         [HttpGet]
         public async Task<Setting?> GetSettignsProfile(int userId, string name)
         {
-            var resultTask = await Task.Run(async () =>
-            {
-                var result = await _dbOperations.GetAllSettings(userId, name);
+            var result = await _dbOperations.GetAllSettings(userId, name);
 
-                return result;
-            });
-
-            return resultTask;
+            return result;
         }
     }
 }

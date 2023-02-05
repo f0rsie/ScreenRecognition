@@ -65,15 +65,15 @@ namespace ScreenRecognition.Desktop.ViewModel
             {
                 var settings = new DefaultProgramSettings();
 
-                var result = await _controller.Post<List<byte>?, string>($"Screen/TranslateWithOrig?translatorName={settings.TranslatorName}&ocrName={settings.OcrName}&translationApiKey={settings.TranslationApiKey}&inputLanguage={settings.OcrLanguage}&outputLanguage={settings.TranslatorLanguage}", byteImg);
+                var result = await _controller.Post<List<byte>, string>($"Screen/Translate?translatorName={settings.TranslatorName}&ocrName={settings.OcrName}&translationApiKey={settings.TranslationApiKey}&inputLanguage={settings.OcrLanguage}&outputLanguage={settings.TranslatorLanguage}&userLogin={ConnectedUserSingleton.Login}&userPassword={ConnectedUserSingleton.Password}&returnsOriginal=true", byteImg);
 
                 return result;
             });
 
-            var result = asyncTask.Split(":::");
+            var result = asyncTask?.Split(":::");
 
-            Output.Property.InputText = result[0];
-            Output.Property.OutputText = result[1];
+            Output.Property.InputText = result?[0];
+            Output.Property.OutputText = result?[1];
             Output.Property = Output.Property;
         }
 
