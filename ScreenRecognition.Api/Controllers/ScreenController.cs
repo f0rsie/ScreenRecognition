@@ -23,7 +23,7 @@ namespace ScreenRecognition.Api.Controllers
     {
         [Route("Translate")]
         [HttpPost]
-        public async Task<string> TextTranslateV2(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword, bool returnsOriginal)
+        public async Task<string> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword, bool returnsOriginal)
         {
             try
             {
