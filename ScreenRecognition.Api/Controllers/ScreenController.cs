@@ -62,7 +62,7 @@ namespace ScreenRecognition.Api.Controllers
             if (translator == null)
                 return result;
 
-            result = translator.ApiKeyValidation(apiKey);
+            result = await translator.ApiKeyValidation(apiKey);
 
             return result;
         }

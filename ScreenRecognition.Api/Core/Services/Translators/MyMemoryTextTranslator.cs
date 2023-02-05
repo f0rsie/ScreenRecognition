@@ -15,7 +15,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
             try
             {
-                bool apiKeyValidation = ApiKeyValidation(apiKey);
+                bool apiKeyValidation = await ApiKeyValidation(apiKey);
 
                 translatorUrl = $"https://api.mymemory.translated.net/get?q={text}&langpair={inputLanguage}|{outputLanguage}";
 
@@ -44,13 +44,13 @@ namespace ScreenRecognition.Api.Core.Services.Translators
             return $"{res}";
         }
 
-        public bool ApiKeyValidation(string? apiKey)
+        public async Task<bool> ApiKeyValidation(string? apiKey)
         {
             try
             {
                 HttpClient client = new HttpClient();
 
-                var stringTask = client.GetStringAsync($"https://api.mymemory.translated.net/get?q=text&langpair=en|ru&key={apiKey}").Result;
+                var stringTask = await client.GetStringAsync($"https://api.mymemory.translated.net/get?q=text&langpair=en|ru&key={apiKey}");
 
                 if (stringTask.Contains("AUTHENTICATION FAILURE"))
                     return false;
