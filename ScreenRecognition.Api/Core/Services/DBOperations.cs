@@ -207,8 +207,21 @@ namespace ScreenRecognition.Api.Core.Services
                     await _dbContext.Settings.AddAsync(settings);
                 else
                 {
-                    _dbContext.Settings.Remove(currentProfileSettings);
-                    await _dbContext.Settings.AddAsync(settings);
+                    currentProfileSettings.InputLanguageId = settings.InputLanguageId;
+                    currentProfileSettings.OutputLanguageId = settings.OutputLanguageId;
+                    currentProfileSettings.ResultColor = settings.ResultColor;
+                    currentProfileSettings.SelectedTranslatorId = settings.SelectedTranslatorId;
+                    currentProfileSettings.SelectedOcrid = settings.SelectedOcrid;
+                    currentProfileSettings.TranslatorApiKey = settings.TranslatorApiKey;
+
+                    currentProfileSettings.InputLanguage = null;
+                    currentProfileSettings.OutputLanguage = null;
+                    currentProfileSettings.SelectedTranslator = null;
+                    currentProfileSettings.SelectedOcr = null;
+
+                    _dbContext.Settings.Update(currentProfileSettings);
+                    //_dbContext.Settings.Remove(currentProfileSettings);
+                    //await _dbContext.Settings.AddAsync(settings);
                 }
 
                 await _dbContext.SaveChangesAsync();
