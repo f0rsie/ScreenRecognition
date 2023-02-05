@@ -98,7 +98,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             while (true)
             {
-                if (_threads.Where(e => e.ThreadState == ThreadState.Running).Count() == 0)
+                if (!_threads.Where(e => e.ThreadState == ThreadState.Running).Any())
                     break;
             }
         }
