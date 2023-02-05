@@ -210,7 +210,7 @@ namespace ScreenRecognition.Desktop.ViewModel
 
         private async Task GetResultAsync(Bitmap f)
         {
-            var array = ImagePreparationService.BitmapToByte(f);
+            var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
             var str = array.ToList();
 
             try
