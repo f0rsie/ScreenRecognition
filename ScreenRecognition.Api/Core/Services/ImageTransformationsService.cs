@@ -200,10 +200,14 @@ namespace ScreenRecognition.Api.Core.Services
         {
             try
             {
+                int i = 0;
                 var sepModel = model as ImageSeparationThreadModel;
 
                 var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
                 var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, _startPixelColor, _imageSize);
+                var imgBmp = ImagePreparationService.ByteToBitmap(image);
+
+                //imgBmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
 
                 ImageSeparationThreadModel result = new ImageSeparationThreadModel
                 {
