@@ -8,6 +8,8 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 {
     public class MyMemoryTextTranslator : ITextTranslatorService
     {
+        // Поменял проверку валидности апи ключа при вызове этой функции, что выиграло от 100+ мс (было в среднем ~700, стало ~400, но зависит от размера переводимого текста)
+        // Теперь если ключ валидный, то скорость работы данной функции быстрее в ~1.5 раза, по сравнению со старой проверкой
         public async Task<string> Translate(string text, string inputLanguage, string outputLanguage, string apiKey)
         {
             string? res = "";
@@ -15,18 +17,24 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
             try
             {
-                bool apiKeyValidation = await ApiKeyValidation(apiKey);
+                //bool apiKeyValidation = await ApiKeyValidation(apiKey);
 
                 translatorUrl = $"https://api.mymemory.translated.net/get?q={text}&langpair={inputLanguage}|{outputLanguage}";
 
                 HttpClient client = new HttpClient();
 
-                if (apiKey != null && apiKeyValidation)
+                if (apiKey != null)
                 {
                     translatorUrl += $"&key={apiKey}";
                 }
 
                 var stringTask = await client.GetStringAsync(translatorUrl);
+
+                if(stringTask.Contains("AUTHENTICATION FAILURE"))
+                {
+                    translatorUrl = translatorUrl.Replace($"&key={apiKey}", "");
+                    stringTask = await client.GetStringAsync(translatorUrl);
+                }
 
                 var result = JsonSerializer.Deserialize<Models.responseData>(stringTask);
 
