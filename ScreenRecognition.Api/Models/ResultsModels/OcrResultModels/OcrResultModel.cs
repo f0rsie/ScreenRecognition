@@ -1,4 +1,4 @@
-﻿namespace ScreenRecognition.Api.Models.OcrResultModels
+﻿namespace ScreenRecognition.Api.Models.ResultsModels.OcrResultModels
 {
     public class OcrResultModel
     {

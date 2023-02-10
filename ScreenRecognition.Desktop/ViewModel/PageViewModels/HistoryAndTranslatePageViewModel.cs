@@ -2,6 +2,7 @@
 using ScreenRecognition.Desktop.Models;
 using ScreenRecognition.Desktop.Models.DBModels;
 using ScreenRecognition.Desktop.Models.OutputModels;
+using ScreenRecognition.Desktop.Models.ResultModels.ApiResultModels;
 using ScreenRecognition.Desktop.Models.SingletonModels;
 using System;
 using System.Collections.Generic;
@@ -68,15 +69,13 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             {
                 var settings = new DefaultProgramSettings();
 
-                var result = await _controller.Post<List<byte>, string>($"Screen/Translate?translatorName={settings.TranslatorName}&ocrName={settings.OcrName}&translationApiKey={settings.TranslationApiKey}&inputLanguage={settings.OcrLanguage}&outputLanguage={settings.TranslatorLanguage}&userLogin={ConnectedUserSingleton.Login}&userPassword={ConnectedUserSingleton.Password}&returnsOriginal=true", byteImg);
+                var result = await _controller.Post<List<byte>, ApiResultModel>($"Screen/Translate?translatorName={settings.TranslatorName}&ocrName={settings.OcrName}&translationApiKey={settings.TranslationApiKey}&inputLanguage={settings.OcrLanguage}&outputLanguage={settings.TranslatorLanguage}&userLogin={ConnectedUserSingleton.Login}&userPassword={ConnectedUserSingleton.Password}", byteImg);
 
                 return result;
             });
 
-            var result = asyncTask?.Split(":::");
-
-            Output.Property.InputText = result?[0];
-            Output.Property.OutputText = result?[1];
+            Output.Property.InputText = asyncTask?.DetectedText;
+            Output.Property.OutputText = asyncTask?.TranslatedTextVariants?.FirstOrDefault();
             Output.Property = Output.Property;
         }
 

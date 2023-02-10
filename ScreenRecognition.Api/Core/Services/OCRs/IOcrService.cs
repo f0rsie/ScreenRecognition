@@ -1,4 +1,4 @@
-﻿using ScreenRecognition.Api.Models.OcrResultModels;
+﻿using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 
 namespace ScreenRecognition.Api.Core.Services.OCRs
 {

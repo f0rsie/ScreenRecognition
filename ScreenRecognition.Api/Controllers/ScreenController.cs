@@ -9,6 +9,8 @@ using System.Reflection;
 using ScreenRecognition.Api.Core.Services.Translators;
 using ScreenRecognition.Api.Models;
 using static System.Net.Mime.MediaTypeNames;
+using ScreenRecognition.Api.Models.ResultsModels.ApiResultModels;
+using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 
 namespace ScreenRecognition.Api.Controllers
 {
@@ -21,33 +23,60 @@ namespace ScreenRecognition.Api.Controllers
     [ApiController]
     public class ScreenController : ControllerBase
     {
+        /// Новая версия перевода
         [Route("Translate")]
         [HttpPost]
-        public async Task<string> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword, bool returnsOriginal)
+        public async Task<ApiResultModel> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword)
         {
+            var detectedText = new OcrResultModel();
+            var translatedText = new List<string>();
+
             try
             {
-                string? result = "";
+                var result = new ApiResultModel();
                 var dbOps = new DBOperations();
                 var textOps = new TextOperations();
 
-                var inputText = await textOps.GetText(ocrName, image.ToArray(), inputLanguage);
+                detectedText = await textOps.GetText(ocrName, image.ToArray(), inputLanguage);
 
-                result = await textOps.GetTranslate(translatorName, inputText.TextResult, inputLanguage, outputLanguage, translationApiKey);
+                if (detectedText.Confidence == 0 && detectedText.TextResult.Contains("Не распознано"))
+                    return new ApiResultModel { Error = true, ErrorMessage = "Ошибка распознавания", ErrorCode = "001" };
 
-                if (result.Contains("JSON"))
-                    return "Ошибка распознавания";
+                translatedText = await textOps.GetTranslate(translatorName, detectedText.TextResult, inputLanguage, outputLanguage, translationApiKey);
 
-                await dbOps.SaveHistory(translatorName, ocrName, image, inputLanguage, outputLanguage, userLogin, userPassword, inputText, result);
+                if (translatedText?.Where(e => e.Contains("JSON")).Count() > 0)
+                    return new ApiResultModel { Error = true, ErrorMessage = "Ошибка перевода", ErrorCode = "002" };
 
-                if (returnsOriginal)
-                    result = $"{inputText.TextResult}:::{result}";
+                await dbOps.SaveHistory(translatorName, ocrName, image, inputLanguage, outputLanguage, userLogin, userPassword, detectedText, translatedText[0]);
+
+                result = new ApiResultModel
+                {
+                    DetectedText = detectedText.TextResult,
+                    DetectedTextConfidence = detectedText.Confidence,
+                    DetectedTextLanguage = inputLanguage,
+                    Error = false,
+                    OcrName = ocrName,
+                    Image = image,
+                    TranslatedTextLanguage = outputLanguage,
+                    TranslatedTextVariants = translatedText,
+                    TranslatorName = translatorName,
+                };
 
                 return result;
             }
             catch
             {
-                return "Ошибка перевода";
+                return new ApiResultModel
+                {
+                    TranslatorName = translatorName,
+                    OcrName = ocrName,
+                    Image = image,
+                    DetectedText = detectedText.TextResult,
+                    DetectedTextConfidence = detectedText.Confidence,
+                    Error = true,
+                    ErrorCode = "000",
+                    ErrorMessage = "Ошибка",
+                };
             }
         }
 

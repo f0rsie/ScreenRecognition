@@ -1,4 +1,4 @@
-﻿using ScreenRecognition.Api.Models.OcrResultModels;
+﻿using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

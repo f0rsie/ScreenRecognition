@@ -31,6 +31,7 @@ using GlobalHotKeys;
 using ScreenRecognition.ImagePreparation.Services;
 using ScreenRecognition.Modules.Modules;
 using ScreenRecognition.Desktop.Models.SingletonModels;
+using ScreenRecognition.Desktop.Models.ResultModels.ApiResultModels;
 
 namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 {
@@ -232,11 +233,11 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
                 if (string.IsNullOrEmpty(apiKey))
                     apiKey = "123";
 
-                string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}&returnsOriginal=false";
+                string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}";
 
-                var result = await _controller.Post<List<byte>?, string>(query, str);
+                var result = await _controller.Post<List<byte>?, ApiResultModel>(query, str);
 
-                Result = result;
+                Result = result?.TranslatedTextVariants?.FirstOrDefault();
 
                 if (Result == null || Result == string.Empty)
                     return;

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using ScreenRecognition.Api.Models.TranslatorsJsonModels;
+using ScreenRecognition.Api.Models.ResultsModels.TranslatorsJsonModels;
 
 namespace ScreenRecognition.Api.Core.Services.Translators
 {
@@ -7,9 +7,9 @@ namespace ScreenRecognition.Api.Core.Services.Translators
     {
         // Поменял проверку валидности апи ключа при вызове этой функции, что выиграло от 100+ мс (было в среднем ~700, стало ~400, но зависит от размера переводимого текста)
         // Теперь если ключ валидный, то скорость работы данной функции быстрее в ~1.5 раза, по сравнению со старой проверкой
-        public async Task<string> Translate(string text, string inputLanguage, string outputLanguage, string apiKey)
+        public async Task<List<string>> Translate(string text, string inputLanguage, string outputLanguage, string apiKey)
         {
-            string? res = "";
+            var res = new List<string>();
             string? translatorUrl = "";
 
             try
@@ -18,7 +18,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
                 translatorUrl = $"https://api.mymemory.translated.net/get?q={text}&langpair={inputLanguage}|{outputLanguage}";
 
-                HttpClient client = new HttpClient();
+                var client = new HttpClient();
 
                 if (apiKey != null)
                 {
@@ -37,16 +37,14 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
                 client.Dispose();
 
-                res = result?.matches?.OrderByDescending(e => e.match.Value).First().translation;
-
-                //res = result?.matches?[0].translation;
+                res = result.matches.Select(e => e.translation).ToList();
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return new() { ex.Message };
             }
 
-            return $"{res}";
+            return res;
         }
 
         public async Task<bool> ApiKeyValidation(string? apiKey)

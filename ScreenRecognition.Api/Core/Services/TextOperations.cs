@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using ScreenRecognition.Api.Core.Services.OCRs;
 using ScreenRecognition.Api.Core.Services.Translators;
-using ScreenRecognition.Api.Models.OcrResultModels;
+using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 using ScreenRecognition.Modules.Modules;
 using System.Reflection;
 
@@ -27,26 +27,26 @@ namespace ScreenRecognition.Api.Core.Services
             _dBOperations = new();
         }
 
-        public async Task<string> GetTranslate(string translatorName, string inputText, string inputLanguage, string outputLanguage, string translationApiKey)
+        public async Task<List<string>?> GetTranslate(string translatorName, string inputText, string inputLanguage, string outputLanguage, string translationApiKey)
         {
             try
             {
                 _textTranslatorService = FindElement<ITextTranslatorService>(translatorName);
 
                 if (_textTranslatorService == null)
-                    return "Переводчик не найден";
+                    return new() { "Переводчик не найден" };
 
                 var translatorInputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(inputLanguage);
                 var translatorOutputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(outputLanguage);
 
                 var result = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
 
-                if (!String.IsNullOrEmpty(result))
+                if (!result.IsNullOrEmpty())
                     return result;
             }
             catch { }
 
-            return "Ошибка перевода";
+            return new() { "Ошибка перевода" };
         }
 
         public async Task<OcrResultModel> GetText(string ocrName, byte[] image, string inputLanguage)
