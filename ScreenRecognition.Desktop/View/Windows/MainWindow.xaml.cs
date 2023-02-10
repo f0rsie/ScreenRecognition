@@ -1,7 +1,7 @@
 ﻿using GlobalHotKeys;
 using ScreenRecognition.Desktop.Core;
 using ScreenRecognition.Desktop.Models;
-using ScreenRecognition.Desktop.ViewModel;
+using ScreenRecognition.Desktop.ViewModel.WindowViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

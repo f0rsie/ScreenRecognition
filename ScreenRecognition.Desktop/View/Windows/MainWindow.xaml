@@ -4,8 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
-        xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
         xmlns:Models="clr-namespace:ScreenRecognition.Desktop.Models"
+        xmlns:WindowViewModels="clr-namespace:ScreenRecognition.Desktop.ViewModel.WindowViewModels"
         x:Class="ScreenRecognition.Desktop.View.Windows.MainWindow"
         mc:Ignorable="d"
         Title="ScreenRecognition"
@@ -15,7 +15,7 @@
         Width="1000"
         MinWidth="800">
     <Window.DataContext>
-        <ViewModel:MainWindowViewModel />
+        <WindowViewModels:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
@@ -32,10 +32,8 @@
                        Foreground="#FF4C4949"
                        Margin="5"
                        DockPanel.Dock="Left"
-                       TextAlignment="Center">
-                <Run Text="Screen" /><Run Text="Recognition"
-                                          Foreground="#FF4862F1" />
-            </TextBlock>
+                       TextAlignment="Center"><Run Text="Screen" /><Run Text="Recognition"
+                                                                        Foreground="#FF4862F1" /></TextBlock>
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Left"
                         Margin="5">
@@ -55,11 +53,8 @@
                            VerticalAlignment="Center"
                            TextAlignment="Center"
                            Margin="0 0 50 0"
-                           Foreground="{Binding ServerStatusCustom.Property.TextColor.Name, Mode=OneWay}">
-                    <Run Text="Статус сервера:" />
-                    <Run Text="{Binding ServerStatusCustom.Property.Text, Mode=OneWay}"
-                         FontWeight="Bold" />
-                </TextBlock>
+                           Foreground="{Binding ServerStatusCustom.Property.TextColor.Name, Mode=OneWay}"><Run Text="Статус сервера:" /><Run Text=" " /><Run Text="{Binding ServerStatusCustom.Property.Text, Mode=OneWay}"
+                                                                                                                                                             FontWeight="Bold" /></TextBlock>
                 <Border CornerRadius="5"
                         Grid.ColumnSpan="2"
                         Padding="10"
@@ -85,7 +80,7 @@
                         BorderBrush="#FF4C4949"
                         Click="SignButton_Click"
                         Visibility="{Binding LoginPanelVisibility}"
-                        Margin="-15 0 5 0"/>
+                        Margin="-15 0 5 0" />
             </StackPanel>
         </DockPanel>
         <Frame Grid.Row="1"

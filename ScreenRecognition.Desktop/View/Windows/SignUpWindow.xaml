@@ -4,7 +4,7 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
-        xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+        xmlns:WindowViewModels="clr-namespace:ScreenRecognition.Desktop.ViewModel.WindowViewModels"
         x:Class="ScreenRecognition.Desktop.View.Windows.SignUpWindow"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -18,7 +18,7 @@
         MaxWidth="470"
         ResizeMode="NoResize">
     <Window.DataContext>
-        <ViewModel:SignUpWindowViewModel />
+        <WindowViewModels:SignUpWindowViewModel />
     </Window.DataContext>
     <Grid>
         <StackPanel Orientation="Vertical">
@@ -62,7 +62,7 @@
                                 ShowEyeButton="True"
                                 hc:InfoElement.Placeholder="Пароль"
                                 VerticalContentAlignment="Center"
-                                HorizontalContentAlignment="Left"/>
+                                HorizontalContentAlignment="Left" />
                 <hc:PasswordBox Margin="5"
                                 FontSize="14"
                                 Width="145"

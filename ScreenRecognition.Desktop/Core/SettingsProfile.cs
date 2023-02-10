@@ -1,4 +1,5 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
+using ScreenRecognition.Desktop.Models.DBModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ namespace ScreenRecognition.Desktop.Core
 {
     public class SettingsProfile
     {
-        private Models.Setting _settings;
+        private Setting _settings;
         private UniversalController _controller;
 
         public SettingsProfile()
         {
-            _settings = new Models.Setting();
+            _settings = new Models.DBModels.Setting();
             _controller = new UniversalController();
         }
 
@@ -25,7 +26,7 @@ namespace ScreenRecognition.Desktop.Core
 
         private async Task GetSettingsAsync()
         {
-            _settings = await _controller.Get<Models.Setting, Models.Setting>("");
+            _settings = await _controller.Get<Setting, Setting>("");
         }
 
         public async void GetSettings() => await GetSettingsAsync();

@@ -1,5 +1,5 @@
-﻿using ScreenRecognition.Desktop.Models;
-using ScreenRecognition.Desktop.ViewModel;
+﻿using ScreenRecognition.Desktop.Models.SingletonModels;
+using ScreenRecognition.Desktop.ViewModel.PageViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

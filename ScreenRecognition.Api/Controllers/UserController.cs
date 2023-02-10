@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using ScreenRecognition.Api.Core.Services;
-using ScreenRecognition.Api.Models;
+using ScreenRecognition.Api.Models.DbModels;
 
 namespace ScreenRecognition.Api.Controllers
 {

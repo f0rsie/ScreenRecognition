@@ -1,8 +1,5 @@
-﻿using Google.Api.Gax.ResourceNames;
-using Google.Cloud.Translate.V3;
-using System.IO;
-using System.Net.Http.Headers;
-using System.Text.Json;
+﻿using System.Text.Json;
+using ScreenRecognition.Api.Models.TranslatorsJsonModels;
 
 namespace ScreenRecognition.Api.Core.Services.Translators
 {
@@ -30,13 +27,13 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
                 var stringTask = await client.GetStringAsync(translatorUrl);
 
-                if(stringTask.Contains("AUTHENTICATION FAILURE"))
+                if (stringTask.Contains("AUTHENTICATION FAILURE"))
                 {
                     translatorUrl = translatorUrl.Replace($"&key={apiKey}", "");
                     stringTask = await client.GetStringAsync(translatorUrl);
                 }
 
-                var result = JsonSerializer.Deserialize<Models.responseData>(stringTask);
+                var result = JsonSerializer.Deserialize<responseData>(stringTask);
 
                 client.Dispose();
 

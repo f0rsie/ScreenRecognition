@@ -1,5 +1,4 @@
-﻿using ScreenRecognition.Api.Core.Services.OCRs;
-using ScreenRecognition.Api.Models;
+﻿using ScreenRecognition.Api.Models.OcrResultModels;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tesseract;
 
-namespace ScreenRecognition.Api.Core.Services
+namespace ScreenRecognition.Api.Core.Services.OCRs
 {
     public class TesseractOcr : IOcrService
     {

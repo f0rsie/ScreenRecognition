@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ScreenRecognition.Api.Models;
+using ScreenRecognition.Api.Models.DbModels;
+using ScreenRecognition.Api.Models.OcrResultModels;
 
 namespace ScreenRecognition.Api.Core.Services
 {

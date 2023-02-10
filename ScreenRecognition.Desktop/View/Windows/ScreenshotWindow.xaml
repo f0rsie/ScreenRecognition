@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
-        xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+        xmlns:WindowViewModels="clr-namespace:ScreenRecognition.Desktop.ViewModel.WindowViewModels"
         x:Class="ScreenRecognition.Desktop.View.Windows.ScreenshotWindow"
         mc:Ignorable="d"
         Title="ScreenshotWindow"
@@ -16,7 +16,7 @@
         WindowState="Maximized"
         Background="#00000000">
     <Window.DataContext>
-        <ViewModel:ScreenshotWindowViewModel />
+        <WindowViewModels:ScreenshotWindowViewModel />
     </Window.DataContext>
     <Canvas MouseDown="Canvas_MouseDown"
             MouseMove="Canvas_MouseMove"
@@ -24,7 +24,7 @@
             Margin="7"
             x:Name="Canvas">
         <Canvas.Background>
-            <ImageBrush x:Name="backgroundImage"/>
+            <ImageBrush x:Name="backgroundImage" />
         </Canvas.Background>
     </Canvas>
 </Window>

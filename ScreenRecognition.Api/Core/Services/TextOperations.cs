@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using ScreenRecognition.Api.Core.Services.OCRs;
 using ScreenRecognition.Api.Core.Services.Translators;
-using ScreenRecognition.Api.Models;
+using ScreenRecognition.Api.Models.OcrResultModels;
 using ScreenRecognition.Modules.Modules;
 using System.Reflection;
 

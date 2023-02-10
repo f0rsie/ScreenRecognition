@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ScreenRecognition.Api.Core.Services;
-using ScreenRecognition.Api.Models;
+using ScreenRecognition.Api.Models.DbModels;
 
 namespace ScreenRecognition.Api.Controllers
 {

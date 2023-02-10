@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using ScreenRecognition.Api.Models;
+using ScreenRecognition.Api.Models.DbModels;
 
 namespace ScreenRecognition.Api.Data;
 

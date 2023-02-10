@@ -4,14 +4,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Pages"
       xmlns:hc="https://handyorg.github.io/handycontrol"
-      xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+      xmlns:PageViewModels="clr-namespace:ScreenRecognition.Desktop.ViewModel.PageViewModels"
       x:Class="ScreenRecognition.Desktop.View.Pages.SettingsPage"
       mc:Ignorable="d"
       d:DesignHeight="450"
       d:DesignWidth="800"
       Title="Настройки">
     <Page.DataContext>
-        <ViewModel:SettingsPageViewModel />
+        <PageViewModels:SettingsPageViewModel />
     </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -29,11 +29,7 @@
                        FontSize="20"
                        Margin="5"
                        TextWrapping="Wrap"
-                       Foreground="DarkRed">
-                <Run Text="Настройки профиля недоступны." />
-                <LineBreak />
-                <Run Text="Для получения полного доступа к программе, Вам необходимо войти в аккаунт." />
-            </TextBlock>
+                       Foreground="DarkRed"><Run Text="Настройки профиля недоступны." /><LineBreak /><Run Text="Для получения полного доступа к программе, Вам необходимо войти в аккаунт." /></TextBlock>
         </StackPanel>
         <Border BorderThickness="0.5"
                 Padding="0"
@@ -199,7 +195,7 @@
                                 Margin="5"
                                 HorizontalContentAlignment="Right"
                                 VerticalContentAlignment="Center"
-                                Click="SaveAccountInfo_Click"/>
+                                Click="SaveAccountInfo_Click" />
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -220,9 +216,9 @@
                         <TextBlock DockPanel.Dock="Left"
                                    Width="auto"
                                    Text="Выбор профиля"
-                                   Margin="5" 
+                                   Margin="5"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"/>
+                                   HorizontalAlignment="Center" />
                     </DockPanel>
                 </StackPanel>
             </StackPanel>

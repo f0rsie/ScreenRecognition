@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ScreenRecognition.Command
+namespace ScreenRecognition.Desktop.Command
 {
     public class DelegateCommand : ICommand
     {

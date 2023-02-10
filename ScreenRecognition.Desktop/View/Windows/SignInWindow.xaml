@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
-        xmlns:ViewModel="clr-namespace:ScreenRecognition.Desktop.ViewModel"
+        xmlns:WindowViewModels="clr-namespace:ScreenRecognition.Desktop.ViewModel.WindowViewModels"
         x:Class="ScreenRecognition.Desktop.View.Windows.SignInWindow"
         mc:Ignorable="d"
         x:Name="AuthWindow"
@@ -19,7 +19,7 @@
         MaxWidth="330"
         IsEnabled="{Binding EnabledWindowStatus}">
     <Window.DataContext>
-        <ViewModel:SignInWindowViewModel />
+        <WindowViewModels:SignInWindowViewModel />
     </Window.DataContext>
     <Grid>
         <StackPanel VerticalAlignment="Center">
@@ -27,10 +27,8 @@
                        FontSize="25"
                        Foreground="#FF4C4949"
                        Margin="5 5 5 15"
-                       TextAlignment="Center">
-                <Run Text="Screen" /><Run Text="Recognition"
-                                          Foreground="#FF4862F1" />
-            </TextBlock>
+                       TextAlignment="Center"><Run Text="Screen" /><Run Text="Recognition"
+                                                                        Foreground="#FF4862F1" /></TextBlock>
             <DockPanel LastChildFill="False">
                 <DockPanel LastChildFill="True"
                            DockPanel.Dock="Top">
@@ -68,7 +66,7 @@
                     <CheckBox Margin="25 5 25 5"
                               Content="Запомнить"
                               Padding="3"
-                              VerticalContentAlignment="Center"/>
+                              VerticalContentAlignment="Center" />
                     <Button Content="Забыли пароль?"
                             Margin="5 5 25 5"
                             DockPanel.Dock="Right"
