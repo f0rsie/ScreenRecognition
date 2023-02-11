@@ -1,15 +1,8 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Models.DbModels;
 using ScreenRecognition.Desktop.Models.SingletonModels;
-using ScreenRecognition.Desktop.View.Pages;
 using ScreenRecognition.Desktop.View.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 {

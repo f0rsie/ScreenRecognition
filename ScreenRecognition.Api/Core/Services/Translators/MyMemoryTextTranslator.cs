@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using ScreenRecognition.Api.Models.ResultsModels.TranslatorsJsonModels;
+﻿using ScreenRecognition.Api.Models.ResultsModels.TranslatorsJsonModels;
+using System.Text.Json;
 
 namespace ScreenRecognition.Api.Core.Services.Translators
 {

@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Permissions;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.Text.Json;
-using System.Reflection.Metadata;
+using System.Threading.Tasks;
 
 namespace ScreenRecognition.Desktop.Controllers
 {

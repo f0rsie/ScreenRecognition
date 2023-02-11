@@ -1,14 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
-using System.Net.Mime;
-using ScreenRecognition.Api.Core;
+﻿using Microsoft.AspNetCore.Mvc;
 using ScreenRecognition.Api.Core.Services;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using ScreenRecognition.Api.Core.Services.Translators;
-using ScreenRecognition.Api.Models;
-using static System.Net.Mime.MediaTypeNames;
 using ScreenRecognition.Api.Models.ResultsModels.ApiResultModels;
 using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 

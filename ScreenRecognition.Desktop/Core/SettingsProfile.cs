@@ -1,9 +1,5 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Models.DbModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ScreenRecognition.Desktop.Core

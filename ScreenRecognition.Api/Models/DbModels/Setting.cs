@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ScreenRecognition.Api.Models.DbModels;
+﻿namespace ScreenRecognition.Api.Models.DbModels;
 
 public partial class Setting
 {

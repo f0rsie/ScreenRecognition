@@ -1,13 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Interop;
+﻿using GlobalHotKeys;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Input;
-using HandyControl.Controls;
-using System.Reflection.PortableExecutable;
-using GlobalHotKeys;
 using System.Reactive.Linq;
 using System.Threading;
 

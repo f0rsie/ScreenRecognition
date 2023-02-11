@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace ScreenRecognition.Desktop.Models
+﻿namespace ScreenRecognition.Desktop.Models
 {
     public class DefaultProgramSettings
     {
@@ -25,7 +18,7 @@ namespace ScreenRecognition.Desktop.Models
         {
             GetDefaultSettings();
         }
-        
+
         private void GetDefaultSettings()
         {
             OcrLanguage = Properties.ProgramSettings.Default.OcrLanguages;
@@ -34,7 +27,7 @@ namespace ScreenRecognition.Desktop.Models
             OcrName = Properties.ProgramSettings.Default.OcrName;
             TranslatorName = Properties.ProgramSettings.Default.TranslatorName;
             TranslationApiKey = Properties.ProgramSettings.Default.TranslatorApiKey;
-            ResultColor  = Properties.ProgramSettings.Default.ResultColor;
+            ResultColor = Properties.ProgramSettings.Default.ResultColor;
             MinimizeToTray = Properties.ProgramSettings.Default.MinimizeToTray;
             AutoStartup = Properties.ProgramSettings.Default.AutoStartup;
             HotkeyEnabledStatus = Properties.ProgramSettings.Default.HotkeyEnabledStatus;
