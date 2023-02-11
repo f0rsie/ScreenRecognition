@@ -124,14 +124,20 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             HotkeyKeyListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
 
             // Получение списка цветов
-            ResultColorListCustom.Property = new List<string>();
-            typeof(Colors).GetProperties().ToList().ForEach(e => ResultColorListCustom.Property.Add(e.Name));
+            ResultColorListCustom.Property = (typeof(Colors).GetProperties()).Select(e => e.Name).ToList();
 
             LoadLocalSettings();
 
             if (ConnectedUserSingleton.ConnectionStatus == false)
                 return;
 
+            await OnStartupAsync();
+
+            await SetSettings();
+        }
+
+        private async Task OnStartupAsync()
+        {
             // Получение списков
             SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>($"Settings/Settings?userId={ConnectedUserSingleton.User.Id}");
             LanguageListCustom.Property = await _controller.Get<List<Language?>, List<Language?>>("Settings/Languages");
@@ -142,7 +148,6 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             // Получение настроек
             SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name=default");
 
-            await SetSettings();
         }
 
         private void SaveLocalSettings()
@@ -181,8 +186,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             SelectedHotkeyKeyCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().FirstOrDefault(e => e.ToString() == Properties.ProgramSettings.Default.HotkeyKey);
             SelectedHotkeyModifierCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().FirstOrDefault(e => e.ToString() == Properties.ProgramSettings.Default.HotkeyModifier);
 
-            ResultColorListCustom.Property = new List<string>();
-            typeof(Colors).GetProperties().ToList().ForEach(e => ResultColorListCustom.Property.Add(e.Name));
+            ResultColorListCustom.Property = (typeof(Colors).GetProperties()).Select(e => e.Name).ToList();
             ResultColorCustom.Property = Properties.ProgramSettings.Default.ResultColor;
         }
 
