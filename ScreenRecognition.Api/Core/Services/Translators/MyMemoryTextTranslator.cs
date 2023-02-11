@@ -5,6 +5,8 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 {
     public class MyMemoryTextTranslator : ITextTranslatorService
     {
+        // ApiKey b70fae420f93dbe21880
+
         // Поменял проверку валидности апи ключа при вызове этой функции, что выиграло от 100+ мс (было в среднем ~700, стало ~400, но зависит от размера переводимого текста)
         // Теперь если ключ валидный, то скорость работы данной функции быстрее в ~1.5 раза, по сравнению со старой проверкой
         public async Task<List<string>> Translate(string text, string inputLanguage, string outputLanguage, string apiKey)

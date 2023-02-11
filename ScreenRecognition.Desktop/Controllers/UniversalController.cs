@@ -8,13 +8,13 @@ namespace ScreenRecognition.Desktop.Controllers
 {
     public class UniversalController
     {
-        private static string _webPath = "http://localhost:5046/api/";
+        public static string s_webPath = "http://localhost:5046/api/";
 
         public UniversalController(string webPath = "")
         {
             if (!string.IsNullOrEmpty(webPath))
             {
-                _webPath = webPath;
+                s_webPath = webPath;
             }
         }
 
@@ -37,7 +37,7 @@ namespace ScreenRecognition.Desktop.Controllers
             HttpClient client = new HttpClient();
             P? result;
 
-            client.BaseAddress = new Uri($"{_webPath}");
+            client.BaseAddress = new Uri($"{s_webPath}");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 

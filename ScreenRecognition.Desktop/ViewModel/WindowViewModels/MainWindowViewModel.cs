@@ -4,6 +4,7 @@ using ScreenRecognition.Desktop.Models;
 using ScreenRecognition.Desktop.Models.ResultModels.ApiResultModels;
 using ScreenRecognition.Desktop.Models.SingletonModels;
 using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
+using ScreenRecognition.Desktop.View.Pages;
 using ScreenRecognition.Desktop.View.Windows;
 using ScreenRecognition.ImagePreparation.Services;
 using ScreenRecognition.Modules.Modules;
@@ -11,12 +12,17 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -55,13 +61,8 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         private double _startX = 0;
         private double _startY = 0;
 
+        // ApiKey (MyMemoryTextApi) b70fae420f93dbe21880
         private string? _result;
-        private string _apiKey = "b70fae420f93dbe21880";
-        private string _inputLanguage = "rus_eng";
-        private string _outputLanguage = "eng";
-
-        private string _translatorName = "MyMemoryTextTranslator";
-        private string _ocrName = "TesseractOcr";
 
         private readonly UniversalController _controller;
 
@@ -100,7 +101,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
             _controller = new UniversalController();
 
-            var page = new View.Pages.SettingsPage();
+            var page = new SettingsPage();
             CurrentPage = page;
 
             SeverStatusCheck();
@@ -121,9 +122,20 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             string statusText = "Не в сети";
             var taskResult = await Task.Run(async () =>
             {
-                var result = await _controller.Get<bool, bool>("Server/StatusCheck");
+                var client = new HttpClient();
+                var data = new StringContent("123", Encoding.UTF8, "application/json");
+                client.Timeout = new TimeSpan(0, 0, 0, 0, 500);
 
-                return result;
+                try
+                {
+                    await client.PostAsync("http://localhost:5046/api/", data);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+
             });
 
             if (taskResult == true)
