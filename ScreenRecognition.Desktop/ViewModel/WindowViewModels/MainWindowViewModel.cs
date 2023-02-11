@@ -12,17 +12,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -30,20 +27,25 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
+        // ApiKey (MyMemoryTextApi) b70fae420f93dbe21880
+        #region Sheilds and Properties
+        #region Shields
+        private readonly UniversalController _controller;
+
+        private RegisterGlobalHotkey? _registerGlobalHotkey;
+
+        private double _startX = 0;
+        private double _startY = 0;
+
+        private string? _result;
+        #endregion
+        #region Properties
         public PropShieldModel<ServerStatus> ServerStatusCustom { get; set; } = new();
+        public PropShieldModel<Visibility> LoginPanelVisibilityCustom { get; set; } = new();
+        public PropShieldModel<Page?> CurrentPageCustom { get; set; } = new();
 
-        private Visibility _loginPanelVisibility;
-
-        public Visibility LoginPanelVisibility
-        {
-            get => _loginPanelVisibility;
-            set
-            {
-                _loginPanelVisibility = value;
-                OnPropertyChanged(nameof(LoginPanelVisibility));
-            }
-        }
-
+        public PropShieldModel<string?> ResultCustom { get; set; } = new();
+             
         public string? CurrentLogin
         {
             get => ConnectedUserSingleton.Login;
@@ -53,38 +55,8 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
                 OnPropertyChanged(nameof(CurrentLogin));
             }
         }
-
-        private RegisterGlobalHotkey _registerGlobalHotkey;
-
-        private Page? _currentPage;
-
-        private double _startX = 0;
-        private double _startY = 0;
-
-        // ApiKey (MyMemoryTextApi) b70fae420f93dbe21880
-        private string? _result;
-
-        private readonly UniversalController _controller;
-
-        public Page? CurrentPage
-        {
-            get => _currentPage;
-            set
-            {
-                _currentPage = value;
-                OnPropertyChanged(nameof(CurrentPage));
-            }
-        }
-
-        public string? Result
-        {
-            get => _result;
-            set
-            {
-                _result = value;
-                OnPropertyChanged(nameof(Result));
-            }
-        }
+        #endregion
+        #endregion
 
         public MainWindowViewModel()
         {
@@ -92,21 +64,22 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
             if (ConnectedUserSingleton.ConnectionStatus == false)
             {
-                LoginPanelVisibility = Visibility.Collapsed;
+                LoginPanelVisibilityCustom.Property = Visibility.Collapsed;
             }
             else
             {
-                LoginPanelVisibility = Visibility.Visible;
+                LoginPanelVisibilityCustom.Property = Visibility.Visible;
             }
 
             _controller = new UniversalController();
 
             var page = new SettingsPage();
-            CurrentPage = page;
+            CurrentPageCustom.Property = page;
 
             SeverStatusCheck();
         }
 
+        // Регистрация комбинации клавиш
         public void RegisterHotkey()
         {
             // А это регистрация кнопки для хоткея
@@ -117,6 +90,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             _registerGlobalHotkey = new RegisterGlobalHotkey(hotkeyKey, hotkeyModifier, TakeScreenshot);
         }
 
+        // Проверка статуса работы сервера
         private async void SeverStatusCheck()
         {
             string statusText = "Не в сети";
@@ -144,6 +118,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             ServerStatusCustom.Property = new ServerStatus(statusText, taskResult);
         }
 
+        // Вызов окна авторизации
         public void SignWindow()
         {
             if (ConnectedUserSingleton.ConnectionStatus == true)
@@ -165,6 +140,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             }
         }
 
+        // Метод по смене текущей страницы в окне
         public void NavigateToPage(object sender)
         {
             var pageName = (sender as Button)?.Name;
@@ -176,7 +152,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             }
 
             var page = ProgramElementFinder.FindByName<Page?>($"{pageName}Page", Assembly.GetExecutingAssembly().FullName);
-            CurrentPage = page;
+            CurrentPageCustom.Property = page;
 
             GC.Collect();
         }
@@ -236,12 +212,12 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
                 var result = await _controller.Post<List<byte>?, ApiResultModel>(query, str);
 
-                Result = result?.TranslatedTextVariants?.FirstOrDefault();
+                ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
 
-                if (Result == null || Result == string.Empty)
+                if (ResultCustom.Property == null || ResultCustom.Property == string.Empty)
                     return;
 
-                var resultWindow = new MessageResultWindow(Result, resultColor, f.Width, f.Height);
+                var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);
                 resultWindow.Left = _startX;
                 resultWindow.Top = _startY + 30;
 
@@ -249,7 +225,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             }
             catch
             {
-                Result = "Connection Error";
+                ResultCustom.Property = "Connection Error";
             }
         }
 

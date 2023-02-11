@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ScreenRecognition.Modules.Modules
 {
-    // System.Windows.Application.ResourceAssembly.FullName
-    // Assembly.GetExecutingAssembly().FullName
+    // v1 assemblyName: System.Windows.Application.ResourceAssembly.FullName
+    // v2 assemblyName: Assembly.GetExecutingAssembly().FullName
     public class ProgramElementFinder
     {
         public static T? FindByName<T>(string name, string assemblyName)

@@ -6,16 +6,10 @@ using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 
 namespace ScreenRecognition.Api.Controllers
 {
-    /// <summary>
-    /// Сюда из клиент-программы будет передаваться скриншот части экрана для перевода и обнаружения того, что изображено.
-    /// Тип принимаемых данных у TextTranslate будет либо массив байтов, либо битмап.
-    /// Если массив байтов, то в json из клиент-программы нужно будет передавать переделанное в byte[] формат, с помощью BitmapToByte в Core библиотеке (пока её там нет, смотреть файл TextOcrService)
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ScreenController : ControllerBase
     {
-        /// Новая версия перевода
         [Route("Translate")]
         [HttpPost]
         public async Task<ApiResultModel> TextTranslate(string translatorName, string ocrName, string translationApiKey, List<byte> image, string inputLanguage, string outputLanguage, string userLogin, string userPassword)

@@ -68,7 +68,7 @@
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    Text="Логин: "
-                                   Visibility="{Binding LoginPanelVisibility}" />
+                                   Visibility="{Binding LoginPanelVisibilityCustom.Property}" />
                         <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                                 Style="{StaticResource ButtonCustom}"
                                 VerticalAlignment="Center"
@@ -79,12 +79,12 @@
                         VerticalAlignment="Center"
                         BorderBrush="#FF4C4949"
                         Click="SignButton_Click"
-                        Visibility="{Binding LoginPanelVisibility}"
+                        Visibility="{Binding LoginPanelVisibilityCustom.Property}"
                         Margin="-15 0 5 0" />
             </StackPanel>
         </DockPanel>
         <Frame Grid.Row="1"
-               Content="{Binding CurrentPage.Content}"
+               Content="{Binding CurrentPageCustom.Property.Content}"
                NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>

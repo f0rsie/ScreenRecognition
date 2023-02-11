@@ -272,7 +272,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
 
             (Application.Current.MainWindow.DataContext as MainWindowViewModel)?.RegisterHotkey();
             //App.Current.MainWindow.DataContext = new MainWindowViewModel();
-            (Application.Current.MainWindow.DataContext as MainWindowViewModel).CurrentPage = new SettingsPage();
+            (Application.Current.MainWindow.DataContext as MainWindowViewModel).CurrentPageCustom.Property = new SettingsPage();
         }
 
         private void AuthChecker()
