@@ -1,6 +1,6 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Models;
-using ScreenRecognition.Desktop.Models.DBModels;
+using ScreenRecognition.Desktop.Models.DbModels;
 using ScreenRecognition.Desktop.Models.OutputModels;
 using ScreenRecognition.Desktop.Models.ResultModels.ApiResultModels;
 using ScreenRecognition.Desktop.Models.SingletonModels;

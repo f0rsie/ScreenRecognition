@@ -1,6 +1,6 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Models;
-using ScreenRecognition.Desktop.Models.DBModels;
+using ScreenRecognition.Desktop.Models.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

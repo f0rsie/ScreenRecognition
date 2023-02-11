@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using ScreenRecognition.Desktop.Models.DBModels;
+using ScreenRecognition.Desktop.Models.DbModels;
 
 namespace ScreenRecognition.Desktop.Models.OutputModels
 {

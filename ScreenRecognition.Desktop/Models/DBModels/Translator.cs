@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ScreenRecognition.Desktop.Models.DBModels;
+namespace ScreenRecognition.Desktop.Models.DbModels;
 
 public partial class Translator
 {

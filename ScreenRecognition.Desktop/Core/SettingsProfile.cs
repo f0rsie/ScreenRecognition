@@ -1,5 +1,5 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
-using ScreenRecognition.Desktop.Models.DBModels;
+using ScreenRecognition.Desktop.Models.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace ScreenRecognition.Desktop.Core
 
         public SettingsProfile()
         {
-            _settings = new Models.DBModels.Setting();
+            _settings = new Setting();
             _controller = new UniversalController();
         }
 

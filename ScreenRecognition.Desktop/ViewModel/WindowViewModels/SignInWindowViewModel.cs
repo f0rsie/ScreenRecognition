@@ -1,5 +1,5 @@
 ﻿using ScreenRecognition.Desktop.Controllers;
-using ScreenRecognition.Desktop.Models.DBModels;
+using ScreenRecognition.Desktop.Models.DbModels;
 using ScreenRecognition.Desktop.Models.SingletonModels;
 using ScreenRecognition.Desktop.View.Pages;
 using ScreenRecognition.Desktop.View.Windows;

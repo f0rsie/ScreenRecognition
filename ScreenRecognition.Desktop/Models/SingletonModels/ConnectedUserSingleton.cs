@@ -1,4 +1,4 @@
-﻿using ScreenRecognition.Desktop.Models.DBModels;
+﻿using ScreenRecognition.Desktop.Models.DbModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
