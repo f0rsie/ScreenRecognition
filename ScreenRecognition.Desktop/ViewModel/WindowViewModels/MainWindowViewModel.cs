@@ -221,7 +221,13 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
                 resultWindow.Left = _startX;
                 resultWindow.Top = _startY + 30;
 
-                resultWindow.Show();
+                if (!string.IsNullOrEmpty(ResultCustom.Property) && !string.IsNullOrWhiteSpace(ResultCustom.Property))
+                {
+                    resultWindow.Show();
+                    return;
+                }
+
+                GC.Collect();
             }
             catch
             {
