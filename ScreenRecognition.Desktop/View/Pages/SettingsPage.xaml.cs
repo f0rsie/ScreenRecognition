@@ -21,16 +21,5 @@ namespace ScreenRecognition.Desktop.View.Pages
         {
             userPassword.Password = ConnectedUserSingleton.Password;
         }
-
-        private void SaveSettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as SettingsPageViewModel).SaveSettings();
-        }
-
-        private void SaveAccountInfo_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as SettingsPageViewModel).UserCustom.Property.Password = userPassword.Password;
-            (DataContext as SettingsPageViewModel).SaveAccountInfo();
-        }
     }
 }

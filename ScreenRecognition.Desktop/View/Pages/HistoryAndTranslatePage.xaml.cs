@@ -1,6 +1,4 @@
-﻿using ScreenRecognition.Desktop.ViewModel.PageViewModels;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace ScreenRecognition.Desktop.View.Pages
 {
@@ -12,17 +10,6 @@ namespace ScreenRecognition.Desktop.View.Pages
         public HistoryAndTranslatePage()
         {
             InitializeComponent();
-        }
-
-        private void GetTranslateButton_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as HistoryAndTranslatePageViewModel).GetTranslate(selectedImage.Source);
-        }
-
-        private void ClearHistoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as HistoryAndTranslatePageViewModel).HistoryList.Property = new();
-            (DataContext as HistoryAndTranslatePageViewModel).ClearHistory();
         }
     }
 }

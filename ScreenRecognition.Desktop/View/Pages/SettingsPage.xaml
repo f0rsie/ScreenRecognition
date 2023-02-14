@@ -195,7 +195,8 @@
                                 Margin="5"
                                 HorizontalContentAlignment="Right"
                                 VerticalContentAlignment="Center"
-                                Click="SaveAccountInfo_Click" />
+                                Command="{Binding SaveAccountInfoBtn}"
+                                CommandParameter="{Binding ElementName=userPassword}"/>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
@@ -448,7 +449,7 @@
                                     Margin="5"
                                     DockPanel.Dock="Right"
                                     BorderBrush="#FF4862F1"
-                                    Click="SaveSettingsButton_Click" />
+                                    Command="{Binding SaveSettingsBtn}" />
                         </DockPanel>
                     </StackPanel>
                 </StackPanel>

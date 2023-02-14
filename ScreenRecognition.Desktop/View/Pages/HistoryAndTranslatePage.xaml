@@ -36,7 +36,7 @@
                             Margin="5"
                             DockPanel.Dock="Right"
                             BorderBrush="#FF4862F1" 
-                            Click="ClearHistoryButton_Click"/>
+                            Command="{Binding ClearHistoryBtn}"/>
                     <TextBlock Text="История переводов"
                                HorizontalAlignment="Center"
                                FontSize="20" 
@@ -153,7 +153,8 @@
                 <Button Content="Загрузить"
                         Margin="5"
                         x:Name="GetTranslateButton"
-                        Click="GetTranslateButton_Click"/>
+                        Command="{Binding GetTranslateBtn}"
+                        CommandParameter="{Binding ElementName=selectedImage, Path=Source}"/>
             </StackPanel>
         </hc:ScrollViewer>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.Command;
+﻿using HandyControl.Controls;
+using ScreenRecognition.Desktop.Command;
 using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Core;
 using ScreenRecognition.Desktop.Models;
@@ -21,6 +22,10 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
     public class SettingsPageViewModel : BaseViewModel
     {
         #region Shields and Properties
+        #region Commands
+        public ICommand SaveSettingsBtn { get; private set; }
+        public ICommand SaveAccountInfoBtn { get; private set; }
+        #endregion
         #region Shields only
         private UniversalController _controller;
         #endregion
@@ -113,12 +118,15 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             _controller = new UniversalController();
             ValidateApiKeyCommand = new DelegateCommand(ValidateApiKeyMethod);
 
-            AuthChecker();
             OnStartup();
         }
 
         private async void OnStartup()
         {
+            AuthChecker();
+
+            RegisterCommands();
+
             // Получение списка кнопок для хоткея
             HotkeyModifiersListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.Modifiers)).Cast<GlobalHotKeys.Native.Types.Modifiers>().ToList();
             HotkeyKeyListCustom.Property = Enum.GetValues(typeof(GlobalHotKeys.Native.Types.VirtualKeyCode)).Cast<GlobalHotKeys.Native.Types.VirtualKeyCode>().ToList();
@@ -134,6 +142,12 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             await OnStartupAsync();
 
             await SetSettings();
+        }
+
+        private void RegisterCommands()
+        {
+            SaveSettingsBtn = new DelegateCommand(SaveSettings);
+            SaveAccountInfoBtn = new DelegateCommand(SaveAccountInfo);
         }
 
         private async Task OnStartupAsync()
@@ -212,7 +226,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             CurrentProfileNameCustom.Property = SelectedSettingCustom?.Name;
         }
 
-        public async void SaveAccountInfo()
+        private async void SaveAccountInfo(object obj)
         {
             if (string.IsNullOrEmpty(UserCustom.Property?.Login))
             {
@@ -235,13 +249,16 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
                 return;
             }
 
+            var password = (obj as PasswordBox).Password;
+            UserCustom.Property.Password = password;
+
             await _controller.Post<User?, User?>("User/ChangeAccountInfo", UserCustom.Property);
 
             ConnectedUserSingleton.Disconnect();
             MainWindowManager.Set(new MainWindow());
         }
 
-        public async void SaveSettings()
+        private async void SaveSettings(object obj)
         {
             if (string.IsNullOrEmpty(ConnectedUserSingleton.Password))
             {

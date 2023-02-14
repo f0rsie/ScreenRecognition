@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.Controllers;
+﻿using ScreenRecognition.Desktop.Command;
+using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Models;
 using ScreenRecognition.Desktop.Models.DbModels;
 using ScreenRecognition.Desktop.Models.OutputModels;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -16,6 +18,10 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
     public class HistoryAndTranslatePageViewModel
     {
         #region Shields and Properties
+        #region Commands
+        public ICommand GetTranslateBtn { get; private set; }
+        public ICommand ClearHistoryBtn { get; private set; }
+        #endregion
         #region Shared
         private UniversalController _controller;
         #endregion
@@ -32,19 +38,38 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         {
             _controller = new UniversalController();
 
+            OnStartup();
+        }
+
+        // При запуске
+        private void OnStartup()
+        {
+            RegisterCommands();
+
             GetTranslationHistory();
         }
 
-        public async void ClearHistory()
+        // Регистрация комманд
+        private void RegisterCommands()
         {
+            GetTranslateBtn = new DelegateCommand(GetTranslate);
+            ClearHistoryBtn = new DelegateCommand(ClearHistory);
+        }
+
+        // Очистить историю
+        private async void ClearHistory(object obj)
+        {
+            HistoryList.Property = new();
+
             await _controller.Post<User?, User?>($"User/ClearTranslateHistory", ConnectedUserSingleton.User);
         }
 
+        // Получить историю переводов
         private async void GetTranslationHistory()
         {
             await Task.Run(async () =>
             {
-                HistoryListOld.Property = await _controller.Get<List<History>, List<History>>($"User/TranslationHistory?userId={ConnectedUserSingleton.User.Id}");
+                HistoryListOld.Property = await _controller.Get<List<History>, List<History>>($"User/TranslationHistory?userId={ConnectedUserSingleton.User?.Id}");
             });
 
             HistoryList.Property = new();
@@ -55,8 +80,11 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             }
         }
 
-        public async void GetTranslate(ImageSource img)
+        // Получить перевод
+        private async void GetTranslate(object obj)
         {
+            var img = (ImageSource)obj;
+
             Output.Property = new();
 
             var byteImg = ImageSourceToList(img);
@@ -75,7 +103,8 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             Output.Property = Output.Property;
         }
 
-        public List<byte> ImageSourceToList(ImageSource imageSource)
+        // Конвертер (Image/Bitmap)Source в List<byte>
+        private List<byte> ImageSourceToList(ImageSource imageSource)
         {
             byte[] data;
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();

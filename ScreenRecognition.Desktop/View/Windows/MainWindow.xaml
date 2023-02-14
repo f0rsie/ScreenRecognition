@@ -40,11 +40,13 @@
                 <Button Content="История"
                         Margin="0 0 5 0"
                         x:Name="HistoryAndTranslate"
-                        Click="NavigateButtons_Click" />
+                        Command="{Binding NavigateTo}"
+                        CommandParameter="{Binding ElementName=HistoryAndTranslate}"/>
                 <Button Content="Настройки"
                         Margin="0 0 5 0"
                         x:Name="Settings"
-                        Click="NavigateButtons_Click" />
+                        Command="{Binding NavigateTo}"
+                        CommandParameter="{Binding ElementName=Settings}" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Right"
@@ -72,13 +74,13 @@
                         <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                                 Style="{StaticResource ButtonCustom}"
                                 VerticalAlignment="Center"
-                                Click="SignButton_Click" />
+                                Command="{Binding ShowSignWindow}"/>
                     </StackPanel>
                 </Border>
                 <Button Content="Выход"
                         VerticalAlignment="Center"
                         BorderBrush="#FF4C4949"
-                        Click="SignButton_Click"
+                        Command="{Binding ShowSignWindow}"
                         Visibility="{Binding LoginPanelVisibilityCustom.Property}"
                         Margin="-15 0 5 0" />
             </StackPanel>

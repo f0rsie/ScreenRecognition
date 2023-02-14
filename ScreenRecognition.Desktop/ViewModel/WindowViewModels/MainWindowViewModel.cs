@@ -1,4 +1,5 @@
-﻿using ScreenRecognition.Desktop.Controllers;
+﻿using ScreenRecognition.Desktop.Command;
+using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Core;
 using ScreenRecognition.Desktop.Models;
 using ScreenRecognition.Desktop.Models.ResultModels.ApiResultModels;
@@ -20,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -29,6 +31,11 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
     {
         // ApiKey (MyMemoryTextApi) b70fae420f93dbe21880
         #region Sheilds and Properties
+        #region Commands
+        public ICommand? ShowSignWindow { get; private set; }
+        public ICommand? NavigateTo { get; private set; }
+
+        #endregion
         #region Shields
         private readonly UniversalController _controller;
 
@@ -60,6 +67,15 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
         public MainWindowViewModel()
         {
+            _controller = new UniversalController();
+
+            OnStartup();
+        }
+
+        // При старте
+        private void OnStartup()
+        {
+            RegisterCommands();
             RegisterHotkey();
 
             if (ConnectedUserSingleton.ConnectionStatus == false)
@@ -71,12 +87,17 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
                 LoginPanelVisibilityCustom.Property = Visibility.Visible;
             }
 
-            _controller = new UniversalController();
-
             var page = new SettingsPage();
             CurrentPageCustom.Property = page;
 
             SeverStatusCheck();
+        }
+
+        // Регистрация команд
+        private void RegisterCommands()
+        {
+            ShowSignWindow = new DelegateCommand(SignWindow);
+            NavigateTo = new DelegateCommand(NavigateToPage);
         }
 
         // Регистрация комбинации клавиш
@@ -119,7 +140,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         }
 
         // Вызов окна авторизации
-        public void SignWindow()
+        public void SignWindow(object? obj = null)
         {
             if (ConnectedUserSingleton.ConnectionStatus == true)
             {
@@ -157,6 +178,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             GC.Collect();
         }
 
+        // Сделать скриншот
         private async void TakeScreenshot()
         {
             var screenshot = ScreenCapture.CaptureDesktop();
@@ -175,6 +197,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             }
         }
 
+        // Перевод ImageSource в Bitmap
         private async Task StartAsync(ImageSource? img)
         {
             if (img != null)
@@ -185,6 +208,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             }
         }
 
+        // Получение результата из Api
         private async Task GetResultAsync(Bitmap f)
         {
             var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
@@ -235,6 +259,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             }
         }
 
+        // Конвертер (Image/Bitmap)Source в Bitmap
         private Bitmap ConvertBitmapSourceToBitmap(BitmapSource bitmapSource)
         {
             var width = bitmapSource.PixelWidth;
