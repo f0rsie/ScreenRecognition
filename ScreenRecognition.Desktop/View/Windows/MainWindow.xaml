@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:local="clr-namespace:ScreenRecognition.Desktop.View.Windows"
         xmlns:Models="clr-namespace:ScreenRecognition.Desktop.Models"
         xmlns:WindowViewModels="clr-namespace:ScreenRecognition.Desktop.ViewModel.WindowViewModels"
@@ -13,19 +14,25 @@
         Height="550"
         MinHeight="450"
         Width="1000"
-        MinWidth="800">
+        MinWidth="800"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True">
     <Window.DataContext>
         <WindowViewModels:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="55" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="52" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <DockPanel LastChildFill="False">
+        <Frame x:Name="topWindowPanelFrame" />
+        <DockPanel LastChildFill="False"
+                   Grid.Row="1">
             <TextBlock FontWeight="Bold"
                        FontSize="20"
                        VerticalAlignment="Center"
@@ -41,7 +48,7 @@
                         Margin="0 0 5 0"
                         x:Name="HistoryAndTranslate"
                         Command="{Binding NavigateTo}"
-                        CommandParameter="{Binding ElementName=HistoryAndTranslate}"/>
+                        CommandParameter="{Binding ElementName=HistoryAndTranslate}" />
                 <Button Content="Настройки"
                         Margin="0 0 5 0"
                         x:Name="Settings"
@@ -74,7 +81,7 @@
                         <Button Content="{Binding CurrentLogin, Mode=TwoWay}"
                                 Style="{StaticResource ButtonCustom}"
                                 VerticalAlignment="Center"
-                                Command="{Binding ShowSignWindow}"/>
+                                Command="{Binding ShowSignWindow}" />
                     </StackPanel>
                 </Border>
                 <Button Content="Выход"
@@ -85,7 +92,7 @@
                         Margin="-15 0 5 0" />
             </StackPanel>
         </DockPanel>
-        <Frame Grid.Row="1"
+        <Frame Grid.Row="2"
                Content="{Binding CurrentPageCustom.Property.Content}"
                NavigationUIVisibility="Hidden" />
     </Grid>

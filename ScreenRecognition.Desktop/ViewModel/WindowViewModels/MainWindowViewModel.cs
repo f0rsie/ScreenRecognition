@@ -166,6 +166,11 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         {
             var pageName = (sender as Button)?.Name;
 
+            if (string.IsNullOrEmpty(pageName))
+            {
+                pageName = sender.ToString();
+            }
+
             if (ConnectedUserSingleton.ConnectionStatus == false && pageName != "Settings")
             {
                 SignWindow();

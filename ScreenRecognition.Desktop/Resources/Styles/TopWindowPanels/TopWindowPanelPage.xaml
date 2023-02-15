@@ -1,0 +1,63 @@
+﻿<Page x:Class="ScreenRecognition.Desktop.Resources.Styles.TopWindowPanels.TopWindowPanelPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:hc="https://handyorg.github.io/handycontrol"
+      xmlns:tb="http://www.hardcodet.net/taskbar"
+      xmlns:local="clr-namespace:ScreenRecognition.Desktop.Resources.Styles.TopWindowPanels"
+      mc:Ignorable="d"
+      d:DesignHeight="25"
+      d:DesignWidth="800"
+      Title="TopWindowPanelPage">
+    <Grid>
+        <tb:TaskbarIcon ToolTipText="ScreenRecognition"
+                        Visibility="Collapsed"
+                        IconSource="\Resources\Icons\icon.ico"
+                        MenuActivation="RightClick"
+                        x:Name="minimizeToTrayTaskbarIcon"
+                        TrayLeftMouseDown="TaskbarIcon_TrayLeftMouseDown">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu HorizontalAlignment="Right">
+                    <MenuItem Header="Настройки"
+                              x:Name="Settings"
+                              Click="navigateButton_Click"
+                              BorderBrush="Transparent"
+                              HorizontalAlignment="Stretch" />
+                    <MenuItem Header="История"
+                              x:Name="HistoryAndTranslate"
+                              Click="navigateButton_Click"
+                              BorderBrush="Transparent"
+                              HorizontalAlignment="Stretch" />
+                    <MenuItem Header="Выход"
+                              x:Name="Exit"
+                              Click="exitButton_Click"
+                              BorderBrush="Transparent"
+                              HorizontalAlignment="Stretch" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+        <DockPanel LastChildFill="False"
+                   MouseLeftButtonDown="TopWindowPanel_MouseLeftButtonDown"
+                   Background="Transparent">
+            <TextBlock x:Name="headerTextBlock"
+                       TextAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="10 2 2 2" />
+            <Button Width="auto"
+                    x:Name="exitButton"
+                    Margin="5 0 0 0"
+                    DockPanel.Dock="Right"
+                    hc:BorderElement.CornerRadius="5"
+                    hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                    Click="exitButton_Click" />
+            <Button Width="auto"
+                    x:Name="minimizeButton"
+                    Margin="5 0 0 0"
+                    DockPanel.Dock="Right"
+                    hc:BorderElement.CornerRadius="5"
+                    hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
+                    Click="minimizeButton_Click" />
+        </DockPanel>
+    </Grid>
+</Page>
