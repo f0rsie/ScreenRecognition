@@ -13,7 +13,7 @@ namespace ScreenRecognition.Api.Core.Services
         private IOcrService? _ocrService;
 
         private List<Thread> _threads;
-        private static List<OcrResultModel> s_results;
+        private static List<OcrResultModel>? s_results;
 
         private DBOperations _dBOperations;
 
@@ -21,9 +21,8 @@ namespace ScreenRecognition.Api.Core.Services
 
         public TextOperations()
         {
-            _threads = new List<Thread>();
-            s_results = new List<OcrResultModel>();
-
+            _threads = new();
+            s_results = new();
             _dBOperations = new();
         }
 
@@ -108,7 +107,7 @@ namespace ScreenRecognition.Api.Core.Services
             var result = _ocrService?.GetText(image as byte[], _inputLanguages);
 
             if (!String.IsNullOrEmpty(result?.TextResult))
-                s_results.Add(result);
+                s_results?.Add(result);
         }
 
         private List<byte[]> ImagePrepare(byte[] image)

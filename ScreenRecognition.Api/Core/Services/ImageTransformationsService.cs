@@ -153,7 +153,7 @@ namespace ScreenRecognition.Api.Core.Services
                         resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
                     }
 
-                    //resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
+                    resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", System.Drawing.Imaging.ImageFormat.Png);
                     _results.Add(ImagePreparationService.BitmapToByte(resElement));
                 }
             }
