@@ -15,6 +15,7 @@
         WindowStyle="None"
         Topmost="True"
         AllowsTransparency="True"
+        ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner"
         MouseDoubleClick="resultWindow_MouseDoubleClick">
     <TextBlock x:Name="result"
