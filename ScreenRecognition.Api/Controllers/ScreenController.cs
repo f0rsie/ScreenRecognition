@@ -3,6 +3,7 @@ using ScreenRecognition.Api.Core.Services;
 using ScreenRecognition.Api.Core.Services.Translators;
 using ScreenRecognition.Api.Models.ResultsModels.ApiResultModels;
 using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
+using ScreenRecognition.Api.Resources.Exceptions;
 
 namespace ScreenRecognition.Api.Controllers
 {
@@ -17,21 +18,15 @@ namespace ScreenRecognition.Api.Controllers
             var detectedText = new OcrResultModel();
             var translatedText = new List<string>();
 
+            var result = new ApiResultModel();
+            var dbOps = new DBOperations();
+            var textOps = new TextOperations();
+
             try
             {
-                var result = new ApiResultModel();
-                var dbOps = new DBOperations();
-                var textOps = new TextOperations();
-
                 detectedText = await textOps.GetText(ocrName, image.ToArray(), inputLanguage);
 
-                if (detectedText.Confidence == 0 && detectedText.TextResult.Contains("Не распознано"))
-                    return new ApiResultModel { Error = true, ErrorMessage = "Ошибка распознавания", ErrorCode = "001" };
-
                 translatedText = await textOps.GetTranslate(translatorName, detectedText.TextResult, inputLanguage, outputLanguage, translationApiKey);
-
-                if (translatedText?.Where(e => e.Contains("JSON")).Count() > 0)
-                    return new ApiResultModel { Error = true, ErrorMessage = "Ошибка перевода", ErrorCode = "002" };
 
                 await dbOps.SaveHistory(translatorName, ocrName, image, inputLanguage, outputLanguage, userLogin, userPassword, detectedText, translatedText[0]);
 
@@ -50,6 +45,35 @@ namespace ScreenRecognition.Api.Controllers
 
                 return result;
             }
+            #region Обработчики исключений
+            catch (RecognitionException ex)
+            {
+                return new ApiResultModel
+                {
+                    TranslatorName = translatorName,
+                    OcrName = ocrName,
+                    Image = image,
+                    DetectedText = detectedText.TextResult,
+                    DetectedTextConfidence = detectedText.Confidence,
+                    Error = true,
+                    ErrorCode = "001",
+                    ErrorMessage = "Ошибка распознавания",
+                };
+            }
+            catch (TranslateException ex)
+            {
+                return new ApiResultModel
+                {
+                    TranslatorName = translatorName,
+                    OcrName = ocrName,
+                    Image = image,
+                    DetectedText = detectedText.TextResult,
+                    DetectedTextConfidence = detectedText.Confidence,
+                    Error = true,
+                    ErrorCode = "002",
+                    ErrorMessage = "Ошибка перевода",
+                };
+            }
             catch
             {
                 return new ApiResultModel
@@ -64,6 +88,7 @@ namespace ScreenRecognition.Api.Controllers
                     ErrorMessage = "Ошибка",
                 };
             }
+            #endregion
         }
 
         [Route("ApiKeyValidation")]

@@ -243,20 +243,14 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
                 ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
 
-                if (ResultCustom.Property == null || ResultCustom.Property == string.Empty)
+                if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
                     return;
 
                 var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);
                 resultWindow.Left = _startX;
                 resultWindow.Top = _startY + 30;
 
-                if (!string.IsNullOrEmpty(ResultCustom.Property) && !string.IsNullOrWhiteSpace(ResultCustom.Property))
-                {
-                    resultWindow.Show();
-                    return;
-                }
-
-                GC.Collect();
+                resultWindow.Show();
             }
             catch
             {

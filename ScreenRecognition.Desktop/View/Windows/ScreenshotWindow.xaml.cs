@@ -55,8 +55,9 @@ namespace ScreenRecognition.Desktop.View.Windows
             _rect = new Rectangle
             {
                 Stroke = Brushes.LightBlue,
-                StrokeThickness = 2
+                StrokeThickness = 2,
             };
+
             Canvas.SetLeft(_rect, _startPoint.X);
             Canvas.SetTop(_rect, _startPoint.Y);
             Canvas.Children.Add(_rect);

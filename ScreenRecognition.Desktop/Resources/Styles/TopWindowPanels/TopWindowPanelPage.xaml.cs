@@ -54,7 +54,7 @@ namespace ScreenRecognition.Desktop.Resources.Styles.TopWindowPanels
         {
             bool minimizeToTray = Properties.ProgramSettings.Default.MinimizeToTray;
 
-            if (minimizeToTrayTaskbarIcon.Visibility == Visibility.Visible)
+            if (minimizeToTrayTaskbarIcon.Visibility == Visibility.Visible || !minimizeToTray)
             {
                 App.Current.MainWindow.Close();
             }
