@@ -40,6 +40,7 @@ namespace ScreenRecognition.Desktop.Controllers
             client.BaseAddress = new Uri($"{s_webPath}");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.Timeout = new TimeSpan(0, 0, 5);
 
             HttpResponseMessage response = new HttpResponseMessage();
             try

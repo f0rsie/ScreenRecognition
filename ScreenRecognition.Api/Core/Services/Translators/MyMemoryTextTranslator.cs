@@ -1,4 +1,6 @@
-﻿using ScreenRecognition.Api.Models.ResultsModels.TranslatorsJsonModels;
+﻿using Microsoft.IdentityModel.Tokens;
+using ScreenRecognition.Api.Models.ResultsModels.TranslatorsJsonModels;
+using ScreenRecognition.Api.Resources.Exceptions;
 using System.Text.Json;
 
 namespace ScreenRecognition.Api.Core.Services.Translators
@@ -40,13 +42,18 @@ namespace ScreenRecognition.Api.Core.Services.Translators
                 client.Dispose();
 
                 res = result.matches.Select(e => e.translation).ToList();
+
+                if(res.IsNullOrEmpty())
+                {
+                    throw new TranslateException();
+                }
+
+                return res;
             }
             catch (Exception ex)
             {
-                return new() { ex.Message };
+                return new();
             }
-
-            return res;
         }
 
         public async Task<bool> ApiKeyValidation(string? apiKey)

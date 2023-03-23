@@ -1,5 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,6 +14,8 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
     /// </summary>
     public partial class MessageResultWindow : Window
     {
+        Timer _timer;
+
         public MessageResultWindow()
         {
             InitializeComponent();
@@ -25,11 +30,25 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
 
             resultWindow.Width = width;
             //resultWindow.Height = height;
+
+            _timer = new Timer(5000);
+
+            _timer.Elapsed += OnStartTimer;
+            _timer.Start();
         }
 
         private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void OnStartTimer(object? sender, ElapsedEventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                this.Close();
+                _timer.Dispose();
+            });
         }
     }
 }
