@@ -14,7 +14,7 @@ namespace ScreenRecognition.Api.Core.Services
         private IOcrService? _ocrService;
 
         private List<Thread> _threads;
-        private static List<OcrResultModel>? s_results;
+        private List<OcrResultModel>? s_results;
 
         private DBOperations _dBOperations;
 
