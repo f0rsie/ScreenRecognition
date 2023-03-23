@@ -32,7 +32,7 @@ namespace ScreenRecognition.Api.Core.Services
             _textTranslatorService = FindElement<ITextTranslatorService>(translatorName);
 
             if (_textTranslatorService == null)
-                throw new FindElementException(); 
+                throw new FindElementException();
 
             var translatorInputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(inputLanguage);
             var translatorOutputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(outputLanguage);
@@ -60,7 +60,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             GetOcrResult(preparedImages);
 
-            if(s_results.IsNullOrEmpty())
+            if (s_results.IsNullOrEmpty())
                 throw new RecognitionException();
 
             var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1];

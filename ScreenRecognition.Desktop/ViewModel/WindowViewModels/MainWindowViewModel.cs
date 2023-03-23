@@ -52,7 +52,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         public PropShieldModel<Page?> CurrentPageCustom { get; set; } = new();
 
         public PropShieldModel<string?> ResultCustom { get; set; } = new();
-             
+
         public string? CurrentLogin
         {
             get => ConnectedUserSingleton.Login;

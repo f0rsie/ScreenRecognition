@@ -43,7 +43,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
                 res = result.matches.Select(e => e.translation).ToList();
 
-                if(res.IsNullOrEmpty())
+                if (res.IsNullOrEmpty())
                 {
                     throw new TranslateException();
                 }

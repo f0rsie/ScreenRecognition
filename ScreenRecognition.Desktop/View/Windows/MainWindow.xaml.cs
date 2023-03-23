@@ -1,6 +1,5 @@
 ﻿using ScreenRecognition.Desktop.Resources.Styles.TopWindowPanels;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace ScreenRecognition.Desktop.View.Windows
 {

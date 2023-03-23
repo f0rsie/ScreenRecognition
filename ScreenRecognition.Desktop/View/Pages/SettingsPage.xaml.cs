@@ -1,6 +1,4 @@
 ﻿using ScreenRecognition.Desktop.Models.SingletonModels;
-using ScreenRecognition.Desktop.ViewModel.PageViewModels;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace ScreenRecognition.Desktop.View.Pages
