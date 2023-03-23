@@ -16,7 +16,7 @@
         Topmost="True"
         AllowsTransparency="True"
         ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner"
+        WindowStartupLocation="Manual"
         MouseDoubleClick="resultWindow_MouseDoubleClick"
         MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
         MouseLeftButtonUp="resultWindow_MouseLeftButtonUp">
