@@ -41,7 +41,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         {
             await Task.Run(async () =>
             {
-                CountryList.Property = await _controller.Get<List<Country?>, List<Country?>>("Settings/Countries");
+                CountryList.Property = await _controller.Get<List<Country?>>("Settings/Countries");
             });
         }
 
@@ -92,14 +92,14 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
         private async Task<bool> LoginCheck()
         {
-            var result = await _controller.Get<bool, bool>($"User/LoginCheck?login={Login.Property}");
+            var result = await _controller.Get<bool>($"User/LoginCheck?login={Login.Property}");
 
             return result;
         }
 
         private async Task<bool> MailCheck()
         {
-            var result = await _controller.Get<bool, bool>($"User/MailCheck?mail={Mail.Property}");
+            var result = await _controller.Get<bool>($"User/MailCheck?mail={Mail.Property}");
 
             return result;
         }

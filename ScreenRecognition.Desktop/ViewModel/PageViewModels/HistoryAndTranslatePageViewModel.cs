@@ -69,7 +69,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         {
             await Task.Run(async () =>
             {
-                HistoryListOld.Property = await _controller.Get<List<History>, List<History>>($"User/TranslationHistory?userId={ConnectedUserSingleton.User?.Id}");
+                HistoryListOld.Property = await _controller.Get<List<History>>($"User/TranslationHistory?userId={ConnectedUserSingleton.User?.Id}");
             });
 
             HistoryList.Property = new();

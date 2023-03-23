@@ -100,7 +100,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
                 {
                     string? apiKey = TranslatorApiKeyCustom.Property;
 
-                    bool apiKeyValidationResult = await _controller.Get<bool, bool>($"Screen/ApiKeyValidation?translatorName={SelectedTranslatorCustom.Property.Name}&apiKey={apiKey}");
+                    bool apiKeyValidationResult = await _controller.Get<bool>($"Screen/ApiKeyValidation?translatorName={SelectedTranslatorCustom.Property.Name}&apiKey={apiKey}");
                     System.Drawing.Color validationColor = System.Drawing.Color.Red;
 
                     if (apiKeyValidationResult == true)
@@ -153,14 +153,14 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         private async Task OnStartupAsync()
         {
             // Получение списков
-            SettingsListCustom.Property = await _controller.Get<List<Setting?>, List<Setting?>>($"Settings/Settings?userId={ConnectedUserSingleton.User.Id}");
-            LanguageListCustom.Property = await _controller.Get<List<Language?>, List<Language?>>("Settings/Languages");
-            CountryListCustom.Property = await _controller.Get<List<Country?>, List<Country?>>("Settings/Countries");
-            OcrListCustom.Property = await _controller.Get<List<Ocr?>, List<Ocr?>>("Settings/Ocrs");
-            TranslatorListCustom.Property = await _controller.Get<List<Translator?>, List<Translator?>>("Settings/Translators");
+            SettingsListCustom.Property = await _controller.Get<List<Setting?>>($"Settings/Settings?userId={ConnectedUserSingleton.User.Id}");
+            LanguageListCustom.Property = await _controller.Get<List<Language?>>("Settings/Languages");
+            CountryListCustom.Property = await _controller.Get<List<Country?>>("Settings/Countries");
+            OcrListCustom.Property = await _controller.Get<List<Ocr?>>("Settings/Ocrs");
+            TranslatorListCustom.Property = await _controller.Get<List<Translator?>>("Settings/Translators");
 
             // Получение настроек
-            SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name=default");
+            SettingsCustom.Property = await _controller.Get<Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name=default");
 
         }
 
@@ -185,7 +185,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         private async Task SetSettings(string settingsName = "default")
         {
             // Получение настроек
-            SettingsCustom.Property = await _controller.Get<Setting?, Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name={settingsName}");
+            SettingsCustom.Property = await _controller.Get<Setting?>($"Settings/ProfileSettings?userId={ConnectedUserSingleton.User.Id}&name={settingsName}");
 
             SetProgramSettings();
             SetUserInfo();

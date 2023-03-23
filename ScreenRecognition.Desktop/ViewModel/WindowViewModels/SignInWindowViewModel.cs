@@ -55,7 +55,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         {
             EnabledWindowStatus = false;
 
-            _user = await _controller.Get<string, User?>($"User/Auth?login={Login}&password={Password}");
+            _user = await _controller.Get<User?>($"User/Auth?login={Login}&password={Password}");
 
             if (_user != null && !string.IsNullOrEmpty(Password))
             {

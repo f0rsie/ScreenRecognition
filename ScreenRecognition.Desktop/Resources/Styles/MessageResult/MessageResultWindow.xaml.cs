@@ -31,15 +31,22 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
             resultWindow.Width = width;
             //resultWindow.Height = height;
 
-            _timer = new Timer(5000);
+            RestartTimeLeft();
+        }
+
+        private void StopTimer()
+        {
+            _timer?.Dispose();
+        }
+
+        private void RestartTimeLeft(int time = 5000)
+        {
+            _timer?.Dispose();
+
+            _timer = new Timer(time);
 
             _timer.Elapsed += OnStartTimer;
             _timer.Start();
-        }
-
-        private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
         }
 
         private void OnStartTimer(object? sender, ElapsedEventArgs e)
@@ -49,6 +56,22 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
                 this.Close();
                 _timer.Dispose();
             });
+        }
+        private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void resultWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            StopTimer();
+
+            DragMove();
+        }
+
+        private void resultWindow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            RestartTimeLeft();
         }
     }
 }

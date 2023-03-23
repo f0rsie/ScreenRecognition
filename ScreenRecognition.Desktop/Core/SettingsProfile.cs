@@ -22,7 +22,7 @@ namespace ScreenRecognition.Desktop.Core
 
         private async Task GetSettingsAsync()
         {
-            _settings = await _controller.Get<Setting, Setting>("");
+            _settings = await _controller.Get<Setting>("");
         }
 
         public async void GetSettings() => await GetSettingsAsync();

@@ -17,7 +17,9 @@
         AllowsTransparency="True"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner"
-        MouseDoubleClick="resultWindow_MouseDoubleClick">
+        MouseDoubleClick="resultWindow_MouseDoubleClick"
+        MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
+        MouseLeftButtonUp="resultWindow_MouseLeftButtonUp">
     <TextBlock x:Name="result"
                TextWrapping="Wrap"
                TextAlignment="Left"
