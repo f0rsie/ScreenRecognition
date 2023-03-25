@@ -2,6 +2,7 @@
 using ScreenRecognition.Desktop.Controllers;
 using ScreenRecognition.Desktop.Core;
 using ScreenRecognition.Desktop.Models;
+using ScreenRecognition.Desktop.Models.InputModels;
 using ScreenRecognition.Desktop.Models.ResultModels.ApiResultModels;
 using ScreenRecognition.Desktop.Models.SingletonModels;
 using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
@@ -10,6 +11,7 @@ using ScreenRecognition.Desktop.View.Windows;
 using ScreenRecognition.ImagePreparation.Services;
 using ScreenRecognition.Modules.Modules;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -209,13 +211,57 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             {
                 var f = ConvertBitmapSourceToBitmap((BitmapSource)img);
 
-                await GetResultAsync(f);
+                await GetResultAsyncV2(f);
             }
         }
 
+        // New
+        // Получение результата из Api V2
+        private async Task GetResultAsyncV2(Bitmap f)
+        {
+            var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
+            var str = array.ToList();
+
+            try
+            {
+                var resultColor = Properties.ProgramSettings.Default.ResultColor;
+
+                var apiInputModel = new ApiInputModel
+                {
+                    TranslatorName = Properties.ProgramSettings.Default.TranslatorName,
+                    OcrName = Properties.ProgramSettings.Default.OcrName,
+                    TranslationApiKey = Properties.ProgramSettings.Default.TranslatorApiKey,
+                    InputLanguage = Properties.ProgramSettings.Default.OcrLanguages,
+                    OutputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage,
+                    User = ConnectedUserSingleton.User,
+                    Image = str,
+                };
+
+                var result = await _controller.Post<ApiInputModel, ApiResultModel>("Screen/TranslateV2", apiInputModel);
+
+                ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
+
+                if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
+                    return;
+
+                var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);
+                resultWindow.Left = _startX;
+                resultWindow.Top = _startY + 30;
+
+                resultWindow.Show();
+            }
+            catch
+            {
+                ResultCustom.Property = "Connection Error";
+            }
+        }
+
+        // Old
         // Получение результата из Api
         private async Task GetResultAsync(Bitmap f)
         {
+            //await _controller.Post<ApiInputModel, ApiResultModel>($"Screen/Test", new ApiInputModel());
+
             var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
             var str = array.ToList();
 

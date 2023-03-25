@@ -18,6 +18,12 @@ namespace ScreenRecognition.Desktop.Controllers
             }
         }
 
+        /// <summary>
+        /// Get запрос
+        /// </summary>
+        /// <typeparam name="T">Input type</typeparam>
+        /// <param name="path">Path to address</param>
+        /// <returns>Nothing returns</returns>
         public async Task<T?> Get<T>(string path)
         {
             var result = await ControllerOperations<T, T>("get", path);
@@ -25,6 +31,14 @@ namespace ScreenRecognition.Desktop.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Post запрос
+        /// </summary>
+        /// <typeparam name="T">Input type</typeparam>
+        /// <typeparam name="P">Outupe type</typeparam>
+        /// <param name="path">Path to address</param>
+        /// <param name="cl">Attached model</param>
+        /// <returns>Returns second parameter</returns>
         public async Task<P?> Post<T, P>(string path, T? cl)
         {
             var result = await ControllerOperations<T, P>("post", path, cl);

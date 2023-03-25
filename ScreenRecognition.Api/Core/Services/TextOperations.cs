@@ -14,7 +14,7 @@ namespace ScreenRecognition.Api.Core.Services
         private IOcrService? _ocrService;
 
         private List<Thread> _threads;
-        private List<OcrResultModel>? s_results;
+        private List<OcrResultModel>? _results;
 
         private DBOperations _dBOperations;
 
@@ -23,7 +23,7 @@ namespace ScreenRecognition.Api.Core.Services
         public TextOperations()
         {
             _threads = new();
-            s_results = new();
+            _results = new();
             _dBOperations = new();
         }
 
@@ -60,10 +60,10 @@ namespace ScreenRecognition.Api.Core.Services
 
             GetOcrResult(preparedImages);
 
-            if (s_results.IsNullOrEmpty())
+            if (_results.IsNullOrEmpty())
                 throw new RecognitionException();
 
-            var result = s_results?.OrderBy(e => e.Confidence).ToArray()[s_results.Count - 1];
+            var result = _results?.OrderBy(e => e.Confidence).ToArray()[_results.Count - 1];
 
             if (!String.IsNullOrEmpty(result?.TextResult))
                 return result;
@@ -95,7 +95,7 @@ namespace ScreenRecognition.Api.Core.Services
             var result = _ocrService?.GetText(image as byte[], _inputLanguages);
 
             if (!String.IsNullOrEmpty(result?.TextResult))
-                s_results?.Add(result);
+                _results?.Add(result);
         }
 
         private List<byte[]> ImagePrepare(byte[] image)
@@ -110,14 +110,7 @@ namespace ScreenRecognition.Api.Core.Services
 
         public static T? FindElement<T>(string name)
         {
-            T? result = default(T);
-            try
-            {
-                result = (T?)ProgramElementFinder.FindByName<object>(name, Assembly.GetExecutingAssembly().FullName);
-            }
-            catch { }
-
-            return result;
+            return ProgramElementFinder.FindByName<T?>(name, Assembly.GetExecutingAssembly().FullName);
         }
     }
 }
