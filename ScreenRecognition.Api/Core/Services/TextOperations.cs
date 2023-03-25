@@ -39,10 +39,11 @@ namespace ScreenRecognition.Api.Core.Services
 
             var result = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
 
-            if (!result.IsNullOrEmpty())
-                return result;
+            if (result.IsNullOrEmpty())
+                throw new TranslateException();
 
-            throw new TranslateException();
+            return result;
+
         }
 
         public async Task<OcrResultModel> GetText(string ocrName, byte[] image, string inputLanguage)
@@ -65,10 +66,10 @@ namespace ScreenRecognition.Api.Core.Services
 
             var result = _results?.OrderBy(e => e.Confidence).ToArray()[_results.Count - 1];
 
-            if (!String.IsNullOrEmpty(result?.TextResult))
-                return result;
+            if (String.IsNullOrEmpty(result?.TextResult))
+                throw new RecognitionException();
 
-            throw new RecognitionException();
+            return result;
         }
 
         private void GetOcrResult(List<byte[]> images)
