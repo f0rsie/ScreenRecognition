@@ -240,6 +240,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
                 var result = await _controller.Post<ApiInputModel, ApiResultModel>("Screen/TranslateV2", apiInputModel);
 
                 ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
+                //ResultCustom.Property = result?.DetectedText;
 
                 if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
                     return;
