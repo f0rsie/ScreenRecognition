@@ -28,7 +28,8 @@ namespace ScreenRecognition.Api.Core.Services.OCRs
 
                 result = new OcrResultModel
                 {
-                    TextResult = res.GetText().Replace("\n", ""),
+                    //TextResult = res.GetText().Replace("\n", ""),
+                    TextResult = res.GetText(),
                     Confidence = confidence
                 };
             }
