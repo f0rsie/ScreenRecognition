@@ -14,7 +14,7 @@
         Topmost="True"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
-        Background="#00000000">
+        Background="Transparent">
     <Window.DataContext>
         <WindowViewModels:ScreenshotWindowViewModel />
     </Window.DataContext>

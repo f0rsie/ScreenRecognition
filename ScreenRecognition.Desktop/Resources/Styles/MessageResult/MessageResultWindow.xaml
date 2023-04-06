@@ -10,12 +10,14 @@
         Height="auto"
         Width="auto"
         x:Name="resultWindow"
-        Background="#00000000"
+        Background="#01000000"
         ResizeMode="NoResize"
         WindowStyle="None"
         Topmost="True"
         AllowsTransparency="True"
         ShowInTaskbar="False"
+        BorderBrush="Black"
+        BorderThickness="0.1"
         WindowStartupLocation="Manual"
         MouseDoubleClick="resultWindow_MouseDoubleClick"
         MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
@@ -36,5 +38,5 @@
              Width="auto"
              Height="auto"
              IsEnabled="False"
-             SelectionChanged="result_SelectionChanged"/>
+             SelectionChanged="result_SelectionChanged" />
 </Window>
