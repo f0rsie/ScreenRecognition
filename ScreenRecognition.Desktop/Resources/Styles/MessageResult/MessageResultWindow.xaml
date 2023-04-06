@@ -19,7 +19,8 @@
         WindowStartupLocation="Manual"
         MouseDoubleClick="resultWindow_MouseDoubleClick"
         MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
-        MouseLeftButtonUp="resultWindow_MouseLeftButtonUp">
+        MouseLeftButtonUp="resultWindow_MouseLeftButtonUp"
+        MouseRightButtonDown="resultWindow_MouseRightButtonDown">
     <TextBox x:Name="result"
              Background="Transparent"
              TextWrapping="Wrap"
@@ -33,5 +34,7 @@
              IsReadOnly="True"
              Foreground="LightBlue"
              Width="auto"
-             Height="auto" />
+             Height="auto"
+             IsEnabled="False"
+             SelectionChanged="result_SelectionChanged"/>
 </Window>

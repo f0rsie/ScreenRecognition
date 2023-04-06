@@ -55,9 +55,13 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
                 _timer.Dispose();
             });
         }
+
         private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            StopTimer();
+            RestartTimeLeft();
+
+            result.IsEnabled = !result.IsEnabled;
         }
 
         private void resultWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -69,6 +73,17 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
 
         private void resultWindow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            RestartTimeLeft();
+        }
+
+        private void resultWindow_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void result_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            StopTimer();
             RestartTimeLeft();
         }
     }
