@@ -11,7 +11,6 @@ using ScreenRecognition.Desktop.View.Windows;
 using ScreenRecognition.ImagePreparation.Services;
 using ScreenRecognition.Modules.Modules;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;

@@ -40,7 +40,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
                 foreach (var item in document.QuerySelectorAll("span"))
                 {
                     if (item.ClassList.Contains("ryNqvb"))
-                    { 
+                    {
 
                     }
                     //ryNqvb

@@ -46,7 +46,6 @@ namespace ScreenRecognition.Api.Core.Services
                 throw new TranslateException();
 
             return result;
-
         }
 
         public async Task<OcrResultModel> GetText(string ocrName, byte[] image, string inputLanguage)
