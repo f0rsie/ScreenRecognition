@@ -29,6 +29,9 @@ namespace ScreenRecognition.Api.Core.Services
 
         public async Task<List<string>?> GetTranslate(string translatorName, string inputText, string inputLanguage, string outputLanguage, string translationApiKey)
         {
+            if (!translatorName.ToLower().Contains("texttranslator"))
+                translatorName += "TextTranslator";
+
             _textTranslatorService = FindElement<ITextTranslatorService>(translatorName);
 
             if (_textTranslatorService == null)
@@ -48,6 +51,9 @@ namespace ScreenRecognition.Api.Core.Services
 
         public async Task<OcrResultModel> GetText(string ocrName, byte[] image, string inputLanguage)
         {
+            if (!ocrName.ToLower().Contains("ocr"))
+                ocrName += "Ocr";
+
             _ocrService = FindElement<IOcrService>(ocrName);
 
             var ocrLangAlias = await _dBOperations.GetOcrLanguageAlias(inputLanguage);
