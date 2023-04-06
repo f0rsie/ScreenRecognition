@@ -26,8 +26,8 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
             result.Text = message;
             result.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B));
 
-            resultWindow.Width = width;
-            resultWindow.Height = height;
+            result.Width = width;
+            //resultWindow.Height = height;
 
             RestartTimeLeft();
         }

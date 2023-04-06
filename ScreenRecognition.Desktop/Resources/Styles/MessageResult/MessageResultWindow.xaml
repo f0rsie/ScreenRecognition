@@ -17,18 +17,19 @@
         AllowsTransparency="True"
         ShowInTaskbar="False"
         BorderBrush="Black"
-        BorderThickness="0.1"
+        BorderThickness="0"
         WindowStartupLocation="Manual"
         MouseDoubleClick="resultWindow_MouseDoubleClick"
         MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
         MouseLeftButtonUp="resultWindow_MouseLeftButtonUp"
-        MouseRightButtonDown="resultWindow_MouseRightButtonDown">
+        MouseRightButtonDown="resultWindow_MouseRightButtonDown"
+        SizeToContent="WidthAndHeight">
     <TextBox x:Name="result"
              Background="Transparent"
              TextWrapping="Wrap"
-             TextAlignment="Left"
              BorderBrush="Transparent"
              VerticalAlignment="Top"
+             TextAlignment="Left"
              HorizontalAlignment="Left"
              FontWeight="Medium"
              FontStyle="Normal"
@@ -38,5 +39,6 @@
              Width="auto"
              Height="auto"
              IsEnabled="False"
+             Style="{StaticResource BaseStyle}"
              SelectionChanged="result_SelectionChanged" />
 </Window>
