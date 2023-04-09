@@ -8,7 +8,9 @@ namespace ScreenRecognition.Desktop.Controllers
 {
     public class UniversalController
     {
-        public static string s_webPath = "http://localhost:5046/api/";
+        // http://localhost:5046/api/ - local address
+        // http://192.168.1.118:23205/api/ - global address
+        public static string s_webPath = "http://192.168.1.118:23205/api/";
 
         public UniversalController(string webPath = "")
         {

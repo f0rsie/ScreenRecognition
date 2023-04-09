@@ -124,7 +124,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
                 try
                 {
-                    await client.PostAsync("http://localhost:5046/api/", data);
+                    await client.PostAsync(UniversalController.s_webPath, data);
                     return true;
                 }
                 catch
