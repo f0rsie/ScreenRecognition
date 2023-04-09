@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using ScreenRecognition.Desktop.Models.DbModels;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Timers;
 using System.Windows;
@@ -13,22 +15,30 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
     public partial class MessageResultWindow : Window
     {
         Timer _timer;
-        private readonly string? _translatedText;
-        private readonly string? _originalText;
+
+        private string? _translatedText;
+        private string? _originalText;
+
+        private string? _originalLanguage;
+        private string? _translatedLanguage;
 
         public MessageResultWindow()
         {
             InitializeComponent();
         }
 
-        public MessageResultWindow(string? message, string resultColor, double width = 400, double height = 200) : this()
+        public MessageResultWindow(string? originalText, string translatedText, string? originalLanguage, string? translatedLanguage, string resultColor, double width = 400, double height = 200) : this()
         {
             var selectedColor = ((SolidBrush)typeof(System.Drawing.Brushes).GetProperties().FirstOrDefault(e => e.Name.ToLower() == resultColor.ToLower()).GetValue(null, null)).Color;
 
-            var tmpResult = message?.Split(":::");
+            _originalText = originalText;
+            _translatedText = translatedText;
 
-            _originalText = tmpResult[0];
-            _translatedText = tmpResult[1];
+            _originalLanguage = originalLanguage;
+            _translatedLanguage = translatedLanguage;
+
+            originalLanguageTextBlock.Text = _originalLanguage;
+            translatedLanguageTextBlock.Text = _translatedLanguage;
 
             result.Text = _translatedText;
             result.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B));

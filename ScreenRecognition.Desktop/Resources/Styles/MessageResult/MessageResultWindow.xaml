@@ -34,18 +34,35 @@
                     HorizontalAlignment="Left"
                     Margin="0 0 0 1"
                     x:Name="topPanel">
-            <TextBlock Text="Оригинал"
+            <TextBlock x:Name="originalLanguageTextBlock"
                        Margin="5"
                        FontWeight="Medium"
-                       FontStyle="Normal" />
+                       FontStyle="Normal"
+                       VerticalAlignment="Center" />
             <ToggleButton x:Name="switchTextButton"
                           Style="{StaticResource ToggleButtonSwitch}"
                           IsChecked="True"
+                          VerticalAlignment="Center"
                           Click="switchTextButton_Click" />
-            <TextBlock Text="Перевод"
+            <TextBlock x:Name="translatedLanguageTextBlock"
                        Margin="5"
                        FontWeight="Medium"
-                       FontStyle="Normal" />
+                       FontStyle="Normal"
+                       VerticalAlignment="Center" />
+            <!--То, что ниже - оставлю до лучших времён.
+            Это должен будет быть перевод на другой язык,
+            выбираемый из комбобокса прямо в этом окне-->
+            <Border Margin="0 2 2 2"
+                    Width="0.3"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="Black"
+                    Background="Black"
+                    Visibility="Collapsed" />
+            <ComboBox Style="{StaticResource ComboBoxExtend.Small}"
+                      VerticalAlignment="Center"
+                      Margin="5"
+                      x:Name="languageListComboBox"
+                      Visibility="Collapsed" />
         </StackPanel>
         <TextBox x:Name="result"
                  Background="Transparent"

@@ -13,7 +13,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
         // Теперь если ключ валидный, то скорость работы данной функции быстрее в ~1.5 раза, по сравнению со старой проверкой
         public async Task<List<string>> Translate(string text, string inputLanguage, string outputLanguage, string apiKey)
         {
-            var res = new List<string>();
+            var res = new List<string?>();
             string? translatorUrl = "";
 
             try
@@ -41,7 +41,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
 
                 client.Dispose();
 
-                res = result.matches.Select(e => e.translation).ToList();
+                res = result?.matches?.Select(e => e.translation).ToList();
 
                 if (res.IsNullOrEmpty())
                 {

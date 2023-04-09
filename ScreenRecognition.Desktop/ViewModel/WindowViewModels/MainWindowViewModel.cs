@@ -243,7 +243,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
                 if (result?.Error == true)
                     return;
 
-                var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);
+                var resultWindow = new MessageResultWindow(result?.DetectedText, result?.TranslatedTextVariants?.FirstOrDefault(), result?.DetectedTextLanguage, result?.TranslatedTextLanguage, resultColor, f.Width, f.Height);
                 resultWindow.Left = _startX;
                 resultWindow.Top = _startY + 30;
 
