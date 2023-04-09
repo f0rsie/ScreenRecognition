@@ -19,26 +19,46 @@
         BorderBrush="Black"
         BorderThickness="0"
         WindowStartupLocation="Manual"
-        MouseDoubleClick="resultWindow_MouseDoubleClick"
         MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
         MouseLeftButtonUp="resultWindow_MouseLeftButtonUp"
         MouseRightButtonDown="resultWindow_MouseRightButtonDown"
         SizeToContent="WidthAndHeight">
-    <TextBox x:Name="result"
-             Background="Transparent"
-             TextWrapping="Wrap"
-             BorderBrush="Transparent"
-             VerticalAlignment="Top"
-             TextAlignment="Left"
-             HorizontalAlignment="Left"
-             FontWeight="Medium"
-             FontStyle="Normal"
-             FontSize="16"
-             IsReadOnly="True"
-             Foreground="LightBlue"
-             Width="auto"
-             Height="auto"
-             IsEnabled="False"
-             Style="{StaticResource BaseStyle}"
-             SelectionChanged="result_SelectionChanged" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="19*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    HorizontalAlignment="Left">
+            <TextBlock Text="Оригинал"
+                       Margin="5" />
+            <ToggleButton x:Name="switchTextButton"
+                          Style="{StaticResource ToggleButtonSwitch}"
+                          IsChecked="True"
+                          Click="switchTextButton_Click" />
+            <TextBlock Text="Перевод"
+                       Margin="5" />
+        </StackPanel>
+        <TextBox x:Name="result"
+                 Background="Transparent"
+                 TextWrapping="Wrap"
+                 BorderBrush="Transparent"
+                 VerticalAlignment="Top"
+                 TextAlignment="Left"
+                 HorizontalAlignment="Left"
+                 FontWeight="Medium"
+                 FontStyle="Normal"
+                 FontSize="16"
+                 IsReadOnly="True"
+                 Foreground="LightBlue"
+                 Width="auto"
+                 MinWidth="200"
+                 Height="auto"
+                 IsEnabled="False"
+                 Style="{StaticResource BaseStyle}"
+                 SelectionChanged="result_SelectionChanged"
+                 MouseDoubleClick="result_MouseDoubleClick"
+                 Grid.Row="1" />
+    </Grid>
 </Window>

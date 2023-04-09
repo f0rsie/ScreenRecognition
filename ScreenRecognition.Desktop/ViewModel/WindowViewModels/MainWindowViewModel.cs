@@ -238,8 +238,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
                 var result = await _controller.Post<ApiInputModel, ApiResultModel>("Screen/TranslateV2", apiInputModel);
 
-                ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
-                //ResultCustom.Property = result?.DetectedText;
+                ResultCustom.Property = $"{result?.DetectedText}:::{result?.TranslatedTextVariants?.FirstOrDefault()}";
 
                 if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
                     return;
@@ -258,51 +257,51 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
         // Old
         // Получение результата из Api
-        private async Task GetResultAsync(Bitmap f)
-        {
-            //await _controller.Post<ApiInputModel, ApiResultModel>($"Screen/Test", new ApiInputModel());
+        //private async Task GetResultAsync(Bitmap f)
+        //{
+        //    //await _controller.Post<ApiInputModel, ApiResultModel>($"Screen/Test", new ApiInputModel());
 
-            var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
-            var str = array.ToList();
+        //    var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
+        //    var str = array.ToList();
 
-            try
-            {
-                var translatorName = Properties.ProgramSettings.Default.TranslatorName;
-                var ocrName = Properties.ProgramSettings.Default.OcrName;
-                var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey;
-                var inputLanguage = Properties.ProgramSettings.Default.OcrLanguages;
-                var outputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage;
-                var resultColor = Properties.ProgramSettings.Default.ResultColor;
-                var userLogin = ConnectedUserSingleton.Login;
-                var userPassword = ConnectedUserSingleton.Password;
+        //    try
+        //    {
+        //        var translatorName = Properties.ProgramSettings.Default.TranslatorName;
+        //        var ocrName = Properties.ProgramSettings.Default.OcrName;
+        //        var apiKey = Properties.ProgramSettings.Default.TranslatorApiKey;
+        //        var inputLanguage = Properties.ProgramSettings.Default.OcrLanguages;
+        //        var outputLanguage = Properties.ProgramSettings.Default.TranslatorLanguage;
+        //        var resultColor = Properties.ProgramSettings.Default.ResultColor;
+        //        var userLogin = ConnectedUserSingleton.Login;
+        //        var userPassword = ConnectedUserSingleton.Password;
 
-                if (string.IsNullOrEmpty(userLogin) || userLogin == "Авторизация")
-                    userLogin = "guest";
-                if (string.IsNullOrEmpty(userPassword))
-                    userPassword = "guest";
-                if (string.IsNullOrEmpty(apiKey))
-                    apiKey = "123";
+        //        if (string.IsNullOrEmpty(userLogin) || userLogin == "Авторизация")
+        //            userLogin = "guest";
+        //        if (string.IsNullOrEmpty(userPassword))
+        //            userPassword = "guest";
+        //        if (string.IsNullOrEmpty(apiKey))
+        //            apiKey = "123";
 
-                string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}";
+        //        string query = $"Screen/Translate?translatorName={translatorName}&ocrName={ocrName}&translationApiKey={apiKey}&inputLanguage={inputLanguage}&outputLanguage={outputLanguage}&userLogin={userLogin}&userPassword={userPassword}";
 
-                var result = await _controller.Post<List<byte>?, ApiResultModel>(query, str);
+        //        var result = await _controller.Post<List<byte>?, ApiResultModel>(query, str);
 
-                ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
+        //        ResultCustom.Property = result?.TranslatedTextVariants?.FirstOrDefault();
 
-                if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
-                    return;
+        //        if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
+        //            return;
 
-                var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);
-                resultWindow.Left = _startX;
-                resultWindow.Top = _startY + 30;
+        //        var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);
+        //        resultWindow.Left = _startX;
+        //        resultWindow.Top = _startY + 30;
 
-                resultWindow.Show();
-            }
-            catch
-            {
-                ResultCustom.Property = "Connection Error";
-            }
-        }
+        //        resultWindow.Show();
+        //    }
+        //    catch
+        //    {
+        //        ResultCustom.Property = "Connection Error";
+        //    }
+        //}
 
         // Конвертер (Image/Bitmap)Source в Bitmap
         private Bitmap ConvertBitmapSourceToBitmap(BitmapSource bitmapSource)

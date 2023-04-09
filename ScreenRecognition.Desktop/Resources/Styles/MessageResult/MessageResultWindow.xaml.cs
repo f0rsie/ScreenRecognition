@@ -13,6 +13,8 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
     public partial class MessageResultWindow : Window
     {
         Timer _timer;
+        private readonly string? _translatedText;
+        private readonly string? _originalText;
 
         public MessageResultWindow()
         {
@@ -23,7 +25,12 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
         {
             var selectedColor = ((SolidBrush)typeof(System.Drawing.Brushes).GetProperties().FirstOrDefault(e => e.Name.ToLower() == resultColor.ToLower()).GetValue(null, null)).Color;
 
-            result.Text = message;
+            var tmpResult = message?.Split(":::");
+
+            _originalText = tmpResult[0];
+            _translatedText = tmpResult[1];
+
+            result.Text = _translatedText;
             result.Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B));
 
             result.Width = width;
@@ -56,7 +63,7 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
             });
         }
 
-        private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void result_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             StopTimer();
             RestartTimeLeft();
@@ -85,6 +92,11 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
         {
             StopTimer();
             RestartTimeLeft();
+        }
+
+        private void switchTextButton_Click(object sender, RoutedEventArgs e)
+        {
+            result.Text = switchTextButton.IsChecked == true ? _translatedText : _originalText;
         }
     }
 }
