@@ -63,7 +63,7 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
             });
         }
 
-        private void result_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void resultWindow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             StopTimer();
             RestartTimeLeft();

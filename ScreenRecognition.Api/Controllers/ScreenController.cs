@@ -15,7 +15,7 @@ namespace ScreenRecognition.Api.Controllers
         // New
         [Route("TranslateV2")]
         [HttpPost]
-        public async Task<ApiResultModel> Test(ApiInputModel apiInputModel)
+        public async Task<ApiResultModel> TextTranslateV2(ApiInputModel apiInputModel)
         {
             var detectedText = new OcrResultModel();
             var translatedText = new List<string>();

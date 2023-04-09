@@ -240,7 +240,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
                 ResultCustom.Property = $"{result?.DetectedText}:::{result?.TranslatedTextVariants?.FirstOrDefault()}";
 
-                if ((string.IsNullOrEmpty(ResultCustom.Property) || string.IsNullOrWhiteSpace(ResultCustom.Property)) && result?.Error == true)
+                if (result?.Error == true)
                     return;
 
                 var resultWindow = new MessageResultWindow(ResultCustom.Property, resultColor, f.Width, f.Height);

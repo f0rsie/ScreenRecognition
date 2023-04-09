@@ -22,6 +22,7 @@
         MouseLeftButtonDown="resultWindow_MouseLeftButtonDown"
         MouseLeftButtonUp="resultWindow_MouseLeftButtonUp"
         MouseRightButtonDown="resultWindow_MouseRightButtonDown"
+        MouseDoubleClick="resultWindow_MouseDoubleClick"
         SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
@@ -50,15 +51,14 @@
                  FontWeight="Medium"
                  FontStyle="Normal"
                  FontSize="16"
-                 IsReadOnly="True"
                  Foreground="LightBlue"
                  Width="auto"
                  MinWidth="200"
                  Height="auto"
+                 IsReadOnly="True"
                  IsEnabled="False"
                  Style="{StaticResource BaseStyle}"
                  SelectionChanged="result_SelectionChanged"
-                 MouseDoubleClick="result_MouseDoubleClick"
                  Grid.Row="1" />
     </Grid>
 </Window>
