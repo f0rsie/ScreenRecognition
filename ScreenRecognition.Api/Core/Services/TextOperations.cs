@@ -71,7 +71,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             var result = _results?.OrderBy(e => e.Confidence).ToArray()[_results.Count - 1];
 
-            if (String.IsNullOrEmpty(result?.TextResult))
+            if (String.IsNullOrEmpty(result?.TextResult) || String.IsNullOrWhiteSpace(result?.TextResult))
                 throw new RecognitionException();
 
             return result;
