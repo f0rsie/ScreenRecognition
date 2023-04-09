@@ -69,6 +69,7 @@ namespace ScreenRecognition.Desktop.Resources.Styles.MessageResult
             RestartTimeLeft();
 
             result.IsEnabled = !result.IsEnabled;
+            topPanel.Visibility = topPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void resultWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
