@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -218,7 +219,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         // Получение результата из Api V2
         private async Task GetResultAsyncV2(Bitmap f)
         {
-            var array = ImagePreparationService.BitmapToByte(f, ImageFormat.Png);
+            var array = BitmapToByte(f, ImageFormat.Png);
             var str = array.ToList();
 
             try
@@ -313,6 +314,25 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             bitmapSource.CopyPixels(new Int32Rect(0, 0, width, height), memoryBlockPointer, height * stride, stride);
             var bitmap = new Bitmap(width, height, stride, System.Drawing.Imaging.PixelFormat.Format32bppPArgb, memoryBlockPointer);
             return bitmap;
+        }
+
+        // Конвертер Bitmap в Byte array
+        public static byte[] BitmapToByte(Bitmap bitmap, ImageFormat? imageFormat = null)
+        {
+            imageFormat ??= ImageFormat.Bmp;
+
+            var sampleStream = new MemoryStream();
+            bitmap.Save(sampleStream, imageFormat);
+
+            return sampleStream.ToArray();
+        }
+
+        // Конвертер Byte array в Bitmap
+        public static Bitmap ByteToBitmap(byte[] image)
+        {
+            var result = new Bitmap(new MemoryStream(image));
+
+            return result;
         }
     }
 }

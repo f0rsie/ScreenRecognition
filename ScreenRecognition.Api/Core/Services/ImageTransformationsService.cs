@@ -1,7 +1,6 @@
 ﻿using ScreenRecognition.Api.Models;
 using ScreenRecognition.ImagePreparation.Services;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+using SkiaSharp;
 
 namespace ScreenRecognition.Api.Core.Services
 {
@@ -15,10 +14,11 @@ namespace ScreenRecognition.Api.Core.Services
         private List<Thread> _threads;
         private List<byte[]> _results;
 
-        private Color _startPixelColor;
+        private SKColor _startPixelColor;
         private int _imageSize;
 
         private int _countParts = 0;
+        private double _maxImagePartLength = 500000.0;
 
         private List<ImageSeparationThreadModel> _newResults;
 
@@ -46,21 +46,23 @@ namespace ScreenRecognition.Api.Core.Services
                 _newResults = new();
 
                 _inputImage = inputImage;
-                var bmp = ImagePreparationService.ByteToBitmap(inputImage);
-                //bmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/defaultImage.png", ImageFormat.Png);
+                //var bmp = ImagePreparationService.ByteToBitmap(inputImage);
+                var bmp = SKBitmap.Decode(inputImage);
 
-                _startPixelColor = bmp.GetPixel(new Random().Next(0, bmp.Width), new Random().Next(0, bmp.Height));
+                //_startPixelColor = bmp.GetPixel(new Random().Next(0, bmp.Width), new Random().Next(0, bmp.Height));
+                _startPixelColor = bmp.GetPixel(0, 0);
                 _imageSize = bmp.Width * bmp.Height;
 
                 List<ImageSeparationThreadModel> models = new();
 
-                int countParts = inputImage.Length / 200000;
+                int countParts = (int)(inputImage.Length / _maxImagePartLength);
                 if (countParts <= 0)
                     countParts = 1;
-                else if (inputImage.Length / 200000.0 > countParts)
+                else if (inputImage.Length / _maxImagePartLength > countParts)
                     countParts++;
 
-                var imageParts = ImageSeparation(bmp, countParts);
+                //var imageParts = ImageSeparation(bmp, countParts);
+                var imageParts = new List<byte[]> { inputImage };
 
                 int currentThreadsNumber = 0;
 
@@ -80,117 +82,147 @@ namespace ScreenRecognition.Api.Core.Services
                         break;
                 }
 
-                result = WholeImage(countParts);
+                //result = WholeImage(countParts);
+                result = _newResults.Select(e => e.ImagePart).ToList();
             }
             catch { }
 
             return result;
         }
 
-        // ImageSeparation через ImageWrapper
-        private List<byte[]> ImageSeparation(Bitmap bmp, int countParts)
-        {
-            List<byte[]>? result = new List<byte[]>();
+        #region Deprecated
+        //// ImageSeparation через ImageWrapper
+        //private List<byte[]> ImageSeparation(Bitmap bmp, int countParts)
+        //{
+        //    List<byte[]>? result = new List<byte[]>();
 
-            try
-            {
-                _countParts = countParts;
+        //    try
+        //    {
+        //        _countParts = countParts;
 
-                int currentWidth = bmp.Width / _countParts;
-                int currentHeight = bmp.Height;
+        //        int currentWidth = bmp.Width / _countParts;
+        //        int currentHeight = bmp.Height;
 
-                int lastWidth = 0;
-                for (int count = 0; count < countParts; count++)
-                {
-                    var resultBitmap = bmp.Clone(new Rectangle(lastWidth, 0, currentWidth - lastWidth, currentHeight), bmp.PixelFormat);
+        //        int lastWidth = 0;
+        //        for (int count = 0; count < countParts; count++)
+        //        {
+        //            var resultBitmap = bmp.Clone(new Rectangle(lastWidth, 0, currentWidth - lastWidth, currentHeight), bmp.PixelFormat);
 
-                    lastWidth = currentWidth;
+        //            lastWidth = currentWidth;
 
-                    currentWidth += bmp.Width / _countParts;
+        //            currentWidth += bmp.Width / _countParts;
 
-                    var element = ImagePreparationService.BitmapToByte(resultBitmap);
+        //            var element = ImagePreparationService.BitmapToByte(resultBitmap);
 
-                    //resultBitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
+        //            //resultBitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
 
-                    result.Add(element);
-                }
-            }
-            catch { }
+        //            result.Add(element);
+        //        }
+        //    }
+        //    catch { }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private List<byte[]> WholeImage(int countParts)
-        {
-            try
-            {
-                int i = 0;
-                var res = new List<List<Bitmap>>();
-                var result = new List<Bitmap>();
-                var r = _newResults.OrderBy(e => e.Number).ToList();
+        //private List<byte[]> WholeImage(int countParts)
+        //{
+        //    try
+        //    {
+        //        int i = 0;
+        //        var res = new List<List<Bitmap>>();
+        //        var result = new List<Bitmap>();
+        //        var r = _newResults.OrderBy(e => e.Number).ToList();
 
-                List<Bitmap> currentBitmap = new();
+        //        List<Bitmap> currentBitmap = new();
 
-                foreach (var value in r)
-                {
-                    currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.ImagePart));
-                }
+        //        foreach (var value in r)
+        //        {
+        //            currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.ImagePart));
+        //        }
 
-                result.AddRange(currentBitmap);
-                res.Add(currentBitmap);
-                result = new List<Bitmap>();
+        //        result.AddRange(currentBitmap);
+        //        res.Add(currentBitmap);
+        //        result = new List<Bitmap>();
 
-                foreach (var item in res)
-                {
-                    Bitmap? resElement = null;
+        //        foreach (var item in res)
+        //        {
+        //            Bitmap? resElement = null;
 
-                    if (item.Count >= countParts)
-                    {
-                        resElement = Draw(item.GetRange(0, countParts), item[0].Width, item[0].Height);
-                    }
-                    else
-                    {
-                        resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
-                    }
+        //            if (item.Count >= countParts)
+        //            {
+        //                resElement = Draw(item.GetRange(0, countParts), item[0].Width, item[0].Height);
+        //            }
+        //            else
+        //            {
+        //                resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
+        //            }
 
-                    //resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", System.Drawing.Imaging.ImageFormat.Png); // - Юзать это для сохранения
-                    _results.Add(ImagePreparationService.BitmapToByte(resElement));
-                }
-            }
-            catch { }
+        //            //resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", System.Drawing.Imaging.ImageFormat.Png); // - Юзать это для сохранения
+        //            _results.Add(ImagePreparationService.BitmapToByte(resElement));
+        //        }
+        //    }
+        //    catch { }
 
-            return _results;
-        }
+        //    return _results;
+        //}
 
-        // Склейка нескольких изоюражений в одно
-        public Bitmap? Draw(List<Bitmap> images, int width, int height)
-        {
-            try
-            {
-                int num = 0;
-                int ListLength = images.Count * width;
+        //// Склейка нескольких изображений в одно
+        //public Bitmap? Draw(List<Bitmap> images, int width, int height)
+        //{
+        //    try
+        //    {
+        //        int num = 0;
+        //        int ListLength = images.Count * width;
 
-                Bitmap bitmap = new Bitmap(ListLength, height);
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    foreach (var img in images)
-                    {
-                        Image tmp = img;
-                        g.DrawImageUnscaled(tmp, width * num, 0);
-                        num++;
-                    }
-                }
+        //        Bitmap bitmap = new Bitmap(ListLength, height);
+        //        using (Graphics g = Graphics.FromImage(bitmap))
+        //        {
+        //            g.InterpolationMode = InterpolationMode.NearestNeighbor;
+        //            foreach (var img in images)
+        //            {
+        //                Image tmp = img;
+        //                g.DrawImageUnscaled(tmp, width * num, 0);
+        //                num++;
+        //            }
+        //        }
 
-                return bitmap;
+        //        return bitmap;
 
-            }
-            catch { }
+        //    }
+        //    catch { }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        // Обработка одной части изображения
+        //// Обработка одной части изображения
+        //private void Prepare(object? model)
+        //{
+        //    try
+        //    {
+        //        int i = 0;
+        //        var sepModel = model as ImageSeparationThreadModel;
+
+        //        var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
+        //        var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, _startPixelColor, _imageSize);
+        //        var imgBmp = ImagePreparationService.ByteToBitmap(image);
+
+        //        //imgBmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
+
+        //        ImageSeparationThreadModel result = new ImageSeparationThreadModel
+        //        {
+        //            ImagePart = image,
+        //            Number = sepModel.Number,
+        //            Type = "default",
+        //        };
+
+        //        _newResults.Add(result);
+        //    }
+        //    catch { }
+        //}
+
+        #endregion
+
+        // New
         private void Prepare(object? model)
         {
             try
@@ -198,11 +230,9 @@ namespace ScreenRecognition.Api.Core.Services
                 int i = 0;
                 var sepModel = model as ImageSeparationThreadModel;
 
-                var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
-                var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, _startPixelColor, _imageSize);
-                var imgBmp = ImagePreparationService.ByteToBitmap(image);
+                var bmp = SKBitmap.Decode(sepModel?.ImagePart);
 
-                //imgBmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
+                var image = _imagePreparationService.GetPreparedImage(bmp, SKColors.White, SKColors.Black, _startPixelColor, _imageSize);
 
                 ImageSeparationThreadModel result = new ImageSeparationThreadModel
                 {
