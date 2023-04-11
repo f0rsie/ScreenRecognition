@@ -39,7 +39,7 @@ namespace ScreenRecognition.Api.Core.Services
         }
 
         // Для дебага фото
-        private async void SaveImgToFile(string filePath, byte[] inputImage)
+        private async void SaveImgToFile(string filePath, byte[]? inputImage)
         {
             try
             {
