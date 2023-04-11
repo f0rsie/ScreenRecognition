@@ -116,7 +116,6 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         // Проверка статуса работы сервера
         private async void SeverStatusCheck()
         {
-            string statusText = "Не в сети";
             var taskResult = await Task.Run(async () =>
             {
                 var client = new HttpClient();
@@ -135,8 +134,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
             });
 
-            if (taskResult == true)
-                statusText = "В сети";
+            string statusText = taskResult ? "В сети" : "Не в сети";
 
             ServerStatusCustom.Property = new ServerStatus(statusText, taskResult);
         }
