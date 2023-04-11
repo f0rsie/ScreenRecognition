@@ -172,14 +172,14 @@ namespace ScreenRecognition.ImagePreparation.Services
 
         private bool IsColorsSimilar(SKColor firstColor, SKColor secondColor, int imageSize)
         {
-            int ratio = 2;
+            double ratio = 1.5;
 
-            if (imageSize <= 800000)
+            if (imageSize >= 800000)
                 ratio = 6;
-            if (imageSize <= 400000)
+            else if (imageSize >= 400000 && imageSize < 800000)
                 ratio = 4;
 
-            int colorDifference = (int)(255 / ratio);
+            int colorDifference = (int)(255.0 / ratio);
             bool result = Math.Abs(firstColor.Red - secondColor.Red) < colorDifference && Math.Abs(firstColor.Green - secondColor.Green) < colorDifference && Math.Abs(firstColor.Blue - secondColor.Blue) < colorDifference;
 
             return result;

@@ -1,6 +1,7 @@
 ﻿using ScreenRecognition.Api.Models;
 using ScreenRecognition.ImagePreparation.Services;
 using SkiaSharp;
+using System.Drawing;
 
 namespace ScreenRecognition.Api.Core.Services
 {
@@ -84,8 +85,18 @@ namespace ScreenRecognition.Api.Core.Services
 
                 //result = WholeImage(countParts);
                 result = _newResults.Select(e => e.ImagePart).ToList();
+
+                //ByteToBitmap(result.FirstOrDefault()).Save("D:/Result.png", System.Drawing.Imaging.ImageFormat.Png);
             }
             catch { }
+
+            return result;
+        }
+
+        // На удаление в будущем
+        public static Bitmap ByteToBitmap(byte[] image)
+        {
+            var result = new Bitmap(new MemoryStream(image));
 
             return result;
         }
