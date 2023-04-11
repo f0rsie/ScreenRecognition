@@ -1,6 +1,5 @@
 ﻿using ScreenRecognition.ImagePreparation.Services;
 using SkiaSharp;
-using System.Drawing;
 
 namespace ScreenRecognition.Api.Core.Services
 {
@@ -26,9 +25,9 @@ namespace ScreenRecognition.Api.Core.Services
                 Prepare(inputImage),
             };
 
-            // Для дебага картинок
-            ByteToBitmap(inputImage).Save("D:/Original.png", System.Drawing.Imaging.ImageFormat.Png);
-            ByteToBitmap(_results.FirstOrDefault()).Save("D:/Result.png", System.Drawing.Imaging.ImageFormat.Png);
+            // Для дебага фото
+            SaveImgToFile("D:/Original.png", inputImage);
+            SaveImgToFile("D:/Result.png", _results.FirstOrDefault());
 
             return _results;
         }
@@ -39,10 +38,13 @@ namespace ScreenRecognition.Api.Core.Services
             return _imagePreparationService.GetPreparedImage(startedImage, SKColors.White, SKColors.Black);
         }
 
-        // Для дебага картинок
-        private Bitmap ByteToBitmap(byte[] image)
+        // Для дебага фото
+        private async void SaveImgToFile(string filePath, byte[] inputImage)
         {
-            return new Bitmap(new MemoryStream(image));
+            using (FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                await fileStream.WriteAsync(inputImage);
+            }
         }
     }
 }
