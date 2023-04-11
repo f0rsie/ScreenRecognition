@@ -16,11 +16,11 @@ namespace ScreenRecognition.ImagePreparation.Services
         public byte[] GetPreparedImage(byte[] image, SKColor firstColor, SKColor secondColor)
         {
             _image = SKBitmap.Decode(image);
-            _firstColor = firstColor;
-            _secondColor = secondColor;
-            _startPixelColor = _image.GetPixel(0, 0);
             _imageWidth = _image.Width;
             _imageHeight = _image.Height;
+            _startPixelColor = _image.GetPixel(0, 0);
+            _firstColor = firstColor;
+            _secondColor = secondColor;
 
             var blackWhiteBitmap = ImageColorSetter();
             var result = blackWhiteBitmap.Encode(SKEncodedImageFormat.Png, 100).ToArray();
