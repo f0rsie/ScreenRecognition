@@ -41,10 +41,14 @@ namespace ScreenRecognition.Api.Core.Services
         // Для дебага фото
         private async void SaveImgToFile(string filePath, byte[] inputImage)
         {
-            using (FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            try
             {
-                await fileStream.WriteAsync(inputImage);
+                using (FileStream fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                {
+                    await fileStream.WriteAsync(inputImage);
+                }
             }
+            catch { }
         }
     }
 }
