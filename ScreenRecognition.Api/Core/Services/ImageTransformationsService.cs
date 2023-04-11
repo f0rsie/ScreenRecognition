@@ -86,6 +86,7 @@ namespace ScreenRecognition.Api.Core.Services
                 //result = WholeImage(countParts);
                 result = _newResults.Select(e => e.ImagePart).ToList();
 
+                //ByteToBitmap(inputImage).Save("D:/Original.png", System.Drawing.Imaging.ImageFormat.Png);
                 //ByteToBitmap(result.FirstOrDefault()).Save("D:/Result.png", System.Drawing.Imaging.ImageFormat.Png);
             }
             catch { }

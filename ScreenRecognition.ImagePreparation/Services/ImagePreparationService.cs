@@ -119,17 +119,10 @@ namespace ScreenRecognition.ImagePreparation.Services
         // New methods
         public byte[] GetPreparedImage(SKBitmap image, SKColor firstColor, SKColor secondColor, SKColor startPixelColor, int imageSize)
         {
-            var blackWhiteBitmap = FloodFillImage(image, firstColor, secondColor, startPixelColor, imageSize);
+            var blackWhiteBitmap = ImageColorSetter(image, firstColor, secondColor, startPixelColor, imageSize);
             var result = blackWhiteBitmap.Encode(SKEncodedImageFormat.Png, 100).ToArray();
 
             //ByteToBitmap(result).Save("D:/Result.png", ImageFormat.Png);
-
-            return result;
-        }
-
-        private SKBitmap FloodFillImage(SKBitmap bmp, SKColor firstColor, SKColor secondColor, SKColor startPixelColor, int imageSize)
-        {
-            var result = ImageColorSetter(bmp, firstColor, secondColor, startPixelColor, imageSize);
 
             return result;
         }
@@ -172,15 +165,18 @@ namespace ScreenRecognition.ImagePreparation.Services
 
         private bool IsColorsSimilar(SKColor firstColor, SKColor secondColor, int imageSize)
         {
-            double ratio = 1.5;
+            double ratio = 4;
 
-            if (imageSize >= 800000)
-                ratio = 6;
-            else if (imageSize >= 400000 && imageSize < 800000)
-                ratio = 4;
+            if (imageSize >= 200000 && imageSize < 400000)
+                ratio = 2;
+            else if (imageSize >= 400000)
+                ratio = 1.5;
 
             int colorDifference = (int)(255.0 / ratio);
-            bool result = Math.Abs(firstColor.Red - secondColor.Red) < colorDifference && Math.Abs(firstColor.Green - secondColor.Green) < colorDifference && Math.Abs(firstColor.Blue - secondColor.Blue) < colorDifference;
+            colorDifference = 150;
+            //bool result = Math.Abs(firstColor.Red - secondColor.Red) < colorDifference && Math.Abs(firstColor.Green - secondColor.Green) < colorDifference && Math.Abs(firstColor.Blue - secondColor.Blue) < colorDifference;
+
+            bool result = Math.Sqrt(Math.Pow(firstColor.Red - secondColor.Red, 2f) + Math.Pow(firstColor.Green - secondColor.Green, 2f) + Math.Pow(firstColor.Blue - secondColor.Blue, 2f)) < colorDifference;
 
             return result;
         }

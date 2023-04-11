@@ -69,7 +69,7 @@ namespace ScreenRecognition.Api.Core.Services
             if (_results.IsNullOrEmpty())
                 throw new RecognitionException();
 
-            var result = _results?.OrderBy(e => e.Confidence).ToArray()[_results.Count - 1];
+            var result = _results?.OrderBy(e => e.Confidence).LastOrDefault();
 
             if (String.IsNullOrEmpty(result?.TextResult) || String.IsNullOrWhiteSpace(result?.TextResult))
                 throw new RecognitionException();
