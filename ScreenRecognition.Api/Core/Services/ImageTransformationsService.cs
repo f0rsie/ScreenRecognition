@@ -86,8 +86,8 @@ namespace ScreenRecognition.Api.Core.Services
                 //result = WholeImage(countParts);
                 result = _newResults.Select(e => e.ImagePart).ToList();
 
-                //ByteToBitmap(inputImage).Save("D:/Original.png", System.Drawing.Imaging.ImageFormat.Png);
-                //ByteToBitmap(result.FirstOrDefault()).Save("D:/Result.png", System.Drawing.Imaging.ImageFormat.Png);
+                ByteToBitmap(inputImage).Save("D:/Original.png", System.Drawing.Imaging.ImageFormat.Png);
+                ByteToBitmap(result.FirstOrDefault()).Save("D:/Result.png", System.Drawing.Imaging.ImageFormat.Png);
             }
             catch { }
 
@@ -101,138 +101,6 @@ namespace ScreenRecognition.Api.Core.Services
 
             return result;
         }
-
-        #region Deprecated
-        //// ImageSeparation через ImageWrapper
-        //private List<byte[]> ImageSeparation(Bitmap bmp, int countParts)
-        //{
-        //    List<byte[]>? result = new List<byte[]>();
-
-        //    try
-        //    {
-        //        _countParts = countParts;
-
-        //        int currentWidth = bmp.Width / _countParts;
-        //        int currentHeight = bmp.Height;
-
-        //        int lastWidth = 0;
-        //        for (int count = 0; count < countParts; count++)
-        //        {
-        //            var resultBitmap = bmp.Clone(new Rectangle(lastWidth, 0, currentWidth - lastWidth, currentHeight), bmp.PixelFormat);
-
-        //            lastWidth = currentWidth;
-
-        //            currentWidth += bmp.Width / _countParts;
-
-        //            var element = ImagePreparationService.BitmapToByte(resultBitmap);
-
-        //            //resultBitmap.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/testImage{count}.png", ImageFormat.Png);
-
-        //            result.Add(element);
-        //        }
-        //    }
-        //    catch { }
-
-        //    return result;
-        //}
-
-        //private List<byte[]> WholeImage(int countParts)
-        //{
-        //    try
-        //    {
-        //        int i = 0;
-        //        var res = new List<List<Bitmap>>();
-        //        var result = new List<Bitmap>();
-        //        var r = _newResults.OrderBy(e => e.Number).ToList();
-
-        //        List<Bitmap> currentBitmap = new();
-
-        //        foreach (var value in r)
-        //        {
-        //            currentBitmap.Add(ImagePreparationService.ByteToBitmap(value.ImagePart));
-        //        }
-
-        //        result.AddRange(currentBitmap);
-        //        res.Add(currentBitmap);
-        //        result = new List<Bitmap>();
-
-        //        foreach (var item in res)
-        //        {
-        //            Bitmap? resElement = null;
-
-        //            if (item.Count >= countParts)
-        //            {
-        //                resElement = Draw(item.GetRange(0, countParts), item[0].Width, item[0].Height);
-        //            }
-        //            else
-        //            {
-        //                resElement = Draw(item.GetRange(0, item.Count), item[0].Width, item[0].Height);
-        //            }
-
-        //            //resElement.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", System.Drawing.Imaging.ImageFormat.Png); // - Юзать это для сохранения
-        //            _results.Add(ImagePreparationService.BitmapToByte(resElement));
-        //        }
-        //    }
-        //    catch { }
-
-        //    return _results;
-        //}
-
-        //// Склейка нескольких изображений в одно
-        //public Bitmap? Draw(List<Bitmap> images, int width, int height)
-        //{
-        //    try
-        //    {
-        //        int num = 0;
-        //        int ListLength = images.Count * width;
-
-        //        Bitmap bitmap = new Bitmap(ListLength, height);
-        //        using (Graphics g = Graphics.FromImage(bitmap))
-        //        {
-        //            g.InterpolationMode = InterpolationMode.NearestNeighbor;
-        //            foreach (var img in images)
-        //            {
-        //                Image tmp = img;
-        //                g.DrawImageUnscaled(tmp, width * num, 0);
-        //                num++;
-        //            }
-        //        }
-
-        //        return bitmap;
-
-        //    }
-        //    catch { }
-
-        //    return null;
-        //}
-
-        //// Обработка одной части изображения
-        //private void Prepare(object? model)
-        //{
-        //    try
-        //    {
-        //        int i = 0;
-        //        var sepModel = model as ImageSeparationThreadModel;
-
-        //        var bmp = ImagePreparationService.ByteToBitmap(sepModel.ImagePart);
-        //        var image = _imagePreparationService.GetPreparedImage(bmp, Color.White, Color.Black, _startPixelColor, _imageSize);
-        //        var imgBmp = ImagePreparationService.ByteToBitmap(image);
-
-        //        //imgBmp.Save($"C:/Users/fff/Desktop/Диплом на диске C/Results/convertedImage{i++}.png", ImageFormat.Png);
-
-        //        ImageSeparationThreadModel result = new ImageSeparationThreadModel
-        //        {
-        //            ImagePart = image,
-        //            Number = sepModel.Number,
-        //            Type = "default",
-        //        };
-
-        //        _newResults.Add(result);
-        //    }
-        //    catch { }
-        //}
-
-        #endregion
 
         // New
         private void Prepare(object? model)
