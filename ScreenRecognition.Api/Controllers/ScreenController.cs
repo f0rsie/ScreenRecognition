@@ -193,6 +193,9 @@ namespace ScreenRecognition.Api.Controllers
         {
             bool result = false;
 
+            if (!translatorName.ToLower().Contains("texttranslator"))
+                translatorName += "TextTranslator";
+
             var translator = TextOperations.FindElement<ITextTranslatorService?>(translatorName);
 
             if (translator == null)

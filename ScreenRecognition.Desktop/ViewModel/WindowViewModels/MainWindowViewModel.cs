@@ -124,7 +124,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
                 try
                 {
-                    await client.PostAsync(UniversalController.s_webPath, data);
+                    await client.PostAsync(UniversalController.SWebPath, data);
                     return true;
                 }
                 catch

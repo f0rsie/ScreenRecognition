@@ -11,13 +11,13 @@ namespace ScreenRecognition.Desktop.Controllers
         // http://localhost:5046/api/ - local address
         // http://192.168.1.118:23205/api/ - global address
         //public static string s_webPath = "http://192.168.1.118:23205/api/";
-        public static string s_webPath = "http://localhost:5046/api/";
+        public static string SWebPath { get; set; } = "http://localhost:5046/api/";
 
         public UniversalController(string webPath = "")
         {
             if (!string.IsNullOrEmpty(webPath))
             {
-                s_webPath = webPath;
+                SWebPath = webPath;
             }
         }
 
@@ -54,7 +54,7 @@ namespace ScreenRecognition.Desktop.Controllers
             HttpClient client = new HttpClient();
             P? result;
 
-            client.BaseAddress = new Uri($"{s_webPath}");
+            client.BaseAddress = new Uri($"{SWebPath}");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
