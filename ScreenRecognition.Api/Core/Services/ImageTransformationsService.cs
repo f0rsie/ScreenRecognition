@@ -26,8 +26,8 @@ namespace ScreenRecognition.Api.Core.Services
             };
 
             // Для дебага фото
-            SaveImgToFile("D:/Диплом/Results/Original.png", inputImage);
-            SaveImgToFile("D:/Диплом/Results/Result.png", _results.FirstOrDefault());
+            //SaveImgToFile("D:/Диплом/Results/Original.png", inputImage);
+            //SaveImgToFile("D:/Диплом/Results/Result.png", _results.FirstOrDefault());
 
             return _results;
         }
