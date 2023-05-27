@@ -428,6 +428,33 @@
                                   VerticalContentAlignment="Center"
                                   IsChecked="{Binding MinimizeToTrayCustom.Property}" />
                     </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   Text="Адрес сервера"
+                                   VerticalAlignment="Center"
+                                   Margin="5" />
+                        <hc:TextBox DockPanel.Dock="Left"
+                                    Margin="5"
+                                    hc:InfoElement.Placeholder="Адрес сервера"
+                                    x:Name="apiServerAddress"
+                                    Width="250"
+                                    IsEnabled="False"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding ApiServerAddress}" />
+                        <CheckBox DockPanel.Dock="Left"
+                                  Width="auto"
+                                  Margin="5"
+                                  x:Name="apiServerAddressEnabledStatus"
+                                  HorizontalContentAlignment="Right"
+                                  VerticalContentAlignment="Center"
+                                  IsChecked="{Binding ElementName=apiServerAddress, Path=IsEnabled}" />
+                        <Button Content="Применить"
+                                Margin="5"
+                                DockPanel.Dock="Right"
+                                BorderBrush="#FF4862F1"
+                                Command="{Binding SaveApiServerAddress}" />
+                    </DockPanel>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Профиль"
                                    HorizontalAlignment="Center"

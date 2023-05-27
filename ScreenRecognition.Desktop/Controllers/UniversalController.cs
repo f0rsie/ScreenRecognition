@@ -10,7 +10,7 @@ namespace ScreenRecognition.Desktop.Controllers
     {
         // http://localhost:5046/api/
         // http://192.168.1.118:23205/api/
-        public static string SWebPath { get; set; } = "http://localhost:5046/api/";
+        public static string SWebPath { get; set; } = Properties.ProgramSettings.Default.ApiServerAddress;
 
         public UniversalController(string webPath = "")
         {

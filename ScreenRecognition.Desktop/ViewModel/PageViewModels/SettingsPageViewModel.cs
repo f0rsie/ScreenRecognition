@@ -25,6 +25,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         #region Commands
         public ICommand SaveSettingsBtn { get; private set; }
         public ICommand SaveAccountInfoBtn { get; private set; }
+        public ICommand SaveApiServerAddress { get; private set; }
         #endregion
         #region Shields only
         private UniversalController _controller;
@@ -35,6 +36,16 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         public PropShieldModel<Visibility> ProfilePanelVisibilityCustom { get; set; } = new();
         #endregion
         #region Program Settings custom
+        public string ApiServerAddress
+        {
+            get => UniversalController.SWebPath;
+            set
+            {
+                UniversalController.SWebPath = value;
+                OnPropertyChanged(nameof(ApiServerAddress));
+            }
+        }
+
         public PropShieldModel<Setting?> SettingsCustom { get; set; } = new();
 
         public PropShieldModel<List<Language?>> LanguageListCustom { get; set; } = new();
@@ -148,6 +159,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
         {
             SaveSettingsBtn = new DelegateCommand(SaveSettings);
             SaveAccountInfoBtn = new DelegateCommand(SaveAccountInfo);
+            SaveApiServerAddress = new DelegateCommand(SaveServerAddress);
         }
 
         private async Task OnStartupAsync()
@@ -224,6 +236,15 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             TranslatorLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.OutputLanguageId);
             ResultColorCustom.Property = SelectedSettingCustom?.ResultColor;
             CurrentProfileNameCustom.Property = SelectedSettingCustom?.Name;
+        }
+
+        private void SaveServerAddress(object obj)
+        {
+            if (HandyControl.Controls.MessageBox.Show("Вы действительно хотите поменять адрес сервера? Если адрес сервера будет указан неверно, то приложение не сможет нормально функционировать. Продолжить сохранение?", "Сохранение", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                Properties.ProgramSettings.Default.ApiServerAddress = ApiServerAddress;
+                Properties.ProgramSettings.Default.Save();
+            }
         }
 
         private async void SaveAccountInfo(object obj)

@@ -12,7 +12,7 @@ namespace ScreenRecognition.Desktop.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
     public sealed partial class ProgramSettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static ProgramSettings defaultInstance = ((ProgramSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ProgramSettings())));
@@ -164,6 +164,18 @@ namespace ScreenRecognition.Desktop.Properties {
             }
             set {
                 this["T9EnableStatus"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5046/api/")]
+        public string ApiServerAddress {
+            get {
+                return ((string)(this["ApiServerAddress"]));
+            }
+            set {
+                this["ApiServerAddress"] = value;
             }
         }
     }
