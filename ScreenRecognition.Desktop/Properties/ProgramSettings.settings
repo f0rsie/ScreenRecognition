@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="OcrLanguages" Type="System.String" Scope="User">
-      <Value Profile="(Default)">eng_rus</Value>
+      <Value Profile="(Default)">English</Value>
     </Setting>
     <Setting Name="TranslatorLanguage" Type="System.String" Scope="User">
-      <Value Profile="(Default)">eng</Value>
+      <Value Profile="(Default)">Russian</Value>
     </Setting>
     <Setting Name="OcrName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TesseractOcr</Value>
+      <Value Profile="(Default)">TesseractOCR</Value>
     </Setting>
     <Setting Name="TranslatorName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MyMemoryTextTranslator</Value>
+      <Value Profile="(Default)">MyMemory</Value>
     </Setting>
     <Setting Name="TranslatorApiKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">nothing</Value>
@@ -27,7 +27,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="HotkeyEnabledStatus" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="HotkeyModifier" Type="System.String" Scope="User">
       <Value Profile="(Default)">Control</Value>

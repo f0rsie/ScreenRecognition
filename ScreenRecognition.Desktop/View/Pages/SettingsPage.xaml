@@ -449,7 +449,7 @@
                                   HorizontalContentAlignment="Right"
                                   VerticalContentAlignment="Center"
                                   IsChecked="{Binding ElementName=apiServerAddress, Path=IsEnabled}" />
-                        <Button Content="Применить"
+                        <Button Content="Сохранить"
                                 Margin="5"
                                 DockPanel.Dock="Right"
                                 BorderBrush="#FF4862F1"
@@ -471,7 +471,8 @@
                                         Width="250"
                                         HorizontalContentAlignment="Left"
                                         VerticalContentAlignment="Center"
-                                        Text="{Binding CurrentProfileNameCustom.Property}" />
+                                        Text="{Binding CurrentProfileNameCustom.Property}"
+                                        IsEnabled="False"/>
                             <Button Content="Сохранить"
                                     Margin="5"
                                     DockPanel.Dock="Right"

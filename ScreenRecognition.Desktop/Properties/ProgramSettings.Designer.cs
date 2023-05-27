@@ -25,7 +25,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("eng_rus")]
+        [global::System.Configuration.DefaultSettingValueAttribute("English")]
         public string OcrLanguages {
             get {
                 return ((string)(this["OcrLanguages"]));
@@ -37,7 +37,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("eng")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Russian")]
         public string TranslatorLanguage {
             get {
                 return ((string)(this["TranslatorLanguage"]));
@@ -49,7 +49,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TesseractOcr")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TesseractOCR")]
         public string OcrName {
             get {
                 return ((string)(this["OcrName"]));
@@ -61,7 +61,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MyMemoryTextTranslator")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MyMemory")]
         public string TranslatorName {
             get {
                 return ((string)(this["TranslatorName"]));
@@ -121,7 +121,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool HotkeyEnabledStatus {
             get {
                 return ((bool)(this["HotkeyEnabledStatus"]));
