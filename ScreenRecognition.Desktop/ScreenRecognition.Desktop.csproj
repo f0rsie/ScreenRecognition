@@ -1,50 +1,51 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <ApplicationIcon>Resources\Icons\icon.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract> <!-- Для деплоя в один файл -->
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<ApplicationIcon>Resources\Icons\icon.ico</ApplicationIcon>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\Images\TestHelloWorldImage.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\Images\TestHelloWorldImage.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Resources\Icons\icon.ico" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Icons\icon.ico" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="GlobalHotKeys.Windows" Version="0.1.0" />
-    <PackageReference Include="HandyControl" Version="3.4.0" />
-    <PackageReference Include="HandyControl.Lang.ru" Version="3.4.0" />
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="GlobalHotKeys.Windows" Version="0.1.0" />
+		<PackageReference Include="HandyControl" Version="3.4.0" />
+		<PackageReference Include="HandyControl.Lang.ru" Version="3.4.0" />
+		<PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ScreenRecognition.Modules\ScreenRecognition.Modules.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ScreenRecognition.Modules\ScreenRecognition.Modules.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Resources\Images\testHelloWorldImage.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Images\testHelloWorldImage.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\ProgramSettings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ProgramSettings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\ProgramSettings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ProgramSettings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Properties\ProgramSettings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>ProgramSettings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\ProgramSettings.settings">
+			<Generator>PublicSettingsSingleFileGenerator</Generator>
+			<LastGenOutput>ProgramSettings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 </Project>
