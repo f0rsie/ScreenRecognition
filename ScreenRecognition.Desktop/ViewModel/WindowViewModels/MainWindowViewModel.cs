@@ -8,7 +8,6 @@ using ScreenRecognition.Desktop.Models.SingletonModels;
 using ScreenRecognition.Desktop.Resources.Styles.MessageResult;
 using ScreenRecognition.Desktop.View.Pages;
 using ScreenRecognition.Desktop.View.Windows;
-using ScreenRecognition.ImagePreparation.Services;
 using ScreenRecognition.Modules.Modules;
 using System;
 using System.Collections.Generic;

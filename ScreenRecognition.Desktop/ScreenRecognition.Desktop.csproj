@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ScreenRecognition.ImagePreparation\ScreenRecognition.ImagePreparation.csproj" />
     <ProjectReference Include="..\ScreenRecognition.Modules\ScreenRecognition.Modules.csproj" />
   </ItemGroup>
 

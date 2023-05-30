@@ -20,7 +20,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenRecognition.Desktop", "ScreenRecognition.Desktop\ScreenRecognition.Desktop.csproj", "{837BFA1D-FD3A-4074-9C2E-699DBA578917}"
 	ProjectSection(ProjectDependencies) = postProject
 		{070745A5-5863-4D83-BA63-E5990C2ED126} = {070745A5-5863-4D83-BA63-E5990C2ED126}
-		{693BCF43-79FD-46F7-89B2-022BEDF4B7C5} = {693BCF43-79FD-46F7-89B2-022BEDF4B7C5}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScreenRecognition.Modules", "ScreenRecognition.Modules\ScreenRecognition.Modules.csproj", "{070745A5-5863-4D83-BA63-E5990C2ED126}"
