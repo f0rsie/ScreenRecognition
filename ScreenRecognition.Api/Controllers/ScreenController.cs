@@ -98,6 +98,10 @@ namespace ScreenRecognition.Api.Controllers
                 };
             }
             #endregion
+            finally
+            {
+                GC.Collect();
+            }
         }
 
         // Old
