@@ -20,8 +20,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -39,6 +41,8 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         #endregion
         #region Shields
         private readonly UniversalController _controller;
+
+        private Timer _serverStatusTimer;
 
         private RegisterGlobalHotkey? _registerGlobalHotkey;
 
@@ -68,7 +72,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
 
         public MainWindowViewModel()
         {
-            _controller = new UniversalController();
+            _controller = new();
 
             OnStartup();
         }
@@ -91,7 +95,7 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
             var page = new SettingsPage();
             CurrentPageCustom.Property = page;
 
-            SeverStatusCheck();
+            ServerStatusCheck();
         }
 
         // Регистрация команд
@@ -113,29 +117,19 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         }
 
         // Проверка статуса работы сервера
-        private async void SeverStatusCheck()
+        private void ServerStatusCheck()
         {
-            var taskResult = await Task.Run(async () =>
-            {
-                var client = new HttpClient();
-                var data = new StringContent("123", Encoding.UTF8, "application/json");
-                client.Timeout = new TimeSpan(0, 0, 0, 0, 500);
+            _serverStatusTimer?.Dispose();
 
-                try
-                {
-                    await client.PostAsync(UniversalController.SWebPath, data);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+            _serverStatusTimer = new Timer(5000);
+            _serverStatusTimer.Elapsed += TimerServerStatusCheckerTick;
 
-            });
+            _serverStatusTimer.Start();
+        }
 
-            string statusText = taskResult ? "В сети" : "Не в сети";
-
-            ServerStatusCustom.Property = new ServerStatus(statusText, taskResult);
+        private async void TimerServerStatusCheckerTick(object? sender, ElapsedEventArgs e)
+        {
+            ServerStatusCustom.Property = await ServerStatusChecker.CheckStatus();
         }
 
         // Вызов окна авторизации
