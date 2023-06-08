@@ -5,6 +5,7 @@ using ScreenRecognition.Api.Models.ResultsModels.OcrResultModels;
 using ScreenRecognition.Api.Resources.Exceptions;
 using ScreenRecognition.Modules.Modules;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ScreenRecognition.Api.Core.Services
 {
@@ -28,6 +29,7 @@ namespace ScreenRecognition.Api.Core.Services
         }
 
         // TODO: Проверить новый метод (ещё не проверял)
+        // UPD 08.06.2023 - 16:28 - вроде робит
         public async Task<List<string>?> GetTranslate(string translatorName, string inputText, string inputLanguage, string outputLanguage, string translationApiKey)
         {
             if (!translatorName.ToLower().Contains("texttranslator"))
@@ -43,14 +45,16 @@ namespace ScreenRecognition.Api.Core.Services
             var translatorOutputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(outputLanguage);
 
             var textList = TextToTextArray(inputText);
+            string str = string.Empty;
 
             if (textList.Count > 0)
             {
                 foreach (var text in textList)
                 {
-                    var textResult = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
-                    result = result.Concat(textResult).ToList();
+                    str += (await _textTranslatorService.Translate(text, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey)).FirstOrDefault();
                 }
+
+                result.Add(str);
             }
             else
             {
@@ -120,6 +124,7 @@ namespace ScreenRecognition.Api.Core.Services
         }
 
         // TODO: Сделать разделение на предложения по 500 символов каждое
+        // UPD 08.06.2023 - 16:28 - вроде робит
         private List<string> TextToTextArray(string text)
         {
             List<string> result = new();
@@ -128,11 +133,16 @@ namespace ScreenRecognition.Api.Core.Services
 
             for (int i = 0; i < splittedText.Length; i++)
             {
-                resultStr += $"{splittedText[i]}.";
+                splittedText[i] = $"{splittedText[i].Replace("\n\n", "&&&").Replace("\n", " ").Replace("&&&", "\n\n")}.";
+            }
+
+            for (int i = 0; i < splittedText.Length; i++)
+            {
+                resultStr += splittedText[i];
 
                 if (resultStr.Length > 500)
                 {
-                    resultStr = resultStr.Replace($"{splittedText[i]}.", "");
+                    resultStr = resultStr.Replace(splittedText[i], "");
 
                     result.Add(resultStr);
                     resultStr = string.Empty;
@@ -143,6 +153,9 @@ namespace ScreenRecognition.Api.Core.Services
                     continue;
                 }
             }
+
+            if (!string.IsNullOrEmpty(resultStr))
+                result.Add(resultStr);
 
             return result;
         }
