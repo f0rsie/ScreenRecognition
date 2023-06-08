@@ -27,6 +27,7 @@ namespace ScreenRecognition.Api.Core.Services
             _dBOperations = new();
         }
 
+        // TODO: Проверить новый метод (ещё не проверял)
         public async Task<List<string>?> GetTranslate(string translatorName, string inputText, string inputLanguage, string outputLanguage, string translationApiKey)
         {
             if (!translatorName.ToLower().Contains("texttranslator"))
@@ -37,10 +38,24 @@ namespace ScreenRecognition.Api.Core.Services
             if (_textTranslatorService == null)
                 throw new FindElementException();
 
+            List<string>? result = new();
             var translatorInputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(inputLanguage);
             var translatorOutputLangAlias = await _dBOperations.GetTranslatorLanguageAlias(outputLanguage);
 
-            var result = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
+            var textList = TextToTextArray(inputText);
+
+            if (textList.Count > 0)
+            {
+                foreach (var text in textList)
+                {
+                    var textResult = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
+                    result = result.Concat(textResult).ToList();
+                }
+            }
+            else
+            {
+                result = await _textTranslatorService.Translate(inputText, translatorInputLangAlias, translatorOutputLangAlias, translationApiKey);
+            }
 
             if (result.IsNullOrEmpty())
                 throw new TranslateException();
@@ -102,6 +117,34 @@ namespace ScreenRecognition.Api.Core.Services
 
             if (!String.IsNullOrEmpty(result?.TextResult))
                 _results?.Add(result);
+        }
+
+        // TODO: Сделать разделение на предложения по 500 символов каждое
+        private List<string> TextToTextArray(string text)
+        {
+            List<string> result = new();
+            string resultStr = string.Empty;
+            var splittedText = text.Split(".");
+
+            for (int i = 0; i < splittedText.Length; i++)
+            {
+                resultStr += $"{splittedText[i]}.";
+
+                if (resultStr.Length > 500)
+                {
+                    resultStr = resultStr.Replace($"{splittedText[i]}.", "");
+
+                    result.Add(resultStr);
+                    resultStr = string.Empty;
+                    i--;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            return result;
         }
 
         private List<byte[]> ImagePrepare(byte[] image)
