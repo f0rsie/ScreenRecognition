@@ -93,6 +93,8 @@ namespace ScreenRecognition.Api.Core.Services
             if (string.IsNullOrEmpty(result?.TextResult) || string.IsNullOrWhiteSpace(result?.TextResult))
                 throw new RecognitionException();
 
+            result.TextResult = TextCorrector(result.TextResult);
+
             return result;
         }
 
@@ -123,6 +125,13 @@ namespace ScreenRecognition.Api.Core.Services
                 _results?.Add(result);
         }
 
+        private string TextCorrector(string inputText)
+        {
+            string result = inputText.Replace("\n\n", "&&&").Replace("\n", " ").Replace("&&&", "\n\n");
+
+            return result;
+        }
+
         // TODO: Сделать разделение на предложения по 500 символов каждое
         // UPD 08.06.2023 - 16:28 - вроде робит
         private List<string> TextToTextArray(string text)
@@ -133,7 +142,7 @@ namespace ScreenRecognition.Api.Core.Services
 
             for (int i = 0; i < splittedText.Length; i++)
             {
-                splittedText[i] = $"{splittedText[i].Replace("\n\n", "&&&").Replace("\n", " ").Replace("&&&", "\n\n")}.";
+                splittedText[i] = $"{splittedText[i]}.";
             }
 
             for (int i = 0; i < splittedText.Length; i++)

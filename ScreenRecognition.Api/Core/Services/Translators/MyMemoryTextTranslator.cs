@@ -20,7 +20,7 @@ namespace ScreenRecognition.Api.Core.Services.Translators
             {
                 //bool apiKeyValidation = await ApiKeyValidation(apiKey);
 
-                translatorUrl = $"https://api.mymemory.translated.net/get?q={text}&langpair={inputLanguage}|{outputLanguage}";
+                translatorUrl = $"https://api.mymemory.translated.net/get?q={text}&langpair={inputLanguage}|{outputLanguage}&de=assa.x0633.su@mail.ru";
 
                 var client = new HttpClient();
 
