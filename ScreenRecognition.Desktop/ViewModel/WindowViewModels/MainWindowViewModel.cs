@@ -119,8 +119,9 @@ namespace ScreenRecognition.Desktop.ViewModel.WindowViewModels
         // Проверка статуса работы сервера
         private void ServerStatusCheck()
         {
-            _serverStatusTimer?.Dispose();
+            TimerServerStatusCheckerTick(null, null);
 
+            _serverStatusTimer?.Dispose();
             _serverStatusTimer = new Timer(5000);
             _serverStatusTimer.Elapsed += TimerServerStatusCheckerTick;
 
