@@ -235,7 +235,7 @@ namespace ScreenRecognition.Desktop.ViewModel.PageViewModels
             OcrLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.InputLanguageId);
             TranslatorLanguageCustom.Property = LanguageListCustom.Property.FirstOrDefault(e => e.Id == SelectedSettingCustom?.OutputLanguageId);
             ResultColorCustom.Property = SelectedSettingCustom?.ResultColor;
-            CurrentProfileNameCustom.Property = SelectedSettingCustom?.Name;
+            CurrentProfileNameCustom.Property = SelectedSettingCustom?.Name != null ? SelectedSettingCustom?.Name : "default";
         }
 
         private void SaveServerAddress(object obj)

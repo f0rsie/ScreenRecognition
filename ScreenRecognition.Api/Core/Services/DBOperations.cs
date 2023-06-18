@@ -139,21 +139,40 @@ namespace ScreenRecognition.Api.Core.Services
 
         public async Task<User?> Authorization(string login, string password)
         {
-            var result = await _dbContext.Users.FirstOrDefaultAsync(e => e.Login == login && e.Password == password);
+            var result = await _dbContext.Users
+                .Include(e => e.Country)
+                .Include(e => e.Role)
+                .FirstOrDefaultAsync(e => e.Login == login && e.Password == password);
 
             return result;
         }
 
         public async Task<Setting?> GetAllSettings(int userId, string profileName)
         {
-            var result = await _dbContext.Settings.FirstOrDefaultAsync(e => e.UserId == userId && e.Name == profileName);
+            var result = await _dbContext.Settings
+                .Include(e => e.InputLanguage)
+                .Include(e => e.OutputLanguage)
+                .Include(e => e.SelectedOcr)
+                .Include(e => e.SelectedTranslator)
+                .Include(e => e.User)
+                    .Include(e => e.User.Country)
+                    .Include(e => e.User.Role)
+                .FirstOrDefaultAsync(e => e.UserId == userId && e.Name == profileName);
 
             return result;
         }
 
         public async Task<List<History>> GetTranslationHistory(int userId)
         {
-            var result = await _dbContext.Histories.Where(e => e.UserId == userId).ToListAsync();
+            var result = await _dbContext.Histories
+                .Include(e => e.InputLanguage)
+                .Include(e => e.OutputLanguage)
+                .Include(e => e.SelectedOcr)
+                .Include(e => e.SelectedTranslator)
+                .Include(e => e.User)
+                    .Include(e => e.User.Country)
+                    .Include(e => e.User.Role)
+                .Where(e => e.UserId == userId).ToListAsync();
 
             return result;
         }
@@ -181,7 +200,15 @@ namespace ScreenRecognition.Api.Core.Services
 
         public async Task<List<Setting>> GetSettignsList(int userId)
         {
-            var result = await _dbContext.Settings.Where(e => e.UserId == userId).ToListAsync();
+            var result = await _dbContext.Settings
+                .Include(e => e.InputLanguage)
+                .Include(e => e.OutputLanguage)
+                .Include(e => e.SelectedOcr)
+                .Include(e => e.SelectedTranslator)
+                .Include(e => e.User)
+                    .Include(e => e.User.Country)
+                    .Include(e => e.User.Role)
+                .Where(e => e.UserId == userId).ToListAsync();
 
             return result;
         }
