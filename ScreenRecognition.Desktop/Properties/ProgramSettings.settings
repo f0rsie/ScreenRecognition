@@ -39,7 +39,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ApiServerAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://localhost:5046/api/</Value>
+      <Value Profile="(Default)">http://45.138.157.71:5046/api/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -169,7 +169,7 @@ namespace ScreenRecognition.Desktop.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:5046/api/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://45.138.157.71:5046/api/")]
         public string ApiServerAddress {
             get {
                 return ((string)(this["ApiServerAddress"]));
